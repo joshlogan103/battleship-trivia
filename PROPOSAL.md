@@ -80,16 +80,20 @@ https://www.figma.com/file/E7LWUjXFjEBcy7tuQXoQSF/Battleship-Trivia-End-State---
 
 10) Create 'Abandon Game' functionality
 
+#### Trello Board for Task Planning/Management
+
+https://trello.com/b/pFpab8LH/battleship-trivia
+
 #### Timeline - Daily Accountability
 
-| Day       |   | Task                                                                                       | Blockers | Notes |
-|-----------|---|--------------------------------------------------------------------------------------------|----------|-------|
-| Sunday    |   | Create proposal and wireframes                                                             |          |       |
-| Monday    |   | Create HTML, CSS, JS files with basic scaffolding                                          |          |       |
-| Tuesday   |   | Add functionality                                                                          |          |       |
-| Wednesday |   | Add content and styling, this includes battleships themselves and trivia questions/answers |          |       |
-| Thursdary |   | Continue with styling                                                                      |          |       |
-| Friday    |   | Finalize MVP                                                                               |          |       |
-| Saturday  |   | Work on stretch goals, particularly a database for the trivia questions/answers            |          |       |
-| Sunday    |   | Finalize work on stretch goals, go through final user testing                              |          |       |
-| Monday    |   | Present work                                                                               |          |       |
+| Day       |   | Task                                                                            | Blockers | Notes |
+|-----------|---|---------------------------------------------------------------------------------|----------|-------|
+| Sunday    |   | Create proposal and wireframes                                                  |          |       |
+| Monday    |   | Create HTML, CSS, JS files with basic scaffolding                               |          |       |
+| Tuesday   |   | Add functionality                                                               |          |       |
+| Wednesday |   | Add content and styling, this includes battleships and trivia questions/answers |          |       |
+| Thursdary |   | Continue with styling                                                           |          |       |
+| Friday    |   | Finalize MVP                                                                    |          |       |
+| Saturday  |   | Work on stretch goals, particularly a database for the trivia questions/answers |          |       |
+| Sunday    |   | Finalize work on stretch goals, go through final user testing                   |          |       |
+| Monday    |   | Present work                                                                    |          |       |
