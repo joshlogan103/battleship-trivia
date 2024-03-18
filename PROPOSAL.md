@@ -16,15 +16,15 @@ There are layout grids visible in the design builder which show the board spaces
 
 **Initial Landing View**
 
-![link](https://www.figma.com/file/3zXkpIdYvj27Yg3lx3Z21h/Battleship-Trivia-Start-State---Wireframe?type=design&node-id=0%3A1&mode=design&t=4023VSf5WofXOH65-1)
+https://www.figma.com/file/3zXkpIdYvj27Yg3lx3Z21h/Battleship-Trivia-Start-State---Wireframe?type=design&node-id=0%3A1&mode=design&t=4023VSf5WofXOH65-1
 
 **Mid-game View**
 
-![link](https://www.figma.com/file/SqqS4sHSIYgDQDvjd9Hmp8/Battleship-Trivia-Mid-game-State---Wireframe?type=design&node-id=0%3A1&mode=design&t=rlvyJPFEQGHmRD1D-1)
+https://www.figma.com/file/SqqS4sHSIYgDQDvjd9Hmp8/Battleship-Trivia-Mid-game-State---Wireframe?type=design&node-id=0%3A1&mode=design&t=rlvyJPFEQGHmRD1D-1
 
 **Results View**
 
-![link](https://www.figma.com/file/E7LWUjXFjEBcy7tuQXoQSF/Battleship-Trivia-End-State---Wireframe?type=design&node-id=0%3A1&mode=design&t=oo0y2OeQ1dIL3BJs-1)
+https://www.figma.com/file/E7LWUjXFjEBcy7tuQXoQSF/Battleship-Trivia-End-State---Wireframe?type=design&node-id=0%3A1&mode=design&t=oo0y2OeQ1dIL3BJs-1
 
 ## User Stories
 
