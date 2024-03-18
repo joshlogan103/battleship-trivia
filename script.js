@@ -2,16 +2,37 @@
 
 //Cache required elements
 
-const newGameNavButton = document.getElementById
+const newGameNavButton = document.getElementById("new-game-nav-button");
+const howToPlayButton = document.getElementById("how-to-play-nav-button");
+const startNewGameButton = document.getElementById("start-new-game-button");
+const startButtonHolderEl = document.getElementById("start-button-holder");
+const howToPlayWindow = document.getElementById("how-to-play-window"); 
 
-//Render the intro screen upon loading the page
+//Set up necessary event listeners
 
-//Create a pop-up with a how-to-play message when the how-to-play button is clicked
+newGameNavButton.addEventListener("click",startNewGame);
+startNewGameButton.addEventListener("click",startNewGame);
+howToPlayButton.addEventListener("click",openHowToPlay);
 
-//Initialize the game when "Start New Game" is clicked
+//Initialize the game upon load and begin game when "Start New Game" is clicked
 
 function init() {
 
+}
+
+function startNewGame() {
+  console.log("Start a New Game!")
+  startNewGameButton.style.visibility = "hidden";
+  howToPlayWindow.classList.add("how-to-play-window-hidden");
+  howToPlayWindow.classList.remove("how-to-play-window-visible");
+}
+
+//Create a pop-up with a how-to-play message when the how-to-play button is clicked
+
+function openHowToPlay() {
+  console.log("How to Play!");
+  howToPlayWindow.classList.remove("how-to-play-window-hidden");
+  howToPlayWindow.classList.add("how-to-play-window-visible");
 }
 
 //Render the screen at the conclusion of each turn
