@@ -1,6 +1,6 @@
 body {
   margin: 0;
-  font-family: Helvetica, sans-serif;
+  font-family: Cantarell, sans-serif;
 }
 
 .navbar {
@@ -8,7 +8,7 @@ body {
   flex-direction: row;
   align-items: center;
   background-color: rgb(4, 7, 50);
-  height: 40px;
+  height: 45px;
   color: white;
 }
 
@@ -42,6 +42,23 @@ body {
   padding: 0 40px 0 0;
 }
 
+.start-button-holder {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 80px auto 0;
+}
+
+#start-new-game-button {
+  text-align: center;
+  font-size: 24px;
+  background-color: rgb(199, 16, 123);
+  color: white;
+  padding: 5px 15px;
+  border: none;
+  border-radius: 8px;
+}
+
 .battleship-area {
   display: flex;
   flex-direction: column;
@@ -51,7 +68,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 10px;
+  margin: 20px;
 }
 
 .board {  
@@ -79,14 +96,14 @@ body {
     "J J1 J2 J3 J4 J5 J6 J7 J8 J9 J10";
 }
 
-#my-board-title {
+#player-one-board-title {
   height: 50px;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-#opponent-board-title {
+#player-two-board-title {
   height: 50px;
   display: flex;
   justify-content: center;
@@ -104,7 +121,6 @@ body {
 .row-name {
   height: 50px;
   width: 50px;
-  border: solid 1px black;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -113,7 +129,6 @@ body {
 .col-name {
   height: 50px;
   width: 50px;
-  border: solid 1px black;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -368,5 +383,14 @@ body {
 
 .board-name { grid-area: board-name; }
 
-
-
+footer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(4, 7, 50);
+  height: 45px;
+  color: white;
+  margin: 50px auto 0;
+  font-size: 12px;
+}
