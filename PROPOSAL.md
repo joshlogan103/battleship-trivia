@@ -2,7 +2,7 @@
 
 ## Project Choice (Tell us which project you're doing!)
 
-- [ ] Battle-Ship Trivia
+- [ ] Battleship Trivia
 
 ## Project Description 
 
@@ -10,16 +10,19 @@ My app is called Battle Ship Trivia. It's a game app for players that want a new
 
 As an additional stretch goal, I'd like to offer an alternate mode where players are allowed to guess an oponents square without needing to answer a question first. In this mode, after a successful 'hit', the player will be prompted with a trivia question. If the question is answered correctly a random adjacent square to their most recent guess will have it's state revealed. Beyond the initial scope is allowing players to play vs. an AI, but this is something I'd like to explore in the future.
 
-TODO
 ## Wire Frames
+
+
 
 **Initial Landing View**
 
-![image](https://media.git.generalassemb.ly/user/21811/files/0f7aee00-c1d9-11ea-9dad-de086a5c91fc)
+There are layout grids visible in the design builder which show the board spaces. This view is not available when simply viewing the wireframes via the links below.
+
+![image](https://www.figma.com/file/3zXkpIdYvj27Yg3lx3Z21h/Battleship-Trivia-Start-State---Wireframe?type=design&node-id=0%3A1&mode=design&t=4023VSf5WofXOH65-1)
 
 **Results View**
 
-![image](https://media.git.generalassemb.ly/user/21811/files/1a358300-c1d9-11ea-95da-6c14aefb0f18)
+![image](https://www.figma.com/file/E7LWUjXFjEBcy7tuQXoQSF/Battleship-Trivia-End-State---Wireframe?type=design&node-id=0%3A1&mode=design&t=oo0y2OeQ1dIL3BJs-1)
 
 ## User Stories
 
