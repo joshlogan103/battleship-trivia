@@ -12,13 +12,15 @@ As an additional stretch goal, I'd like to offer an alternate mode where players
 
 ## Wire Frames
 
-
+There are layout grids visible in the design builder which show the board spaces. This view is not available when simply viewing the wireframes via the links below.
 
 **Initial Landing View**
 
-There are layout grids visible in the design builder which show the board spaces. This view is not available when simply viewing the wireframes via the links below.
-
 ![image](https://www.figma.com/file/3zXkpIdYvj27Yg3lx3Z21h/Battleship-Trivia-Start-State---Wireframe?type=design&node-id=0%3A1&mode=design&t=4023VSf5WofXOH65-1)
+
+**Mid-game View**
+
+![image](https://www.figma.com/file/SqqS4sHSIYgDQDvjd9Hmp8/Battleship-Trivia-Mid-game-State---Wireframe?type=design&node-id=0%3A1&mode=design&t=rlvyJPFEQGHmRD1D-1)
 
 **Results View**
 
