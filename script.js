@@ -52,6 +52,8 @@ function init() {
   playerTwoBoardTotalEl.classList.remove("board-hidden");
   shipRepositoryOneEl.classList.remove("ship-repository-visible");
   shipRepositoryTwoEl.classList.remove("ship-repository-visible");
+  shipRepositoryOneEl.classList.add("ship-repository-hidden");
+  shipRepositoryTwoEl.classList.add("ship-repository-hidden");
 }
 
 function startNewGame() {
@@ -98,9 +100,11 @@ function placeShips() {
   if (turn === 1) {
     playerTwoBoardTotalEl.classList.add("board-hidden");
     shipRepositoryOneEl.classList.add("ship-repository-visible");
+    shipRepositoryOneEl.classList.remove("ship-repository-hidden");
   } else {
     playerOneBoardTotalEl.classList.add("board-hidden");
     shipRepositoryTwoEl.classList.add("ship-repository-visible");
+    shipRepositoryTwoEl.classList.remove("ship-repository-hidden");
   }
 }
 

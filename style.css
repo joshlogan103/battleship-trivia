@@ -146,7 +146,7 @@ main {
 
 .ship-repository-visible {
   visibility: visible;
-  width: 300px;
+  width: 250px;
   height: 500px;
   background-color: white;
   border: solid 2px rgb(165, 220, 222);
@@ -154,6 +154,33 @@ main {
   padding: 10px 20px;
   font-size: 20px;
   margin: 80px auto 0 auto;
+}
+
+.ship-repository-hidden {
+  visibility: hidden;
+  width: 0px;
+  margin: 0;
+  padding: 0;
+}
+
+.carrier-png {
+  width: 250px;
+  margin: 10px auto;
+}
+
+.cruiser-png {
+  width: 200px;
+  margin: 10px auto;
+}
+
+.submarine-png {
+  width: 150px;
+  margin: 10px auto;
+}
+
+.floater-png {
+  width: 100px;
+  margin: 10px auto;
 }
 
 .battleship-area {
