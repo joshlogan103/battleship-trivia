@@ -1,10 +1,18 @@
 /*--- Set-up and Initialization---*/
 
+//Cache required elements
+
+const newGameNavButton = document.getElementById
+
 //Render the intro screen upon loading the page
 
 //Create a pop-up with a how-to-play message when the how-to-play button is clicked
 
 //Initialize the game when "Start New Game" is clicked
+
+function init() {
+
+}
 
 //Render the screen at the conclusion of each turn
 
@@ -39,3 +47,4 @@
 //Update the scoreboard at the conclusion of a match
 
 //Abandon the match if both players click "New Game" (if 'Confirm New Game' is clicked as well)
+
