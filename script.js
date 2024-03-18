@@ -5,20 +5,26 @@
 const newGameNavButton = document.getElementById("new-game-nav-button");
 const howToPlayButton = document.getElementById("how-to-play-nav-button");
 const startNewGameButton = document.getElementById("start-new-game-button");
+const siteNameButton = document.getElementById("site-name-button");
 const startButtonHolderEl = document.getElementById("start-button-holder");
 const howToPlayWindow = document.getElementById("how-to-play-window"); 
 const playerOneBoardEl = document.getElementsByClassName("square1");
+const playerOneScoreEl = document.getElementById("player-1-score-name")
+const playerTwoScoreEl = document.getElementById("player-2-score-name")
 
 //Set up necessary event listeners
 
 newGameNavButton.addEventListener("click",startNewGame);
 startNewGameButton.addEventListener("click",startNewGame);
 howToPlayButton.addEventListener("click",openHowToPlay);
+siteNameButton.addEventListener("click",init);
 
 //Define required constants
 
 let playerOneBoard = [];
 let playerTwoBoard = [];
+let playerOneScore = 0;
+let playerTwoScore = 0;
 
 //Initialize the game upon load and begin game when "Start New Game" is clicked
 
@@ -29,12 +35,17 @@ function init() {
   playerOneBoard.push(null);
   playerTwoBoard.push(null);
   }
+  startButtonHolderEl.classList.add("start-button-holder-visible");
+  startButtonHolderEl.classList.remove("start-button-holder-hidden");
+  howToPlayWindow.classList.add("how-to-play-window-hidden");
+  howToPlayWindow.classList.remove("how-to-play-window-visible");
 }
 
 function startNewGame() {
   console.log(playerOneBoard);
-  startButtonHolderEl.style.visibility = "hidden";
-  startButtonHolderEl.style.margin = "0 auto";
+  console.log(playerTwoBoard);
+  startButtonHolderEl.classList.add("start-button-holder-hidden");
+  startButtonHolderEl.classList.remove("start-button-holder-visible");
   howToPlayWindow.classList.add("how-to-play-window-hidden");
   howToPlayWindow.classList.remove("how-to-play-window-visible");
 }
@@ -48,6 +59,11 @@ function openHowToPlay() {
 }
 
 //Render the screen at the conclusion of each turn
+
+function render() {
+  playerOneScoreEl = playerOneScore;
+  playerTwoScoreEl = playerTwoScore;
+}
 
 //Visually update the board state
 

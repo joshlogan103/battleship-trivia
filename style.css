@@ -1,5 +1,6 @@
 body {
   margin: 0;
+  padding: 0;
   font-family: Cantarell, helvetica, sans-serif;
 }
 
@@ -32,6 +33,13 @@ body {
 
 .site-name {
   padding: 0 100px 0 10px;
+}
+
+#site-name-button {
+  border: none;
+  background-color: rgb(4, 7, 50);
+  color: white;
+  font-family: Cantarell, helvetica, sans-serif;
   font-size: 24px;
 }
 
@@ -78,11 +86,19 @@ main {
   align-items: center;
 }
 
-#start-button-holder {
+.start-button-holder-visible {
   display: flex;
   justify-content: center;
   align-items: center;
   margin: 80px auto 0;
+}
+
+.start-button-holder-hidden {
+  visibility: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
 }
 
 #start-new-game-button {
@@ -474,6 +490,6 @@ footer {
   background-color: rgb(4, 7, 50);
   height: 45px;
   color: white;
-  margin: 50px auto 0;
+  margin: 50px auto 0 auto;
   font-size: 12px;
 }
