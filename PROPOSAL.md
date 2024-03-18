@@ -1,6 +1,6 @@
 # Project Proposal Example
 
-## Project Choice (Tell us which project you're doing!)
+## Project Choice
 
 - [ ] Battleship Trivia
 
@@ -92,7 +92,7 @@ https://trello.com/b/pFpab8LH/battleship-trivia
 | Monday    |   | Create HTML, CSS, JS files with basic scaffolding                               |          |       |
 | Tuesday   |   | Add functionality                                                               |          |       |
 | Wednesday |   | Add content and styling, this includes battleships and trivia questions/answers |          |       |
-| Thursdary |   | Continue with styling                                                           |          |       |
+| Thursdary |   | Continue with styling and add animations                                        |          |       |
 | Friday    |   | Finalize MVP                                                                    |          |       |
 | Saturday  |   | Work on stretch goals, particularly a database for the trivia questions/answers |          |       |
 | Sunday    |   | Finalize work on stretch goals, go through final user testing                   |          |       |
