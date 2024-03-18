@@ -7,6 +7,7 @@ const howToPlayButton = document.getElementById("how-to-play-nav-button");
 const startNewGameButton = document.getElementById("start-new-game-button");
 const startButtonHolderEl = document.getElementById("start-button-holder");
 const howToPlayWindow = document.getElementById("how-to-play-window"); 
+const playerOneBoardEl = document.getElementsByClassName("square1");
 
 //Set up necessary event listeners
 
@@ -14,15 +15,26 @@ newGameNavButton.addEventListener("click",startNewGame);
 startNewGameButton.addEventListener("click",startNewGame);
 howToPlayButton.addEventListener("click",openHowToPlay);
 
+//Define required constants
+
+let playerOneBoard = [];
+let playerTwoBoard = [];
+
 //Initialize the game upon load and begin game when "Start New Game" is clicked
 
-function init() {
+init();
 
+function init() {
+  for(let i=0; i<playerOneBoardEl.length; i++) {
+  playerOneBoard.push(null);
+  playerTwoBoard.push(null);
+  }
 }
 
 function startNewGame() {
-  console.log("Start a New Game!")
-  startNewGameButton.style.visibility = "hidden";
+  console.log(playerOneBoard);
+  startButtonHolderEl.style.visibility = "hidden";
+  startButtonHolderEl.style.margin = "0 auto";
   howToPlayWindow.classList.add("how-to-play-window-hidden");
   howToPlayWindow.classList.remove("how-to-play-window-visible");
 }
