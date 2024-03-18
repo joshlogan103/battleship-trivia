@@ -10,6 +10,8 @@ My app is called Battle Ship Trivia. It's a game app for players that want a new
 
 As an additional stretch goal, I'd like to offer an alternate mode where players are allowed to guess an opponents square without needing to answer a question first. In this mode, after a successful 'hit', the player will be prompted with a trivia question. If the question is answered correctly a random adjacent square to their most recent guess will have it's state revealed. Beyond the initial scope is allowing players to play vs. an AI, but this is something I'd like to explore in the future.
 
+A quick note on scope - if this seems like too much to combine both the trivia and battleship components, I'll build battleship on it's own first, then add in the trivia component if possible.
+
 ## Wire Frames
 
 There are layout grids visible in the design builder which show the board spaces. This view is not available when simply viewing the wireframes via the links below.
@@ -17,6 +19,10 @@ There are layout grids visible in the design builder which show the board spaces
 **Initial Landing View**
 
 https://www.figma.com/file/3zXkpIdYvj27Yg3lx3Z21h/Battleship-Trivia-Start-State---Wireframe?type=design&node-id=0%3A1&mode=design&t=4023VSf5WofXOH65-1
+
+**How-to-Play View**
+
+https://www.figma.com/file/IoV5TAIOiHLn2p4uM3Snzv/Battleship-Trivia-How-to-play-State---Wireframe?type=design&node-id=0%3A1&mode=design&t=Hfu2gdBB6nT3yXb3-1
 
 **Mid-game View**
 
@@ -30,6 +36,7 @@ https://www.figma.com/file/E7LWUjXFjEBcy7tuQXoQSF/Battleship-Trivia-End-State---
 
 #### MVP Goals
 
+- As a player, I would like a how-to-play screen to explain the game format, rules and objectives
 - As a player, I want my game to recognize when battleships are hit by myself and my opponent and update the game state visually.
 - As a player, I would like to be informed when the game is over due to all ships being sunk.
 - As a player, I would like to know whose turn it is so that I don't have to keep track.
@@ -51,28 +58,38 @@ https://www.figma.com/file/E7LWUjXFjEBcy7tuQXoQSF/Battleship-Trivia-End-State---
 - As a player, I would like to be able to abandon a game and start again in the same session if both my opponent and I agree to a restart
 - As a player, I would like to be able to choose a certain category for the trivia used in game, or play with random categories. I would like the art of the game to update based on the category chosen
 
-TODO
-#### Notionboard Template
-Notionboard template for building projects ( You can use this for any project )
-https://www.notion.so/GA-Unit-3-Tunr-Lab-da2c82fafd4e4a7aa654676732db9ee3
+#### High-level Pseudo-code (lower level pseudo-code written in script.js)
 
-TODO
+1) Define the required variables used to track the state of the game
+
+2) Store cached element references
+
+3) Upon loading, the game state should be initialized, and a function should be called to render this game state
+
+4) The state of the game should be rendered to the user
+
+5) Define the required constants
+
+6) Allow each player to set ships on their board
+
+7) Handle a player answering trivia questions and evaluate correctness
+
+8) Allow a player to guess a square on their opponents board and evaluate a hit/miss
+
+9) Store trivia questions/answers locally (or investigate loading from a database)
+
+10) Create 'Abandon Game' functionality
+
 #### Timeline - Daily Accountability
-Example of a Timeline to keep organized and on task for hitting goals every single day you’re on the sprint for your project.
 
-Create your own table using this markdown table generator website:
-https://www.tablesgenerator.com/markdown_tables
-
-Do not neglect to plan, you will thank yourself later for being proactive!
-| Day        |   | Task                               | Blockers | Notes/ Thoughts |
-|------------|---|------------------------------------|----------|-----------------|
-| Sunday     |   | Create and present proposal        |          |                 |
-| Monday     |   | Create html, js, css files         |          |                 |
-| Tuesday    |   | Create basic scaffolding           |          |                 |
-| Wednesday  |   | Add functionality                  |          |                 |
-| Thursday   |   | Add styling                        |          |                 |
-| Friday     |   | Finaliza MVP                       |          |                 |
-| Saturday   |   | Work on stretch goals              |          |                 |
-| Sunday     |   | Work on icebox items if applicable |          |                 |
-| Monday     |   | Presentation Day!                  |          |                 |
-|            |   |                                    |          |                 |
+| Day       |   | Task                                                                                       | Blockers | Notes |
+|-----------|---|--------------------------------------------------------------------------------------------|----------|-------|
+| Sunday    |   | Create proposal and wireframes                                                             |          |       |
+| Monday    |   | Create HTML, CSS, JS files with basic scaffolding                                          |          |       |
+| Tuesday   |   | Add functionality                                                                          |          |       |
+| Wednesday |   | Add content and styling, this includes battleships themselves and trivia questions/answers |          |       |
+| Thursdary |   | Continue with styling                                                                      |          |       |
+| Friday    |   | Finalize MVP                                                                               |          |       |
+| Saturday  |   | Work on stretch goals, particularly a database for the trivia questions/answers            |          |       |
+| Sunday    |   | Finalize work on stretch goals, go through final user testing                              |          |       |
+| Monday    |   | Present work                                                                               |          |       |
