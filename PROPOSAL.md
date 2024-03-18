@@ -8,7 +8,7 @@
 
 My app is called Battle Ship Trivia. It's a game app for players that want a new twist on playing battleship online. Two players can join the game and play a round of Battleship combined with a trivia game. Each turn begins with the player being presented with a trivia question. If they successfully answer the question (by selecting the correct option from four choices), they will be allowed to guess an opponent square and reveal if it's a hit or a miss. If the players fails to answer the question correctly, the turn passes to the opposing player. The game ends when one player has sunk all of the opponent's battle ships, as in the standard battle ship game. There will be a scoreboard which will keep track of wins and losses for each player if more than one match are played in a single session. I'd like to connect my game to a database that stores hundreds of trivia questions in order to maximize replayability. 
 
-As an additional stretch goal, I'd like to offer an alternate mode where players are allowed to guess an oponents square without needing to answer a question first. In this mode, after a successful 'hit', the player will be prompted with a trivia question. If the question is answered correctly a random adjacent square to their most recent guess will have it's state revealed. Beyond the initial scope is allowing players to play vs. an AI, but this is something I'd like to explore in the future.
+As an additional stretch goal, I'd like to offer an alternate mode where players are allowed to guess an opponents square without needing to answer a question first. In this mode, after a successful 'hit', the player will be prompted with a trivia question. If the question is answered correctly a random adjacent square to their most recent guess will have it's state revealed. Beyond the initial scope is allowing players to play vs. an AI, but this is something I'd like to explore in the future.
 
 ## Wire Frames
 
@@ -16,15 +16,15 @@ There are layout grids visible in the design builder which show the board spaces
 
 **Initial Landing View**
 
-![image](https://www.figma.com/file/3zXkpIdYvj27Yg3lx3Z21h/Battleship-Trivia-Start-State---Wireframe?type=design&node-id=0%3A1&mode=design&t=4023VSf5WofXOH65-1)
+![link](https://www.figma.com/file/3zXkpIdYvj27Yg3lx3Z21h/Battleship-Trivia-Start-State---Wireframe?type=design&node-id=0%3A1&mode=design&t=4023VSf5WofXOH65-1)
 
 **Mid-game View**
 
-![image](https://www.figma.com/file/SqqS4sHSIYgDQDvjd9Hmp8/Battleship-Trivia-Mid-game-State---Wireframe?type=design&node-id=0%3A1&mode=design&t=rlvyJPFEQGHmRD1D-1)
+![link](https://www.figma.com/file/SqqS4sHSIYgDQDvjd9Hmp8/Battleship-Trivia-Mid-game-State---Wireframe?type=design&node-id=0%3A1&mode=design&t=rlvyJPFEQGHmRD1D-1)
 
 **Results View**
 
-![image](https://www.figma.com/file/E7LWUjXFjEBcy7tuQXoQSF/Battleship-Trivia-End-State---Wireframe?type=design&node-id=0%3A1&mode=design&t=oo0y2OeQ1dIL3BJs-1)
+![link](https://www.figma.com/file/E7LWUjXFjEBcy7tuQXoQSF/Battleship-Trivia-End-State---Wireframe?type=design&node-id=0%3A1&mode=design&t=oo0y2OeQ1dIL3BJs-1)
 
 ## User Stories
 
