@@ -12,6 +12,8 @@ As an additional stretch goal, I'd like to offer an alternate mode where players
 
 A quick note on scope - if this seems like too much to combine both the trivia and battleship components, I'll build battleship on it's own first, then add in the trivia component if possible.
 
+**Shift Trivia portion to stretch
+
 ## Wire Frames
 
 There are layout grids visible in the design builder which show the board spaces. This view is not available when simply viewing the wireframes via the links below.
@@ -43,7 +45,7 @@ https://www.figma.com/file/E7LWUjXFjEBcy7tuQXoQSF/Battleship-Trivia-End-State---
 - As a player, I would like to be informed with some indication when I make a guess of an opponents ship location and whether it is a hit or a miss
 - As a player, I would like to be informed with some indication when my opponent makes a guess of my ships' locations and whether it is a hit or a miss
 - As a player who requires assistive technologies, I would like accessibility features so that I'm not left out of enjoying the game.
-- As a player I would like to be able to restart the game after a win or loss
+- As a player I would like to be able to restart the game after a win or loss (look at just disapling New Game button until game is over)
 - As a player, I want the UI to be engaging and out of the way so that I enjoy the experience of playing the game.
 - As a player, I would like the trivia portion of the game be clearly presented, and let me know if I got the answer right. If I got the answer wrong, it should show me what the correct answer was.
 - As a player, I would like a scoreboard to track my wins and losses over the course of a session. 
