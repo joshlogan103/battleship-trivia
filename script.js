@@ -8,9 +8,15 @@ const startNewGameButton = document.getElementById("start-new-game-button");
 const siteNameButton = document.getElementById("site-name-button");
 const startButtonHolderEl = document.getElementById("start-button-holder");
 const howToPlayWindow = document.getElementById("how-to-play-window"); 
-const playerOneBoardEl = document.getElementsByClassName("square1");
-const playerOneScoreEl = document.getElementById("player-1-score-name")
-const playerTwoScoreEl = document.getElementById("player-2-score-name")
+const closeHowToWindow = document.getElementById("close-how-to-window");
+const playerOneBoardEls = document.getElementsByClassName("square1");
+const playerTwoBoardEls = document.getElementsByClassName("square2");
+const playerOneBoardTotalEl = document.getElementById("board1");
+const playerTwoBoardTotalEl = document.getElementById("board2");
+const playerOneScoreEl = document.getElementById("player-1-score-name");
+const playerTwoScoreEl = document.getElementById("player-2-score-name");
+const shipRepositoryOneEl = document.getElementById("ship-repository-1");
+const shipRepositoryTwoEl = document.getElementById("ship-repository-2");
 
 //Set up necessary event listeners
 
@@ -18,6 +24,7 @@ newGameNavButton.addEventListener("click",startNewGame);
 startNewGameButton.addEventListener("click",startNewGame);
 howToPlayButton.addEventListener("click",openHowToPlay);
 siteNameButton.addEventListener("click",init);
+closeHowToWindow.addEventListener("click",closeHowTo);
 
 //Define required constants
 
@@ -25,20 +32,26 @@ let playerOneBoard = [];
 let playerTwoBoard = [];
 let playerOneScore = 0;
 let playerTwoScore = 0;
+let turn;
 
 //Initialize the game upon load and begin game when "Start New Game" is clicked
 
 init();
 
 function init() {
-  for(let i=0; i<playerOneBoardEl.length; i++) {
+  for(let i=0; i<playerOneBoardEls.length; i++) {
   playerOneBoard.push(null);
   playerTwoBoard.push(null);
   }
+  turn = 1;
   startButtonHolderEl.classList.add("start-button-holder-visible");
   startButtonHolderEl.classList.remove("start-button-holder-hidden");
   howToPlayWindow.classList.add("how-to-play-window-hidden");
   howToPlayWindow.classList.remove("how-to-play-window-visible");
+  playerOneBoardTotalEl.classList.remove("board-hidden");
+  playerTwoBoardTotalEl.classList.remove("board-hidden");
+  shipRepositoryOneEl.classList.remove("ship-repository-visible");
+  shipRepositoryTwoEl.classList.remove("ship-repository-visible");
 }
 
 function startNewGame() {
@@ -48,6 +61,7 @@ function startNewGame() {
   startButtonHolderEl.classList.remove("start-button-holder-visible");
   howToPlayWindow.classList.add("how-to-play-window-hidden");
   howToPlayWindow.classList.remove("how-to-play-window-visible");
+  placeShips();
 }
 
 //Create a pop-up with a how-to-play message when the how-to-play button is clicked
@@ -56,6 +70,11 @@ function openHowToPlay() {
   console.log("How to Play!");
   howToPlayWindow.classList.remove("how-to-play-window-hidden");
   howToPlayWindow.classList.add("how-to-play-window-visible");
+}
+
+function closeHowTo() {
+  howToPlayWindow.classList.add("how-to-play-window-hidden");
+  howToPlayWindow.classList.remove("how-to-play-window-visible");
 }
 
 //Render the screen at the conclusion of each turn
@@ -75,6 +94,16 @@ function render() {
 
 //Accept user input to place ships on their respective boards
 
+function placeShips() {
+  if (turn === 1) {
+    playerTwoBoardTotalEl.classList.add("board-hidden");
+    shipRepositoryOneEl.classList.add("ship-repository-visible");
+  } else {
+    playerOneBoardTotalEl.classList.add("board-hidden");
+    shipRepositoryTwoEl.classList.add("ship-repository-visible");
+  }
+}
+
 //Load a question and four possible answers into the trivia window
 
 //Validate if the user selected the correct answer to the trivia question
@@ -88,6 +117,10 @@ function render() {
 //Display hit/miss message to the players
 
 //Change player turn (either after trivia question is failed or guess is made of ship location)
+
+function changeTurn(){
+  turn *= -1;
+}
 
 //Evaluate if the win conditions have been met at the end of each turn
 

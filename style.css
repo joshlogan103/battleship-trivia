@@ -4,6 +4,10 @@ body {
   font-family: Cantarell, helvetica, sans-serif;
 }
 
+button {
+  cursor: pointer;
+}
+
 .navbar {
   display: flex;
   flex-direction: row;
@@ -120,12 +124,36 @@ main {
 .how-to-play-window-visible {
   visibility: visible;
   width: 800px;
-  height: 300px;
   background-color: rgb(165, 220, 222);
+  border-radius: 7px;
+  padding: 20px 20px;
+  font-size: 20px;
+  margin: 40px auto 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#close-how-to-window {
+  border: solid 2px white;
+  background-color: rgb(199, 16, 123);
+  color: white;
+  padding: 5px 10px;
+  border-radius: 7px;
+  font-size: 20px;
+}
+
+.ship-repository-visible {
+  visibility: visible;
+  width: 300px;
+  height: 500px;
+  background-color: white;
+  border: solid 2px rgb(165, 220, 222);
   border-radius: 7px;
   padding: 10px 20px;
   font-size: 20px;
-  margin: 40px auto 0 auto;
+  margin: 80px auto 0 auto;
 }
 
 .battleship-area {
@@ -165,6 +193,12 @@ main {
     "H H1 H2 H3 H4 H5 H6 H7 H8 H9 H10"
     "I I1 I2 I3 I4 I5 I6 I7 I8 I9 I10"
     "J J1 J2 J3 J4 J5 J6 J7 J8 J9 J10";
+}
+
+.board-hidden {
+  visibility: hidden;
+  width: 0px;
+  height: 0px;
 }
 
 #player-one-board-title {
