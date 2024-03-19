@@ -1,5 +1,28 @@
 /*--- Set-up and Initialization---*/
 
+//Define required constants
+
+let playerOneBoard = [];
+let playerTwoBoard = [];
+let playerOneScore = 0;
+let playerTwoScore = 0;
+let turn = 1;
+let draggedShip;
+let angle = 0;
+let shipOptions = [];
+const shipSizes = {
+  "p1-carrier-png": 5,
+  "p1-cruiser-png": 4,
+  "p1-submarine-1-png": 3,
+  "p1-submarine-2-png": 3,
+  "p1-floater-png": 2,
+  "p2-carrier-png": 5,
+  "p2-cruiser-png": 4,
+  "p2-submarine-1-png": 3,
+  "p2-submarine-2-png": 3,
+  "p2-floater-png": 2,
+}
+
 //Cache required elements
 
 const newGameNavButton = document.getElementById("new-game-nav-button");
@@ -7,6 +30,7 @@ const howToPlayButton = document.getElementById("how-to-play-nav-button");
 const startNewGameButton = document.getElementById("start-new-game-button");
 const siteNameButton = document.getElementById("site-name-button");
 const startButtonHolderEl = document.getElementById("start-button-holder");
+const messageEl = document.getElementById("message");
 const howToPlayWindow = document.getElementById("how-to-play-window"); 
 const closeHowToWindowButton = document.getElementById("close-how-to-window");
 const playerOneBoardEls = document.getElementsByClassName("square1");
@@ -20,6 +44,8 @@ const shipSectionTwoEl = document.getElementById("ship-section-2");
 const shipRepoOneEl = document.getElementById("ship-repository-1");
 const shipRepoTwoEl = document.getElementById("ship-repository-2");
 const shipEls = document.getElementsByClassName("ship");
+const rotateButtons = Array.from(document.getElementsByClassName("rotate-button"));
+const doneSettingShipsButtons = Array.from(document.getElementsByClassName("done-setting-ships-button"));
 
 //Set up necessary event listeners
 
@@ -28,11 +54,14 @@ startNewGameButton.addEventListener("click",startNewGame);
 howToPlayButton.addEventListener("click",openHowToPlay);
 siteNameButton.addEventListener("click",init);
 closeHowToWindowButton.addEventListener("click",closeHowTo);
+rotateButtons.forEach((button) => button.addEventListener("click",rotateShips));
+doneSettingShipsButtons.forEach((button) => button.addEventListener("click",checkShipsToSet));
+
 
 for(let ship of shipEls) {
   ship.addEventListener("dragstart",function(e) {
   draggedShip = e.target;
-  checkShipsToSet();
+  console.log(draggedShip);
 })}
 
 for(let square of playerOneBoardEls) {
@@ -47,50 +76,47 @@ for(let square of playerTwoBoardEls) {
   })
 }
 
-
 for(let square of playerOneBoardEls) {
   square.addEventListener("drop",function(e) {
-    square.prepend(draggedShip);
-    square.classList.add('no-background');
-    console.log(draggedShip.length);
-    for (let i=0; i<draggedShip.length;i++) {
-      console.log(draggedShip.length)
-      //let idx = playerOneBoardEls.indexOf(square);
-      //console.log(idx);
+    const shipSize = shipSizes[draggedShip.id];
+    draggedShip.remove();
+    if (angle === 0) {
+      for (let i=0; i<shipSize;i++) {
+        let idx = Number(square.id);
+        playerOneBoard[idx + i] = 1;
+        playerOneBoardEls[idx - 1 + i].classList.add('ship-location-background');
+      }
+    } else {
+      for (let i=0; i<shipSize;i++) {
+        let idx = Number(square.id);
+        playerOneBoard[idx + (10*i)] = 1;
+        playerOneBoardEls[idx - 1 + (10*i)].classList.add('ship-location-background');
+      }
     }
-    console.log(square);
-    checkShipsToSet();
-    shipSetUp();
+    console.log(playerOneBoard);
   })
 }
 
 for(let square of playerTwoBoardEls) {
   square.addEventListener("drop",function(e) {
-    square.prepend(draggedShip);
-    square.classList.add('no-background');
-    console.log(draggedShip.length);
-    for (let i=0; i<draggedShip.length;i++) {
-      console.log(draggedShip.length)
-      //let idx = playerOneBoardEls.indexOf(square);
-      //console.log(idx);
+    const shipSize = shipSizes[draggedShip.id];
+    draggedShip.remove();
+    if (angle === 0) {
+      for (let i=0; i<shipSize;i++) {
+        let idx = Number(square.id);
+        playerTwoBoard[idx + i] = 1;
+        playerTwoBoardEls[idx - 100 - 1 + i].classList.add('ship-location-background');
+      }
+    } else {
+      for (let i=0; i<shipSize;i++) {
+        let idx = Number(square.id);
+        playerTwoBoard[idx + (10*i)] = 1;
+        playerTwoBoardEls[idx - 100 - 1 + (10*i)].classList.add('ship-location-background');
+      }
     }
-    console.log(square);
-    checkShipsToSet();
-    if (turn ===1) {
-      startGuessing();
-    }
+    console.log(playerTwoBoard);
   })
 }
-
-
-//Define required constants
-
-let playerOneBoard = [];
-let playerTwoBoard = [];
-let playerOneScore = 0;
-let playerTwoScore = 0;
-let turn;
-let draggedShip;
 
 //Initialize the game upon load and begin game when "Start New Game" is clicked
 
@@ -98,8 +124,8 @@ init();
 
 function init() {
   for(let i=0; i<playerOneBoardEls.length; i++) {
-  playerOneBoard.push(null);
-  playerTwoBoard.push(null);
+  playerOneBoard.push(0);
+  playerTwoBoard.push(0);
   }
   turn = 1;
   startButtonHolderEl.classList.add("start-button-holder-visible");
@@ -170,22 +196,66 @@ function shipSetUp() {
   //placeShip();
 }
 
-function checkShipsToSet() {
-  if(turn===1){
-    if(shipRepoOneEl.innerHTML.trim() === "") {
-      changeTurn();
+
+
+//Allow user to rotate ship orientation 90 degrees before placing it on the board
+
+function rotateShips() {
+  //const shipOptions = Array.from(shipRepoOneEl.children);
+  //angle = angle === 0 ? 90 : 0;
+  //shipOptions.forEach(shipOption => shipOption.style.transform = `rotate(${angle}deg)`);
+  if (turn===1) {
+      shipOptions = Array.from(shipRepoOneEl.children);
+      angle = angle === 0 ? 90 : 0;
+      shipOptions.forEach(shipOption => shipOption.style.transform = `rotate(${angle}deg)`);
+    if (angle === 90) {
+      
+      shipRepoOneEl.classList.remove("ship-repository-vertical");
+      shipRepoOneEl.classList.add("ship-repository-horizontal");
+    } else {
+      shipRepoOneEl.classList.add("ship-repository-vertical");
+      shipRepoOneEl.classList.remove("ship-repository-horizontal");
     }
   } else {
-    if(shipRepoTwoEl.innerHTML.trim() === "") {
-      changeTurn();
+    shipOptions = Array.from(shipRepoTwoEl.children);
+    angle = angle === 0 ? 90 : 0;
+    shipOptions.forEach(shipOption => shipOption.style.transform = `rotate(${angle}deg)`);
+    if (angle === 90) {
+      shipRepoTwoEl.classList.remove("ship-repository-vertical");
+      shipRepoTwoEl.classList.add("ship-repository-horizontal");
+    } else {
+      shipRepoTwoEl.classList.add("ship-repository-vertical");
+      shipRepoTwoEl.classList.remove("ship-repository-horizontal");
     }
   }
 }
 
-//function placeShip {
+function checkShipsToSet() {
+  if(turn===1){
+    if(shipRepoOneEl.innerHTML.trim() === "") {
+      changeTurn();
+      angle = 0;
+      shipSetUp();
+    } else {
+      messageEl.textContent = "Place all ships on the board before proceeding."
+      clearMessageAfter5s();
+    }
+  } else {
+    if(shipRepoTwoEl.innerHTML.trim() === "") {
+      changeTurn();
+      startGuessing();
+    } else {
+      messageEl.textContent = "Place all ships on the board before proceeding."
+      clearMessageAfter5s();
+    }
+  }
+}
 
-//}
-
+function clearMessageAfter5s() {
+  setTimeout(() => {
+    messageEl.textContent = "";
+  }, 5000);
+}
 
 //Load a question and four possible answers into the trivia window
 
@@ -197,12 +267,10 @@ function checkShipsToSet() {
 
 function startGuessing() {
   for (let square of playerOneBoardEls) {
-    square.innerHTML = "";
-    square.classList.remove("no-background")
+    square.classList.remove("ship-location-background")
   }
   for (let square of playerTwoBoardEls) {
-    square.innerHTML = "";
-    square.classList.remove("no-background")
+    square.classList.remove("ship-location-background")
   }
   playerOneBoardTotalEl.classList.remove("board-hidden");
   shipSectionTwoEl.classList.remove("ship-section-visible");
@@ -227,3 +295,17 @@ function changeTurn(){
 
 //Abandon the match if both players click "New Game" (if 'Confirm New Game' is clicked as well)
 
+/*
+function makeBoard(playerBoard) {
+  const newBoard = document.createElement("div");
+  newBoard.classList.add('board');
+  newBoard.id = player;
+
+  for (let i=0; i < 132; i++) {
+    const square = document.createElement("div");
+    square.classList.add("square1");
+    square.id = i;
+    newBoard.append(square)
+  }
+}
+*/
