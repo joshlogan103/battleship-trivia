@@ -17,8 +17,9 @@ const playerOneScoreEl = document.getElementById("player-1-score-name");
 const playerTwoScoreEl = document.getElementById("player-2-score-name");
 const shipSectionOneEl = document.getElementById("ship-section-1");
 const shipSectionTwoEl = document.getElementById("ship-section-2");
-const playerOneShips = document.getElementsByClassName("ship");
-
+const shipRepoOneEl = document.getElementById("ship-repository-1");
+const shipRepoTwoEl = document.getElementById("ship-repository-2");
+const shipEls = document.getElementsByClassName("ship");
 
 //Set up necessary event listeners
 
@@ -28,9 +29,10 @@ howToPlayButton.addEventListener("click",openHowToPlay);
 siteNameButton.addEventListener("click",init);
 closeHowToWindowButton.addEventListener("click",closeHowTo);
 
-for(let ship of playerOneShips) {
+for(let ship of shipEls) {
   ship.addEventListener("dragstart",function(e) {
   draggedShip = e.target;
+  checkShipsToSet();
 })}
 
 for(let square of playerOneBoardEls) {
@@ -38,6 +40,13 @@ for(let square of playerOneBoardEls) {
     e.preventDefault();
   })
 }
+
+for(let square of playerTwoBoardEls) {
+  square.addEventListener("dragover",function(e) {
+    e.preventDefault();
+  })
+}
+
 
 for(let square of playerOneBoardEls) {
   square.addEventListener("drop",function(e) {
@@ -50,6 +59,26 @@ for(let square of playerOneBoardEls) {
       //console.log(idx);
     }
     console.log(square);
+    checkShipsToSet();
+    shipSetUp();
+  })
+}
+
+for(let square of playerTwoBoardEls) {
+  square.addEventListener("drop",function(e) {
+    square.prepend(draggedShip);
+    square.classList.add('no-background');
+    console.log(draggedShip.length);
+    for (let i=0; i<draggedShip.length;i++) {
+      console.log(draggedShip.length)
+      //let idx = playerOneBoardEls.indexOf(square);
+      //console.log(idx);
+    }
+    console.log(square);
+    checkShipsToSet();
+    if (turn ===1) {
+      startGuessing();
+    }
   })
 }
 
@@ -132,10 +161,25 @@ function shipSetUp() {
     shipSectionOneEl.classList.remove("ship-section-hidden");
   } else {
     playerOneBoardTotalEl.classList.add("board-hidden");
+    playerTwoBoardTotalEl.classList.remove("board-hidden");
     shipSectionTwoEl.classList.add("ship-section-visible");
     shipSectionTwoEl.classList.remove("ship-section-hidden");
+    shipSectionOneEl.classList.remove("ship-section-visible");
+    shipSectionOneEl.classList.add("ship-section-hidden");
   }
   //placeShip();
+}
+
+function checkShipsToSet() {
+  if(turn===1){
+    if(shipRepoOneEl.innerHTML.trim() === "") {
+      changeTurn();
+    }
+  } else {
+    if(shipRepoTwoEl.innerHTML.trim() === "") {
+      changeTurn();
+    }
+  }
 }
 
 //function placeShip {
@@ -150,6 +194,20 @@ function shipSetUp() {
 //Display the correct answer after user selection
 
 //Accept user input when a guess is made of opponent's battleship location
+
+function startGuessing() {
+  for (let square of playerOneBoardEls) {
+    square.innerHTML = "";
+    square.classList.remove("no-background")
+  }
+  for (let square of playerTwoBoardEls) {
+    square.innerHTML = "";
+    square.classList.remove("no-background")
+  }
+  playerOneBoardTotalEl.classList.remove("board-hidden");
+  shipSectionTwoEl.classList.remove("ship-section-visible");
+  shipSectionTwoEl.classList.add("ship-section-hidden");
+}
 
 //Register a hit/miss after a player guesses an opponent's battleship location
 
