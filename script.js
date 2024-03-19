@@ -8,15 +8,17 @@ const startNewGameButton = document.getElementById("start-new-game-button");
 const siteNameButton = document.getElementById("site-name-button");
 const startButtonHolderEl = document.getElementById("start-button-holder");
 const howToPlayWindow = document.getElementById("how-to-play-window"); 
-const closeHowToWindow = document.getElementById("close-how-to-window");
+const closeHowToWindowButton = document.getElementById("close-how-to-window");
 const playerOneBoardEls = document.getElementsByClassName("square1");
 const playerTwoBoardEls = document.getElementsByClassName("square2");
 const playerOneBoardTotalEl = document.getElementById("board1");
 const playerTwoBoardTotalEl = document.getElementById("board2");
 const playerOneScoreEl = document.getElementById("player-1-score-name");
 const playerTwoScoreEl = document.getElementById("player-2-score-name");
-const shipRepositoryOneEl = document.getElementById("ship-repository-1");
-const shipRepositoryTwoEl = document.getElementById("ship-repository-2");
+const shipSectionOneEl = document.getElementById("ship-section-1");
+const shipSectionTwoEl = document.getElementById("ship-section-2");
+const playerOneShips = document.getElementsByClassName("ship");
+
 
 //Set up necessary event listeners
 
@@ -24,7 +26,33 @@ newGameNavButton.addEventListener("click",startNewGame);
 startNewGameButton.addEventListener("click",startNewGame);
 howToPlayButton.addEventListener("click",openHowToPlay);
 siteNameButton.addEventListener("click",init);
-closeHowToWindow.addEventListener("click",closeHowTo);
+closeHowToWindowButton.addEventListener("click",closeHowTo);
+
+for(let ship of playerOneShips) {
+  ship.addEventListener("dragstart",function(e) {
+  draggedShip = e.target;
+})}
+
+for(let square of playerOneBoardEls) {
+  square.addEventListener("dragover",function(e) {
+    e.preventDefault();
+  })
+}
+
+for(let square of playerOneBoardEls) {
+  square.addEventListener("drop",function(e) {
+    square.prepend(draggedShip);
+    square.classList.add('no-background');
+    console.log(draggedShip.length);
+    for (let i=0; i<draggedShip.length;i++) {
+      console.log(draggedShip.length)
+      //let idx = playerOneBoardEls.indexOf(square);
+      //console.log(idx);
+    }
+    console.log(square);
+  })
+}
+
 
 //Define required constants
 
@@ -33,6 +61,7 @@ let playerTwoBoard = [];
 let playerOneScore = 0;
 let playerTwoScore = 0;
 let turn;
+let draggedShip;
 
 //Initialize the game upon load and begin game when "Start New Game" is clicked
 
@@ -50,10 +79,10 @@ function init() {
   howToPlayWindow.classList.remove("how-to-play-window-visible");
   playerOneBoardTotalEl.classList.remove("board-hidden");
   playerTwoBoardTotalEl.classList.remove("board-hidden");
-  shipRepositoryOneEl.classList.remove("ship-repository-visible");
-  shipRepositoryTwoEl.classList.remove("ship-repository-visible");
-  shipRepositoryOneEl.classList.add("ship-repository-hidden");
-  shipRepositoryTwoEl.classList.add("ship-repository-hidden");
+  shipSectionOneEl.classList.remove("ship-section-visible");
+  shipSectionTwoEl.classList.remove("ship-section-visible");
+  shipSectionOneEl.classList.add("ship-section-hidden");
+  shipSectionTwoEl.classList.add("ship-section-hidden");
 }
 
 function startNewGame() {
@@ -63,7 +92,7 @@ function startNewGame() {
   startButtonHolderEl.classList.remove("start-button-holder-visible");
   howToPlayWindow.classList.add("how-to-play-window-hidden");
   howToPlayWindow.classList.remove("how-to-play-window-visible");
-  placeShips();
+  shipSetUp();
 }
 
 //Create a pop-up with a how-to-play message when the how-to-play button is clicked
@@ -96,17 +125,23 @@ function render() {
 
 //Accept user input to place ships on their respective boards
 
-function placeShips() {
+function shipSetUp() {
   if (turn === 1) {
     playerTwoBoardTotalEl.classList.add("board-hidden");
-    shipRepositoryOneEl.classList.add("ship-repository-visible");
-    shipRepositoryOneEl.classList.remove("ship-repository-hidden");
+    shipSectionOneEl.classList.add("ship-section-visible");
+    shipSectionOneEl.classList.remove("ship-section-hidden");
   } else {
     playerOneBoardTotalEl.classList.add("board-hidden");
-    shipRepositoryTwoEl.classList.add("ship-repository-visible");
-    shipRepositoryTwoEl.classList.remove("ship-repository-hidden");
+    shipSectionTwoEl.classList.add("ship-section-visible");
+    shipSectionTwoEl.classList.remove("ship-section-hidden");
   }
+  //placeShip();
 }
+
+//function placeShip {
+
+//}
+
 
 //Load a question and four possible answers into the trivia window
 
