@@ -88,11 +88,11 @@ for(let square of playerOneBoardEls) {
     } 
     for (let shipSquare of shipSquares) {
       console.log(shipSquare);
-      if (playerOneBoard[shipSquare.id] === 1) {
+      if (playerOneBoard[Number(shipSquare.id)] === 1) {
         overlap.push(true);
       }
     }
-    noOverlap = !overlap.some(val => val === true);
+    noOverlap = overlap.length === 0;
     overlap = [];
     if (angle === 0 && noOverlap) {
       if (10 - idx % 10 >= shipSize) {
@@ -122,11 +122,11 @@ for(let square of playerTwoBoardEls) {
     } 
     for (let shipSquare of shipSquares) {
       console.log(shipSquare);
-      if (playerTwoBoard[shipSquare.id - 100] === 1) {
+      if (playerTwoBoard[Number(shipSquare.id)- 100] === 1) {
         overlap.push(true);
       }
     }
-    noOverlap = !overlap.some(val => val === true);
+    noOverlap = overlap.length === 0;
     overlap = [];
     if (angle === 0 && noOverlap) {
       if (10 - idx % 10 >= shipSize) {
@@ -144,12 +144,12 @@ for(let square of playerOneBoardEls) {
   square.addEventListener("drop",function(e) {
     const shipSize = shipSizes[draggedShip.id];
     let idx = Number(square.id);
-    for (let i=0; i<shipSize;i++) {
+    for (let i=0; i<shipSize; i++) {
       if (angle === 0) {
         playerOneBoard[idx + i] = 1;
         playerOneBoardEls[idx + i].classList.add('ship-location-background');
       } else {
-        playerTwoBoard[idx + (10 * i)] = 1;
+        playerOneBoard[idx + (10 * i)] = 1;
         playerOneBoardEls[idx + (10 * i)].classList.add('ship-location-background');
       }
     }
