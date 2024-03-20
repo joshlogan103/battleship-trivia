@@ -6,6 +6,7 @@ let playerOneBoard = [];
 let playerTwoBoard = [];
 let playerOneScore = 0;
 let playerTwoScore = 0;
+let winner = "";
 let turn = 1;
 let draggedShip;
 let angle = 0;
@@ -278,7 +279,9 @@ function clearMessageAfter5s() {
 function startGuessing() {
   for (let square of playerOneBoardEls) {
     square.classList.remove("ship-location-background");
-    square.addEventListener("click", makeGuess);
+    square.addEventListener("click", function(e) {
+      makeGuess(e);
+    })
   }
   for (let square of playerTwoBoardEls) {
     square.classList.remove("ship-location-background");
@@ -291,36 +294,67 @@ function startGuessing() {
   shipSectionTwoEl.classList.add("ship-section-hidden");
 }
 
+
+//Register a hit/miss after a player guesses an opponent's battleship location
+
 function makeGuess(e) {
   let idx = e.target.id;
-  if (turn === -1) {
-    if (playerOneBoard[idx] === 1) {
+  if (turn === 1) {
+    if (playerTwoBoard[idx - 100] === 1) {
       e.target.classList.add("hit");
+      playerTwoBoard[idx-100] = 0;
+      console.log(playerTwoBoard);
+      checkForWin();
     } else {
       e.target.classList.add("miss");
     }
   } else {
-    if (playerTwoBoard[idx - 100] === 1) {
+    if (playerOneBoard[idx] === 1) {
       e.target.classList.add("hit");
+      playerOneBoard[idx] = 0;
+      console.log(playerOneBoard);
+      checkForWin();
     } else {
       e.target.classList.add("miss");
     }
+    
   }
-  changeTurn();
+  if (!winner) {
+    changeTurn();
+  }
+  
 }
-
-//Register a hit/miss after a player guesses an opponent's battleship location
 
 //Display hit/miss message to the players
 
 //Change player turn (either after trivia question is failed or guess is made of ship location)
 
-function changeTurn(){
+function changeTurn() {
   turn *= -1;
   messageEl.textContent = `It is player ${turn}'s turn.`;
 }
 
 //Evaluate if the win conditions have been met at the end of each turn
+
+function checkForWin() {
+  let sum1 = playerOneBoard.reduce((prev,num) => {
+    prev += num;
+    return prev;
+  },0)
+  let sum2 = playerTwoBoard.reduce((prev,num) => {
+    prev += num;
+    return prev;
+  },0)
+  if (sum1 === 0) {
+    winner = "Player 2";
+  }
+  if (sum2 === 0) {
+    winner = "Player 1";
+  }
+  if (winner) {
+    messageEl.textContent = `${winner} wins!`;
+  }
+}
 
 //Display winning message at the conclusion of the game
 
