@@ -347,18 +347,22 @@ function makeGuess(e) {
   if (turn === 1 && !winner) {
     if (playerTwoBoard[idx - 100] === 1) {
       e.target.classList.add("hit");
+      e.target.removeEventListener("click", makeGuess);
       playerTwoBoard[idx-100] = 0;
       checkForWin();
     } else {
       e.target.classList.add("miss");
+      e.target.removeEventListener("click", makeGuess);
     }
-  } else {
-    if (playerOneBoard[idx] === 1 && !winner) {
+  } else if (turn === -1 && !winner) {
+    if (playerOneBoard[idx] === 1) {
       e.target.classList.add("hit");
+      e.target.removeEventListener("click", makeGuess);
       playerOneBoard[idx] = 0;
       checkForWin();
     } else {
       e.target.classList.add("miss");
+      e.target.removeEventListener("click", makeGuess);
     }
   }
   if (!winner) {
