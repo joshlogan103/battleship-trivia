@@ -328,11 +328,11 @@ function clearMessageAfter5s() {
 function startGuessing() {
   for (let square of playerOneBoardEls) {
     square.classList.remove("ship-location-background");
-    square.addEventListener("click", makeGuess);
+    square.addEventListener("click", makeGuessPlayerTwo);
   }
   for (let square of playerTwoBoardEls) {
     square.classList.remove("ship-location-background");
-    square.addEventListener("click", makeGuess);
+    square.addEventListener("click", makeGuessPlayerOne);
   }
   playerOneBoardTotalEl.classList.remove("board-hidden");
   shipSectionTwoEl.classList.remove("ship-section-visible");
@@ -342,31 +342,39 @@ function startGuessing() {
 
 //Register a hit/miss after a player guesses an opponent's battleship location, then calls a function to change the turn
 
-function makeGuess(e) {
-  let idx = e.target.id;
+function makeGuessPlayerOne(e) {
+  let idx = Number(e.target.id - 100);
   if (turn === 1 && !winner) {
-    if (playerTwoBoard[idx - 100] === 1) {
+    if (playerTwoBoard[idx] === 1) {
       e.target.classList.add("hit");
-      e.target.removeEventListener("click", makeGuess);
-      playerTwoBoard[idx-100] = 0;
+      e.target.removeEventListener("click", makeGuessPlayerOne);
+      playerTwoBoard[idx] = 0;
       checkForWin();
     } else {
       e.target.classList.add("miss");
-      e.target.removeEventListener("click", makeGuess);
+      e.target.removeEventListener("click", makeGuessPlayerOne);
     }
-  } else if (turn === -1 && !winner) {
+    changeTurn();
+  } else {
+    messageEl.textContent = `${playerTwo} must guess a square on ${playerOne}'s board.`;
+  }
+}
+
+function makeGuessPlayerTwo(e) {
+  let idx = Number(e.target.id);
+  if (turn === -1 && !winner) {
     if (playerOneBoard[idx] === 1) {
       e.target.classList.add("hit");
-      e.target.removeEventListener("click", makeGuess);
+      e.target.removeEventListener("click", makeGuessPlayerTwo);
       playerOneBoard[idx] = 0;
       checkForWin();
     } else {
       e.target.classList.add("miss");
-      e.target.removeEventListener("click", makeGuess);
+      e.target.removeEventListener("click", makeGuessPlayerTwo);
     }
-  }
-  if (!winner) {
     changeTurn();
+  } else {
+    messageEl.textContent = `${playerOne} must guess a square on ${playerTwo}'s board.`;
   }
 }
 
