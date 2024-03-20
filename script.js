@@ -10,6 +10,7 @@ let turn = 1;
 let draggedShip;
 let angle = 0;
 let shipOptions = [];
+let validStartSquare;
 const shipSizes = {
   "p1-carrier-png": 5,
   "p1-cruiser-png": 4,
@@ -62,7 +63,8 @@ for(let ship of shipEls) {
   ship.addEventListener("dragstart",function(e) {
   draggedShip = e.target;
   console.log(draggedShip);
-})}
+  })
+}
 
 for(let square of playerOneBoardEls) {
   square.addEventListener("dragover",function(e) {
@@ -79,20 +81,26 @@ for(let square of playerTwoBoardEls) {
 for(let square of playerOneBoardEls) {
   square.addEventListener("drop",function(e) {
     const shipSize = shipSizes[draggedShip.id];
-    draggedShip.remove();
-    if (angle === 0) {
-      for (let i=0; i<shipSize;i++) {
-        let idx = Number(square.id);
-        playerOneBoard[idx + i] = 1;
-        playerOneBoardEls[idx - 1 + i].classList.add('ship-location-background');
+    let idx = Number(square.id);
+    let shipSquares = [];
+    for (let i=0; i<shipSize;i++) {
+      if (angle === 0)  {
+        shipSquares.push(playerOneBoardEls[idx + i])
+      } else {
+        shipSquares.push(playerOneBoardEls[idx + (10 * i)])
       }
-    } else {
-      for (let i=0; i<shipSize;i++) {
-        let idx = Number(square.id);
-        playerOneBoard[idx + (10*i)] = 1;
-        playerOneBoardEls[idx - 1 + (10*i)].classList.add('ship-location-background');
+
+      {
+      if (angle === 0) {
+        playerOneBoard[idx + i] = 1;
+        playerOneBoardEls[idx + i].classList.add('ship-location-background');
+      } else {
+        playerTwoBoard[idx + (10 * i)] = 1;
+        playerOneBoardEls[idx + (10 * i)].classList.add('ship-location-background');
+      }
       }
     }
+    draggedShip.remove();
     console.log(playerOneBoard);
   })
 }
@@ -104,19 +112,27 @@ for(let square of playerTwoBoardEls) {
     if (angle === 0) {
       for (let i=0; i<shipSize;i++) {
         let idx = Number(square.id);
-        playerTwoBoard[idx + i] = 1;
-        playerTwoBoardEls[idx - 100 - 1 + i].classList.add('ship-location-background');
+        playerTwoBoard[idx - 100 + i] = 1;
+        playerTwoBoardEls[idx - 100 + i].classList.add('ship-location-background');
       }
     } else {
       for (let i=0; i<shipSize;i++) {
         let idx = Number(square.id);
-        playerTwoBoard[idx + (10*i)] = 1;
-        playerTwoBoardEls[idx - 100 - 1 + (10*i)].classList.add('ship-location-background');
+        playerTwoBoard[idx - 100 + (10 * i)] = 1;
+        playerTwoBoardEls[idx - 100 + (10 * i)].classList.add('ship-location-background');
       }
     }
     console.log(playerTwoBoard);
   })
 }
+
+//Use 'r' as a hotkey for rotating ship repository
+
+document.addEventListener("keydown",function(e) {
+  if (e.key.toLowerCase() === "r") {
+    rotateShips();
+  }
+})
 
 //Initialize the game upon load and begin game when "Start New Game" is clicked
 
@@ -124,8 +140,8 @@ init();
 
 function init() {
   for(let i=0; i<playerOneBoardEls.length; i++) {
-  playerOneBoard.push(0);
-  playerTwoBoard.push(0);
+    playerOneBoard.push(0);
+    playerTwoBoard.push(0);
   }
   turn = 1;
   startButtonHolderEl.classList.add("start-button-holder-visible");
@@ -193,17 +209,11 @@ function shipSetUp() {
     shipSectionOneEl.classList.remove("ship-section-visible");
     shipSectionOneEl.classList.add("ship-section-hidden");
   }
-  //placeShip();
 }
-
-
 
 //Allow user to rotate ship orientation 90 degrees before placing it on the board
 
 function rotateShips() {
-  //const shipOptions = Array.from(shipRepoOneEl.children);
-  //angle = angle === 0 ? 90 : 0;
-  //shipOptions.forEach(shipOption => shipOption.style.transform = `rotate(${angle}deg)`);
   if (turn===1) {
       shipOptions = Array.from(shipRepoOneEl.children);
       angle = angle === 0 ? 90 : 0;
@@ -231,8 +241,8 @@ function rotateShips() {
 }
 
 function checkShipsToSet() {
-  if(turn===1){
-    if(shipRepoOneEl.innerHTML.trim() === "") {
+  if (turn===1) {
+    if (shipRepoOneEl.innerHTML.trim() === "") {
       changeTurn();
       angle = 0;
       shipSetUp();
@@ -241,7 +251,7 @@ function checkShipsToSet() {
       clearMessageAfter5s();
     }
   } else {
-    if(shipRepoTwoEl.innerHTML.trim() === "") {
+    if (shipRepoTwoEl.innerHTML.trim() === "") {
       changeTurn();
       startGuessing();
     } else {
@@ -267,14 +277,36 @@ function clearMessageAfter5s() {
 
 function startGuessing() {
   for (let square of playerOneBoardEls) {
-    square.classList.remove("ship-location-background")
+    square.classList.remove("ship-location-background");
+    square.addEventListener("click", makeGuess);
   }
   for (let square of playerTwoBoardEls) {
-    square.classList.remove("ship-location-background")
+    square.classList.remove("ship-location-background");
+    square.addEventListener("click", function(e) {
+      makeGuess(e);
+    });
   }
   playerOneBoardTotalEl.classList.remove("board-hidden");
   shipSectionTwoEl.classList.remove("ship-section-visible");
   shipSectionTwoEl.classList.add("ship-section-hidden");
+}
+
+function makeGuess(e) {
+  let idx = e.target.id;
+  if (turn === -1) {
+    if (playerOneBoard[idx] === 1) {
+      e.target.classList.add("hit");
+    } else {
+      e.target.classList.add("miss");
+    }
+  } else {
+    if (playerTwoBoard[idx - 100] === 1) {
+      e.target.classList.add("hit");
+    } else {
+      e.target.classList.add("miss");
+    }
+  }
+  changeTurn();
 }
 
 //Register a hit/miss after a player guesses an opponent's battleship location
@@ -285,6 +317,7 @@ function startGuessing() {
 
 function changeTurn(){
   turn *= -1;
+  messageEl.textContent = `It is player ${turn}'s turn.`;
 }
 
 //Evaluate if the win conditions have been met at the end of each turn

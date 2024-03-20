@@ -186,6 +186,8 @@ main {
   padding: 20px 10px;
   font-size: 20px;
   margin: 260px auto 0 auto;
+  display: flex;
+  align-items: center;
 }
 
 .carrier-png {
@@ -326,6 +328,14 @@ main {
 
 .ship-location-background {
   background-color: rgb(58, 58, 58);
+}
+
+.hit {
+  background-color: rgb(155, 35, 35);
+}
+
+.miss {
+  background-color: rgb(167, 160, 160);
 }
 
 .row-name {
