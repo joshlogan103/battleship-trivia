@@ -12,6 +12,8 @@ let draggedShip;
 let angle = 0;
 let shipOptions = [];
 let validStartSquare;
+let playerOne = "Player 1";
+let playerTwo = "Player 2";
 const shipSizes = {
   "p1-carrier-png": 5,
   "p1-cruiser-png": 4,
@@ -39,8 +41,8 @@ const playerOneBoardEls = document.getElementsByClassName("square1");
 const playerTwoBoardEls = document.getElementsByClassName("square2");
 const playerOneBoardTotalEl = document.getElementById("board1");
 const playerTwoBoardTotalEl = document.getElementById("board2");
-const playerOneScoreEl = document.getElementById("player-1-score-name");
-const playerTwoScoreEl = document.getElementById("player-2-score-name");
+const playerOneScoreEl = document.getElementById("player-1-score-number");
+const playerTwoScoreEl = document.getElementById("player-2-score-number");
 const shipSectionOneEl = document.getElementById("ship-section-1");
 const shipSectionTwoEl = document.getElementById("ship-section-2");
 const shipRepoOneEl = document.getElementById("ship-repository-1");
@@ -135,7 +137,7 @@ document.addEventListener("keydown",function(e) {
   }
 })
 
-//Initialize the game upon load and begin game when "Start New Game" is clicked
+//Initializes a fresh game state and begins a game when "Start New Game" is clicked
 
 init();
 
@@ -175,23 +177,12 @@ function openHowToPlay() {
   howToPlayWindow.classList.add("how-to-play-window-visible");
 }
 
+//Closes the how-to-play window when the close button is clicked
+
 function closeHowTo() {
   howToPlayWindow.classList.add("how-to-play-window-hidden");
   howToPlayWindow.classList.remove("how-to-play-window-visible");
 }
-
-//Render the screen at the conclusion of each turn
-
-function render() {
-  playerOneScoreEl = playerOneScore;
-  playerTwoScoreEl = playerTwoScore;
-}
-
-//Visually update the board state
-
-//Update the the text to show who's turn it is
-
-//Define win conditions
 
 /*--- Game Flow ---*/
 
@@ -279,15 +270,11 @@ function clearMessageAfter5s() {
 function startGuessing() {
   for (let square of playerOneBoardEls) {
     square.classList.remove("ship-location-background");
-    square.addEventListener("click", function(e) {
-      makeGuess(e);
-    })
+    square.addEventListener("click", makeGuess);
   }
   for (let square of playerTwoBoardEls) {
     square.classList.remove("ship-location-background");
-    square.addEventListener("click", function(e) {
-      makeGuess(e);
-    });
+    square.addEventListener("click", makeGuess);
   }
   playerOneBoardTotalEl.classList.remove("board-hidden");
   shipSectionTwoEl.classList.remove("ship-section-visible");
@@ -295,43 +282,40 @@ function startGuessing() {
 }
 
 
-//Register a hit/miss after a player guesses an opponent's battleship location
+//Register a hit/miss after a player guesses an opponent's battleship location, then calls a function to change the turn
 
 function makeGuess(e) {
   let idx = e.target.id;
-  if (turn === 1) {
+  if (turn === 1 && !winner) {
     if (playerTwoBoard[idx - 100] === 1) {
       e.target.classList.add("hit");
       playerTwoBoard[idx-100] = 0;
-      console.log(playerTwoBoard);
       checkForWin();
     } else {
       e.target.classList.add("miss");
     }
   } else {
-    if (playerOneBoard[idx] === 1) {
+    if (playerOneBoard[idx] === 1 && !winner) {
       e.target.classList.add("hit");
       playerOneBoard[idx] = 0;
-      console.log(playerOneBoard);
       checkForWin();
     } else {
       e.target.classList.add("miss");
     }
-    
   }
   if (!winner) {
     changeTurn();
   }
-  
 }
 
 //Display hit/miss message to the players
 
-//Change player turn (either after trivia question is failed or guess is made of ship location)
+//Changes player turn and displays that it is the current players turn
 
 function changeTurn() {
   turn *= -1;
-  messageEl.textContent = `It is player ${turn}'s turn.`;
+  turn === 1 ? currentPlayer = playerOne : currentPlayer = playerTwo;
+  messageEl.textContent = `It is ${currentPlayer}'s turn.`;
 }
 
 //Evaluate if the win conditions have been met at the end of each turn
@@ -346,19 +330,46 @@ function checkForWin() {
     return prev;
   },0)
   if (sum1 === 0) {
-    winner = "Player 2";
+    winUpdate(playerTwo);
   }
   if (sum2 === 0) {
-    winner = "Player 1";
-  }
-  if (winner) {
-    messageEl.textContent = `${winner} wins!`;
+    winUpdate(playerOne);
   }
 }
 
-//Display winning message at the conclusion of the game
+//Display winning message at the conclusion of the game and update the scoreboard in the nav bar
 
-//Update the scoreboard at the conclusion of a match
+function winUpdate(winningPlayer) {
+  winner = winningPlayer;
+  if (winner === playerOne) {
+    playerOneScore += 1;
+    playerOneScoreEl.textContent = playerOneScore;
+  } else {
+    playerTwoScore += 1;
+    playerTwoScoreEl.textContent = playerTwoScore;
+  }
+  messageEl.textContent = `${winner} wins!`;
+  renderGameOverBoard()
+}
+
+//Disables further guesses once the game has ended and renders the boards with unguessed ship locations visibile
+
+function renderGameOverBoard() {
+  for (let square of playerOneBoardEls) {
+    square.removeEventListener("click", makeGuess);
+    if (playerOneBoard[square.id] === 1) {
+      square.classList.add("ship-location-background");
+    }
+  }
+  for (let square of playerTwoBoardEls) {
+    square.removeEventListener("click", makeGuess);
+    if (playerTwoBoard[square.id - 100] === 1) {
+      square.classList.add("ship-location-background");
+    }
+  }
+  startButtonHolderEl.classList.add("start-button-holder-visible");
+  startButtonHolderEl.classList.remove("start-button-holder-hidden");
+}
 
 //Abandon the match if both players click "New Game" (if 'Confirm New Game' is clicked as well)
 
