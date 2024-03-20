@@ -54,6 +54,8 @@ const carrierPNG = Array.from(document.getElementsByClassName("carrier-png"));
 const cruiserPNG = Array.from(document.getElementsByClassName("cruiser-png"));
 const submarinePNG = Array.from(document.getElementsByClassName("submarine-png"));
 const floaterPNG = Array.from(document.getElementsByClassName("floater-png"));
+const playerOneBoardTitle = document.getElementById("player-one-board-title");
+const playerTwoBoardTitle = document.getElementById("player-two-board-title");
 
 //Set up necessary event listeners
 
@@ -201,6 +203,8 @@ function init() {
   shipSectionTwoEl.classList.remove("ship-section-visible");
   shipSectionOneEl.classList.add("ship-section-hidden");
   shipSectionTwoEl.classList.add("ship-section-hidden");
+  playerOneBoardTitle.textContent = `${playerOne}'s Board`;
+  playerTwoBoardTitle.textContent = `${playerTwo}'s Board`;
   clearBoards();
 }
 
@@ -237,6 +241,7 @@ function closeHowTo() {
 //Accept user input to place ships on their respective boards
 
 function shipSetUp() {
+  messageEl.textContent = `Drag ships onto your board to place them.`;
   if (turn === 1) {
     playerTwoBoardTotalEl.classList.add("board-hidden");
     shipSectionOneEl.classList.add("ship-section-visible");
@@ -268,6 +273,7 @@ function rotateShips() {
   }
 }
 
+//Changes the 
 
 function renderRotatedShips() {
   if (angle === 90) {
@@ -298,7 +304,7 @@ function checkShipsToSet() {
       shipSetUp();
     } else {
       messageEl.textContent = "Place all ships on the board before proceeding."
-      clearMessageAfter5s();
+      //clearMessageAfter5s();
     }
   } else {
     if (shipRepoTwoEl.innerHTML.trim() === "") {
@@ -306,7 +312,7 @@ function checkShipsToSet() {
       startGuessing();
     } else {
       messageEl.textContent = "Place all ships on the board before proceeding."
-      clearMessageAfter5s();
+      //clearMessageAfter5s();
     }
   }
 }
@@ -354,7 +360,9 @@ function makeGuessPlayerOne(e) {
       e.target.classList.add("miss");
       e.target.removeEventListener("click", makeGuessPlayerOne);
     }
-    changeTurn();
+    if (!winner) {
+      changeTurn();
+    }
   } else {
     messageEl.textContent = `${playerTwo} must guess a square on ${playerOne}'s board.`;
   }
@@ -372,7 +380,9 @@ function makeGuessPlayerTwo(e) {
       e.target.classList.add("miss");
       e.target.removeEventListener("click", makeGuessPlayerTwo);
     }
-    changeTurn();
+    if (!winner) {
+      changeTurn();
+    }
   } else {
     messageEl.textContent = `${playerOne} must guess a square on ${playerTwo}'s board.`;
   }
@@ -426,13 +436,13 @@ function winUpdate(winningPlayer) {
 
 function renderGameOverBoard() {
   for (let square of playerOneBoardEls) {
-    square.removeEventListener("click", makeGuess);
+    square.removeEventListener("click", makeGuessPlayerTwo);
     if (playerOneBoard[square.id] === 1) {
       square.classList.add("ship-location-background");
     }
   }
   for (let square of playerTwoBoardEls) {
-    square.removeEventListener("click", makeGuess);
+    square.removeEventListener("click", makeGuessPlayerOne);
     if (playerTwoBoard[square.id - 100] === 1) {
       square.classList.add("ship-location-background");
     }
