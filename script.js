@@ -74,18 +74,6 @@ for(let ship of shipEls) {
 
 for(let square of playerOneBoardEls) {
   square.addEventListener("dragover",function(e) {
-    e.preventDefault();
-  })
-}
-
-for(let square of playerTwoBoardEls) {
-  square.addEventListener("dragover",function(e) {
-    e.preventDefault();
-  })
-}
-
-for(let square of playerOneBoardEls) {
-  square.addEventListener("drop",function(e) {
     const shipSize = shipSizes[draggedShip.id];
     let idx = Number(square.id);
     let shipSquares = [];
@@ -95,15 +83,54 @@ for(let square of playerOneBoardEls) {
       } else {
         shipSquares.push(playerOneBoardEls[idx + (10 * i)])
       }
+    } 
+    if (angle === 0) {
+      if (10 - idx % 10 >= shipSize) {
+        e.preventDefault();
+      }
+    } else {
+      if (10 - (Math.floor(idx / 10)) >= shipSize) {
+        e.preventDefault();
+      }
+    }
+  })
+}
 
-      {
+for(let square of playerTwoBoardEls) {
+  square.addEventListener("dragover",function(e) {
+    const shipSize = shipSizes[draggedShip.id];
+    let idx = Number(square.id) - 100;
+    let shipSquares = [];
+    for (let i=0; i<shipSize;i++) {
+      if (angle === 0)  {
+        shipSquares.push(playerTwoBoardEls[idx + i])
+      } else {
+        shipSquares.push(playerTwoBoardEls[idx + (10 * i)])
+      }
+    } 
+    if (angle === 0) {
+      if (10 - idx % 10 >= shipSize) {
+        e.preventDefault();
+      }
+    } else {
+      if (10 - (Math.floor(idx / 10)) >= shipSize) {
+        e.preventDefault();
+      }
+    }
+  })
+}
+
+for(let square of playerOneBoardEls) {
+  square.addEventListener("drop",function(e) {
+    const shipSize = shipSizes[draggedShip.id];
+    let idx = Number(square.id);
+    for (let i=0; i<shipSize;i++) {
       if (angle === 0) {
         playerOneBoard[idx + i] = 1;
         playerOneBoardEls[idx + i].classList.add('ship-location-background');
       } else {
         playerTwoBoard[idx + (10 * i)] = 1;
         playerOneBoardEls[idx + (10 * i)].classList.add('ship-location-background');
-      }
       }
     }
     draggedShip.remove();
@@ -114,20 +141,19 @@ for(let square of playerOneBoardEls) {
 for(let square of playerTwoBoardEls) {
   square.addEventListener("drop",function(e) {
     const shipSize = shipSizes[draggedShip.id];
-    draggedShip.remove();
+    let idx = Number(square.id) - 100;
     if (angle === 0) {
       for (let i=0; i<shipSize;i++) {
-        let idx = Number(square.id);
-        playerTwoBoard[idx - 100 + i] = 1;
-        playerTwoBoardEls[idx - 100 + i].classList.add('ship-location-background');
+        playerTwoBoard[idx + i] = 1;
+        playerTwoBoardEls[idx + i].classList.add('ship-location-background');
       }
     } else {
       for (let i=0; i<shipSize;i++) {
-        let idx = Number(square.id);
-        playerTwoBoard[idx - 100 + (10 * i)] = 1;
-        playerTwoBoardEls[idx - 100 + (10 * i)].classList.add('ship-location-background');
+        playerTwoBoard[idx + (10 * i)] = 1;
+        playerTwoBoardEls[idx + (10 * i)].classList.add('ship-location-background');
       }
     }
+    draggedShip.remove();
     console.log(playerTwoBoard);
   })
 }
