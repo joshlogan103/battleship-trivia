@@ -50,6 +50,10 @@ const shipRepoTwoEl = document.getElementById("ship-repository-2");
 const shipEls = document.getElementsByClassName("ship");
 const rotateButtons = Array.from(document.getElementsByClassName("rotate-button"));
 const doneSettingShipsButtons = Array.from(document.getElementsByClassName("done-setting-ships-button"));
+const carrierPNG = Array.from(document.getElementsByClassName("carrier-png"));
+const cruiserPNG = Array.from(document.getElementsByClassName("cruiser-png"));
+const submarinePNG = Array.from(document.getElementsByClassName("submarine-png"));
+const floaterPNG = Array.from(document.getElementsByClassName("floater-png"));
 
 //Set up necessary event listeners
 
@@ -65,7 +69,6 @@ doneSettingShipsButtons.forEach((button) => button.addEventListener("click",chec
 for(let ship of shipEls) {
   ship.addEventListener("dragstart",function(e) {
   draggedShip = e.target;
-  console.log(draggedShip);
   })
 }
 
@@ -142,11 +145,6 @@ document.addEventListener("keydown",function(e) {
 init();
 
 function init() {
-  for(let i=0; i<playerOneBoardEls.length; i++) {
-    playerOneBoard.push(0);
-    playerTwoBoard.push(0);
-  }
-  turn = 1;
   startButtonHolderEl.classList.add("start-button-holder-visible");
   startButtonHolderEl.classList.remove("start-button-holder-hidden");
   howToPlayWindow.classList.add("how-to-play-window-hidden");
@@ -157,11 +155,16 @@ function init() {
   shipSectionTwoEl.classList.remove("ship-section-visible");
   shipSectionOneEl.classList.add("ship-section-hidden");
   shipSectionTwoEl.classList.add("ship-section-hidden");
+  clearBoards();
 }
 
 function startNewGame() {
-  console.log(playerOneBoard);
-  console.log(playerTwoBoard);
+  for(let i=0; i<playerOneBoardEls.length; i++) {
+    playerOneBoard.push(0);
+    playerTwoBoard.push(0);
+  }
+  turn = 1;
+  clearBoards();
   startButtonHolderEl.classList.add("start-button-holder-hidden");
   startButtonHolderEl.classList.remove("start-button-holder-visible");
   howToPlayWindow.classList.add("how-to-play-window-hidden");
@@ -172,7 +175,6 @@ function startNewGame() {
 //Create a pop-up with a how-to-play message when the how-to-play button is clicked
 
 function openHowToPlay() {
-  console.log("How to Play!");
   howToPlayWindow.classList.remove("how-to-play-window-hidden");
   howToPlayWindow.classList.add("how-to-play-window-visible");
 }
@@ -200,6 +202,7 @@ function shipSetUp() {
     shipSectionTwoEl.classList.remove("ship-section-hidden");
     shipSectionOneEl.classList.remove("ship-section-visible");
     shipSectionOneEl.classList.add("ship-section-hidden");
+    renderRotatedShips();
   }
 }
 
@@ -207,28 +210,35 @@ function shipSetUp() {
 
 function rotateShips() {
   if (turn===1) {
-      shipOptions = Array.from(shipRepoOneEl.children);
-      angle = angle === 0 ? 90 : 0;
-      shipOptions.forEach(shipOption => shipOption.style.transform = `rotate(${angle}deg)`);
-    if (angle === 90) {
-      
-      shipRepoOneEl.classList.remove("ship-repository-vertical");
-      shipRepoOneEl.classList.add("ship-repository-horizontal");
-    } else {
-      shipRepoOneEl.classList.add("ship-repository-vertical");
-      shipRepoOneEl.classList.remove("ship-repository-horizontal");
-    }
+    shipOptions = Array.from(shipRepoOneEl.children);
+    angle = angle === 0 ? 90 : 0;
+    shipOptions.forEach(shipOption => shipOption.style.transform = `rotate(${angle}deg)`);
+    renderRotatedShips();
   } else {
     shipOptions = Array.from(shipRepoTwoEl.children);
     angle = angle === 0 ? 90 : 0;
     shipOptions.forEach(shipOption => shipOption.style.transform = `rotate(${angle}deg)`);
-    if (angle === 90) {
-      shipRepoTwoEl.classList.remove("ship-repository-vertical");
-      shipRepoTwoEl.classList.add("ship-repository-horizontal");
-    } else {
-      shipRepoTwoEl.classList.add("ship-repository-vertical");
-      shipRepoTwoEl.classList.remove("ship-repository-horizontal");
-    }
+    renderRotatedShips();
+  }
+}
+
+
+function renderRotatedShips() {
+  if (angle === 90) {
+    shipRepoOneEl.classList.remove("ship-repository-vertical");
+    shipRepoOneEl.classList.add("ship-repository-horizontal");
+    shipRepoTwoEl.classList.remove("ship-repository-vertical");
+    shipRepoTwoEl.classList.add("ship-repository-horizontal");
+    carrierPNG.forEach(carrier => carrier.style.margin = "10px -80px");
+    cruiserPNG.forEach(cruiser => cruiser.style.margin = "10px -50px");
+    submarinePNG.forEach(sub => sub.style.margin = "10px -35px");
+    floaterPNG.forEach(floater => floater.style.margin = "10px -20px");
+  } else {
+    shipRepoOneEl.classList.add("ship-repository-vertical");
+    shipRepoOneEl.classList.remove("ship-repository-horizontal");
+    shipRepoTwoEl.classList.add("ship-repository-vertical");
+    shipRepoTwoEl.classList.remove("ship-repository-horizontal");
+    shipOptions.forEach(shipOption => shipOption.style.margin = "10px auto");
   }
 }
 
@@ -237,6 +247,8 @@ function checkShipsToSet() {
     if (shipRepoOneEl.innerHTML.trim() === "") {
       changeTurn();
       angle = 0;
+      shipOptions = Array.from(shipRepoTwoEl.children);
+      shipOptions.forEach(shipOption => shipOption.style.margin = "10px auto");
       shipSetUp();
     } else {
       messageEl.textContent = "Place all ships on the board before proceeding."
@@ -370,6 +382,24 @@ function renderGameOverBoard() {
   startButtonHolderEl.classList.add("start-button-holder-visible");
   startButtonHolderEl.classList.remove("start-button-holder-hidden");
 }
+
+//Clears the board visually to start a new game
+
+function clearBoards() {
+  for (let square of playerOneBoardEls) {
+    square.classList.remove("hit");
+    square.classList.remove("miss");
+    square.classList.remove("ship-location-background");
+    }
+  for (let square of playerTwoBoardEls) {
+    if (playerTwoBoard[square.id - 100] === 1) {
+      square.classList.remove("hit");
+      square.classList.remove("miss");
+      square.classList.remove("ship-location-background");
+    }
+  }
+}
+
 
 //Abandon the match if both players click "New Game" (if 'Confirm New Game' is clicked as well)
 
