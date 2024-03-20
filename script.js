@@ -77,6 +77,8 @@ for(let square of playerOneBoardEls) {
     const shipSize = shipSizes[draggedShip.id];
     let idx = Number(square.id);
     let shipSquares = [];
+    let overlap = [];
+    let noOverlap;
     for (let i=0; i<shipSize;i++) {
       if (angle === 0)  {
         shipSquares.push(playerOneBoardEls[idx + i])
@@ -84,11 +86,19 @@ for(let square of playerOneBoardEls) {
         shipSquares.push(playerOneBoardEls[idx + (10 * i)])
       }
     } 
-    if (angle === 0) {
+    for (let shipSquare of shipSquares) {
+      console.log(shipSquare);
+      if (playerOneBoard[shipSquare.id] === 1) {
+        overlap.push(true);
+      }
+    }
+    noOverlap = !overlap.some(val => val === true);
+    overlap = [];
+    if (angle === 0 && noOverlap) {
       if (10 - idx % 10 >= shipSize) {
         e.preventDefault();
       }
-    } else {
+    } else if (angle === 90 && noOverlap) {
       if (10 - (Math.floor(idx / 10)) >= shipSize) {
         e.preventDefault();
       }
@@ -99,8 +109,10 @@ for(let square of playerOneBoardEls) {
 for(let square of playerTwoBoardEls) {
   square.addEventListener("dragover",function(e) {
     const shipSize = shipSizes[draggedShip.id];
-    let idx = Number(square.id) - 100;
+    let idx = Number(square.id - 100);
     let shipSquares = [];
+    let overlap = [];
+    let noOverlap;
     for (let i=0; i<shipSize;i++) {
       if (angle === 0)  {
         shipSquares.push(playerTwoBoardEls[idx + i])
@@ -108,11 +120,19 @@ for(let square of playerTwoBoardEls) {
         shipSquares.push(playerTwoBoardEls[idx + (10 * i)])
       }
     } 
-    if (angle === 0) {
+    for (let shipSquare of shipSquares) {
+      console.log(shipSquare);
+      if (playerTwoBoard[shipSquare.id - 100] === 1) {
+        overlap.push(true);
+      }
+    }
+    noOverlap = !overlap.some(val => val === true);
+    overlap = [];
+    if (angle === 0 && noOverlap) {
       if (10 - idx % 10 >= shipSize) {
         e.preventDefault();
       }
-    } else {
+    } else if (angle === 90 && noOverlap) {
       if (10 - (Math.floor(idx / 10)) >= shipSize) {
         e.preventDefault();
       }
