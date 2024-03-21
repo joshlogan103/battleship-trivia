@@ -339,6 +339,10 @@ main {
   background-color: rgb(167, 160, 160);
 }
 
+.preview {
+  background-color: blueviolet;
+}
+
 .row-name {
   height: 50px;
   width: 50px;

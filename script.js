@@ -67,7 +67,11 @@ closeHowToWindowButton.addEventListener("click",closeHowTo);
 rotateButtons.forEach((button) => button.addEventListener("click",rotateShips));
 doneSettingShipsButtons.forEach((button) => button.addEventListener("click",checkShipsToSet));
 
+class ShipIcons {
+  constructor() {
 
+  }
+}
 for(let ship of shipEls) {
   ship.addEventListener("dragstart",function(e) {
   draggedShip = e.target;
@@ -89,20 +93,22 @@ for(let square of playerOneBoardEls) {
       }
     } 
     for (let shipSquare of shipSquares) {
-      console.log(shipSquare);
       if (playerOneBoard[Number(shipSquare.id)] === 1) {
         overlap.push(true);
       }
     }
     noOverlap = overlap.length === 0;
     overlap = [];
+    removePreview();
     if (angle === 0 && noOverlap) {
       if (10 - idx % 10 >= shipSize) {
         e.preventDefault();
+        addPreview(shipSize,playerOneBoardEls,idx);
       }
     } else if (angle === 90 && noOverlap) {
       if (10 - (Math.floor(idx / 10)) >= shipSize) {
         e.preventDefault();
+        addPreview(shipSize,playerOneBoardEls,idx);
       }
     }
   })
@@ -123,20 +129,22 @@ for(let square of playerTwoBoardEls) {
       }
     } 
     for (let shipSquare of shipSquares) {
-      console.log(shipSquare);
       if (playerTwoBoard[Number(shipSquare.id)- 100] === 1) {
         overlap.push(true);
       }
     }
     noOverlap = overlap.length === 0;
     overlap = [];
+    removePreview();
     if (angle === 0 && noOverlap) {
       if (10 - idx % 10 >= shipSize) {
         e.preventDefault();
+        addPreview(shipSize,playerTwoBoardEls,idx);
       }
     } else if (angle === 90 && noOverlap) {
       if (10 - (Math.floor(idx / 10)) >= shipSize) {
         e.preventDefault();
+        addPreview(shipSize,playerTwoBoardEls,idx);
       }
     }
   })
@@ -156,7 +164,7 @@ for(let square of playerOneBoardEls) {
       }
     }
     draggedShip.remove();
-    console.log(playerOneBoard);
+    removePreview();
   })
 }
 
@@ -176,7 +184,7 @@ for(let square of playerTwoBoardEls) {
       }
     }
     draggedShip.remove();
-    console.log(playerTwoBoard);
+    removePreview();
   })
 }
 
@@ -205,16 +213,13 @@ function init() {
   shipSectionTwoEl.classList.add("ship-section-hidden");
   playerOneBoardTitle.textContent = `${playerOne}'s Board`;
   playerTwoBoardTitle.textContent = `${playerTwo}'s Board`;
-  clearBoards();
+  messageEl.textContent = "";
+  resetGame();
+  turn = 1;
 }
 
 function startNewGame() {
-  for(let i=0; i<playerOneBoardEls.length; i++) {
-    playerOneBoard.push(0);
-    playerTwoBoard.push(0);
-  }
-  turn = 1;
-  clearBoards();
+  init();
   startButtonHolderEl.classList.add("start-button-holder-hidden");
   startButtonHolderEl.classList.remove("start-button-holder-visible");
   howToPlayWindow.classList.add("how-to-play-window-hidden");
@@ -257,6 +262,27 @@ function shipSetUp() {
   }
 }
 
+function addPreview(size,board,index) {
+  if (angle === 0) {
+    for (let i=0; i<size; i++) {
+      board[index + i].classList.add('preview');
+    }
+  } else {
+    for (let i=0; i<size; i++) {
+      board[index + (10 * i)].classList.add('preview');
+    }
+  }
+}
+
+//Removes squares that were highlighted as part of the ship drop preview during board set-up
+
+function removePreview() {
+  const previewSquares = Array.from(document.getElementsByClassName('preview'));
+  if (previewSquares.length > 0) {
+    previewSquares.forEach((previewSquare) => previewSquare.classList.remove('preview'));
+  }
+}
+
 //Allow user to rotate ship orientation 90 degrees before placing it on the board
 
 function rotateShips() {
@@ -281,7 +307,7 @@ function renderRotatedShips() {
     shipRepoOneEl.classList.add("ship-repository-horizontal");
     shipRepoTwoEl.classList.remove("ship-repository-vertical");
     shipRepoTwoEl.classList.add("ship-repository-horizontal");
-    carrierPNG.forEach(carrier => carrier.style.margin = "10px -80px");
+    carrierPNG.forEach(carrier => carrier.style.margin = "10px -75px");
     cruiserPNG.forEach(cruiser => cruiser.style.margin = "10px -50px");
     submarinePNG.forEach(sub => sub.style.margin = "10px -35px");
     floaterPNG.forEach(floater => floater.style.margin = "10px -20px");
@@ -451,9 +477,13 @@ function renderGameOverBoard() {
   startButtonHolderEl.classList.remove("start-button-holder-hidden");
 }
 
-//Clears the board visually to start a new game
+//Clears the board visually and resets variables to prepare for new game start
 
-function clearBoards() {
+function resetGame() {
+  for(let i=0; i<100; i++) {
+    playerOneBoard[i] = 0;
+    playerTwoBoard[i] = 0;
+  }
   for (let square of playerOneBoardEls) {
     square.classList.remove("hit");
     square.classList.remove("miss");
@@ -464,6 +494,7 @@ function clearBoards() {
       square.classList.remove("miss");
       square.classList.remove("ship-location-background");
   }
+  angle = 0;
 }
 
 
