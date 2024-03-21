@@ -56,6 +56,7 @@ const submarinePNG = Array.from(document.getElementsByClassName("submarine-png")
 const floaterPNG = Array.from(document.getElementsByClassName("floater-png"));
 const playerOneBoardTitle = document.getElementById("player-one-board-title");
 const playerTwoBoardTitle = document.getElementById("player-two-board-title");
+const battleshipAreaEl = document.getElementById("battleship-area");
 
 //Set up necessary event listeners
 
@@ -99,7 +100,6 @@ for(let square of playerOneBoardEls) {
     }
     noOverlap = overlap.length === 0;
     overlap = [];
-    removePreview();
     if (angle === 0 && noOverlap) {
       if (10 - idx % 10 >= shipSize) {
         e.preventDefault();
@@ -135,7 +135,6 @@ for(let square of playerTwoBoardEls) {
     }
     noOverlap = overlap.length === 0;
     overlap = [];
-    removePreview();
     if (angle === 0 && noOverlap) {
       if (10 - idx % 10 >= shipSize) {
         e.preventDefault();
@@ -147,6 +146,18 @@ for(let square of playerTwoBoardEls) {
         addPreview(shipSize,playerTwoBoardEls,idx);
       }
     }
+  })
+}
+
+for(let square of playerOneBoardEls) {
+  square.addEventListener("dragleave",function(e) {
+    removePreview();
+  })
+}
+
+for(let square of playerTwoBoardEls) {
+  square.addEventListener("dragleave",function(e) {
+    removePreview();
   })
 }
 
@@ -262,6 +273,8 @@ function shipSetUp() {
   }
 }
 
+//Adds a visual effect to preview where a ship would be dropped while the user drags a ship over the board
+
 function addPreview(size,board,index) {
   if (angle === 0) {
     for (let i=0; i<size; i++) {
@@ -274,7 +287,7 @@ function addPreview(size,board,index) {
   }
 }
 
-//Removes squares that were highlighted as part of the ship drop preview during board set-up
+//Removes squares visual preview effect when no longer dragging a ship over a square that was previewed
 
 function removePreview() {
   const previewSquares = Array.from(document.getElementsByClassName('preview'));
@@ -477,24 +490,27 @@ function renderGameOverBoard() {
   startButtonHolderEl.classList.remove("start-button-holder-hidden");
 }
 
-//Clears the board visually and resets variables to prepare for new game start
+//Resets board and variables to prepare for new game start
 
 function resetGame() {
   for(let i=0; i<100; i++) {
     playerOneBoard[i] = 0;
     playerTwoBoard[i] = 0;
   }
-  for (let square of playerOneBoardEls) {
+  angle = 0;
+  clearBoard(playerOneBoardEls) ;
+  clearBoard(playerTwoBoardEls);
+  removePreview();
+}
+
+//Clears the board visually
+
+function clearBoard(board) {
+  for (let square of board) {
     square.classList.remove("hit");
     square.classList.remove("miss");
     square.classList.remove("ship-location-background");
-    }
-  for (let square of playerTwoBoardEls) {
-      square.classList.remove("hit");
-      square.classList.remove("miss");
-      square.classList.remove("ship-location-background");
   }
-  angle = 0;
 }
 
 
