@@ -11,7 +11,6 @@ let turn = 1;
 let draggedShip;
 let angle = 0;
 let shipOptions = [];
-let validStartSquare;
 let playerOne = "Player 1";
 let playerTwo = "Player 2";
 const shipSizes = {
@@ -35,6 +34,7 @@ const startNewGameButton = document.getElementById("start-new-game-button");
 const siteNameButton = document.getElementById("site-name-button");
 const startButtonHolderEl = document.getElementById("start-button-holder");
 const messageEl = document.getElementById("message");
+const hitMissMessageEl = document.getElementById("hit-miss-message");
 const howToPlayWindow = document.getElementById("how-to-play-window"); 
 const closeHowToWindowButton = document.getElementById("close-how-to-window");
 const playerOneBoardEls = document.getElementsByClassName("square1");
@@ -122,6 +122,10 @@ function renderInit () {
   shipSectionTwoEl.classList.remove("ship-section-visible");
   shipSectionOneEl.classList.add("ship-section-hidden");
   shipSectionTwoEl.classList.add("ship-section-hidden");
+  shipRepoOneEl.classList.add("ship-repository-vertical");
+  shipRepoOneEl.classList.remove("ship-repository-horizontal");
+  shipRepoTwoEl.classList.add("ship-repository-vertical");
+  shipRepoTwoEl.classList.remove("ship-repository-horizontal");
   playerOneBoardTitle.textContent = `${playerOne}'s Board`;
   playerTwoBoardTitle.textContent = `${playerTwo}'s Board`;
 }
@@ -158,9 +162,6 @@ function makeShips() {
   globalShips();
 
   setShipAndBoardEventListeners();
-
-  console.log(playerOneShips);
-  console.log(playerTwoShips);
 }
 
 //Loads the ships into the html for each player's ship repo
@@ -190,11 +191,25 @@ function globalShips() {
 // Sets event listeners for dragging and dropping ships onto the board once ships have been created
 
 function setShipAndBoardEventListeners() {
+  dragstartEventListener();
+  dragoverEventListener();
+  dragleaveEventListener();
+  dropEventListener();
+}
+
+//Sets event listener to cache the dragged ship when a player starts dragging
+
+function dragstartEventListener() {
   for(let ship of shipEls) {
     ship.addEventListener("dragstart",function(e) {
     draggedShip = e.target;
     })
   }
+}
+
+//Sets event listener to monitor if a ship is in a legal drop position while a ship is being dragged over the board
+
+function dragoverEventListener() {
   for(let square of playerOneBoardEls) {
     square.addEventListener("dragover",function(e) {
       const shipSize = shipSizes[draggedShip.id];
@@ -263,6 +278,11 @@ function setShipAndBoardEventListeners() {
       }
     })
   }
+}
+
+//Sets event listener to remove the drop-preview when no longer dragging a ship over a certain square
+
+function dragleaveEventListener() {
   for(let square of playerOneBoardEls) {
     square.addEventListener("dragleave",function(e) {
       removePreview();
@@ -273,6 +293,11 @@ function setShipAndBoardEventListeners() {
       removePreview();
     })
   }
+}
+
+//Sets event listener to update the board array storing ship locations and update the visual board when ships are dropped
+
+function dropEventListener() {
   for(let square of playerOneBoardEls) {
     square.addEventListener("drop",function(e) {
       const shipSize = shipSizes[draggedShip.id];
@@ -416,7 +441,6 @@ function checkShipsToSet() {
       shipSetUp();
     } else {
       messageEl.textContent = "Place all ships on the board before proceeding."
-      //clearMessageAfter5s();
     }
   } else {
     if (shipRepoTwoEl.innerHTML.trim() === "") {
@@ -424,15 +448,14 @@ function checkShipsToSet() {
       startGuessing();
     } else {
       messageEl.textContent = "Place all ships on the board before proceeding."
-      //clearMessageAfter5s();
     }
   }
 }
 
-function clearMessageAfter5s() {
+function clearMessageAfter3s() {
   setTimeout(() => {
-    messageEl.textContent = "";
-  }, 5000);
+    hitMissMessageEl.textContent = "";
+  }, 3000);
 }
 
 //Load a question and four possible answers into the trivia window
@@ -467,10 +490,12 @@ function makeGuessPlayerOne(e) {
       e.target.classList.add("hit");
       e.target.removeEventListener("click", makeGuessPlayerOne);
       playerTwoBoard[idx] = 0;
+      hitMessage();
       checkForWin(playerTwoBoard);
     } else {
       e.target.classList.add("miss");
       e.target.removeEventListener("click", makeGuessPlayerOne);
+      missMessage();
     }
     if (!winner) {
       changeTurn();
@@ -487,10 +512,12 @@ function makeGuessPlayerTwo(e) {
       e.target.classList.add("hit");
       e.target.removeEventListener("click", makeGuessPlayerTwo);
       playerOneBoard[idx] = 0;
+      hitMessage();
       checkForWin(playerOneBoard);
     } else {
       e.target.classList.add("miss");
       e.target.removeEventListener("click", makeGuessPlayerTwo);
+      missMessage();
     }
     if (!winner) {
       changeTurn();
@@ -500,7 +527,17 @@ function makeGuessPlayerTwo(e) {
   }
 }
 
-//Display hit/miss message to the players
+//Display hit message when a battleship position is guessed correctly
+
+function hitMessage() {
+  hitMissMessageEl.textContent = "Excellent shot!";
+}
+
+//Display miss message when an empty square is guessed
+
+function missMessage() {
+  hitMissMessageEl.textContent = "Ah, so close! Probably...";
+}
 
 //Changes player turn and displays that it is the current players turn
 
@@ -534,6 +571,7 @@ function winUpdate(winningPlayer) {
     playerTwoScoreEl.textContent = playerTwoScore;
   }
   messageEl.textContent = `${winner} wins!`;
+  hitMissMessageEl.textContent = "";
   renderGameOverBoard()
 }
 
@@ -582,18 +620,3 @@ function clearBoard(board) {
     square.classList.remove("ship-location-background");
   }
 }
-
-/*
-function makeBoard(playerBoard) {
-  const newBoard = document.createElement("div");
-  newBoard.classList.add('board');
-  newBoard.id = player;
-
-  for (let i=0; i < 132; i++) {
-    const square = document.createElement("div");
-    square.classList.add("square1");
-    square.id = i;
-    newBoard.append(square)
-  }
-}
-*/
