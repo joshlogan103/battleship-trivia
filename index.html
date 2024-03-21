@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cantarell:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./style.css">
-  <script defer src="./script.js"></script>
+  <script defer src="./script.js" type="module"></script>
 </head>
 <body>
   <div class="navbar">
@@ -58,7 +58,12 @@
       </div>
       <button type="button" id="close-how-to-window">Close</button>
     </div>
-    <div class="trivia-window">
+    <div class="trivia-window-hidden" id="trivia-window">
+      <div id="trivia-question"></div>
+      <button type="button" class="answer-button"></button>
+      <button type="button" class="answer-button"></button>
+      <button type="button" class="answer-button"></button>
+      <button type="button" class="answer-button"></button>
     </div>
     <div id="message"></div>
     <div id="hit-miss-message"></div>

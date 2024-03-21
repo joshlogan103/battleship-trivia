@@ -13,6 +13,7 @@ let angle = 0;
 let shipOptions = [];
 let playerOne = "Player 1";
 let playerTwo = "Player 2";
+let currentPlayer;
 const shipSizes = {
   "p1-carrier-png": 5,
   "p1-cruiser-png": 4,
@@ -25,6 +26,10 @@ const shipSizes = {
   "p2-submarine-2-png": 3,
   "p2-floater-png": 2,
 }
+import trivia from "./trivia.json" assert {type : "json"};
+let triviaQuestion;
+let triviaAnswers = [];
+let triviaCorrectAnswer;
 
 //Cache required elements
 
@@ -51,7 +56,9 @@ const rotateButtons = Array.from(document.getElementsByClassName("rotate-button"
 const doneSettingShipsButtons = Array.from(document.getElementsByClassName("done-setting-ships-button"));
 const playerOneBoardTitle = document.getElementById("player-one-board-title");
 const playerTwoBoardTitle = document.getElementById("player-two-board-title");
-const battleshipAreaEl = document.getElementById("battleship-area");
+const triviaSectionEl = document.getElementById("trivia-window");
+const triviaQuestionEl = document.getElementById("trivia-question");
+const triviaAnswerButtons = Array.from(document.getElementsByClassName("answer-button"));
 
 //Ship elements will be updated to the global cache once a new game has started and they've been created
 
@@ -194,12 +201,12 @@ function globalShips() {
 
 function setShipAndBoardEventListeners() {
   dragstartEventListener();
-  dragoverEventListener(playerOneBoardEls,playerOneBoard);
-  dragoverEventListener(playerTwoBoardEls,playerTwoBoard);
+  dragoverEventListener(playerOneBoardEls, playerOneBoard);
+  dragoverEventListener(playerTwoBoardEls, playerTwoBoard);
   dragleaveEventListener(playerOneBoardEls);
   dragleaveEventListener(playerTwoBoardEls);
-  dropEventListener(playerOneBoardEls,playerOneBoard);
-  dropEventListener(playerTwoBoardEls,playerTwoBoard);
+  dropEventListener(playerOneBoardEls, playerOneBoard);
+  dropEventListener(playerTwoBoardEls, playerTwoBoard);
 }
 
 //Sets event listener to cache the dragged ship when a player starts dragging
@@ -417,15 +424,55 @@ function checkShipsToSet() {
 
 /* ----- Trivia Section -----*/
 
-//Load a question and four possible answers into the trivia window
+//Load a random question from the trivia.json file
+
+function loadTriviaQuestion() {
+  let random = Math.floor(Math.random() * 10);
+  console.log(random);
+  triviaQuestion = trivia[random].question;
+  triviaAnswers = trivia[random].answers;
+  triviaCorrectAnswer = trivia[random].correctAnswer;
+  console.log(triviaQuestion);
+  console.log(triviaAnswers);
+  console.log(triviaCorrectAnswer);
+}
+
+function initTrivia() {
+  loadTriviaQuestion();
+  renderTrivia();
+}
+
+
+//Render a question and four possible answers into the trivia window
+
+function renderTrivia() {
+  triviaQuestionEl.textContent = triviaQuestion;
+  for (let i=0; i<triviaAnswers.length; i++) {
+    triviaAnswerButtons[i].textContent = triviaAnswers[i];
+    triviaAnswerButtons.forEach((triviaAns) => {
+      triviaAns.addEventListener("click", answerTrivia);
+    })
+  }
+  triviaSectionEl.classList.remove("trivia-window-hidden");
+  triviaSectionEl.classList.add("trivia-window-visible");
+}
 
 //Validate if the user selected the correct answer to the trivia question
 
+function answerTrivia(e) {
+  if (e.target.textContent === triviaCorrectAnswer) {
+    e.target.classList.add("correct-answer");
+  
+  } else {
+    e.target.classList.add("wrong-answer");
+  }
+}
+
 //Display the correct answer after user selection
 
-//Accept user input when a guess is made of opponent's battleship location
-
 /* ----- Battleship Guessing Section -----*/
+
+//Render the screen with the format for making guesses and add event listeners to enable guessing
 
 function startGuessing() {
   for (let square of playerOneBoardEls) {
@@ -452,6 +499,7 @@ function makeGuessPlayerOne(e) {
       playerTwoBoard[idx] = 0;
       hitMessage();
       checkForWin(playerTwoBoard);
+      initTrivia();
     } else {
       e.target.classList.add("miss");
       e.target.removeEventListener("click", makeGuessPlayerOne);
@@ -474,6 +522,7 @@ function makeGuessPlayerTwo(e) {
       playerOneBoard[idx] = 0;
       hitMessage();
       checkForWin(playerOneBoard);
+      initTrivia();
     } else {
       e.target.classList.add("miss");
       e.target.removeEventListener("click", makeGuessPlayerTwo);

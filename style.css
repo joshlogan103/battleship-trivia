@@ -179,7 +179,7 @@ main {
   height: 450px;
   background-color: white;
   border: solid 2px rgb(165, 220, 222);
-  border-radius: 7px;
+  border-radius: 4px;
   padding: 10px 20px;
   font-size: 20px;
   margin: 80px auto 0 auto;
@@ -193,13 +193,17 @@ main {
   height: 250px;
   background-color: white;
   border: solid 2px rgb(165, 220, 222);
-  border-radius: 7px;
+  border-radius: 4px;
   padding: 20px 10px;
   font-size: 20px;
   margin: 260px auto 0 auto;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
+}
+
+.ship {
+  cursor: grab;
 }
 
 .carrier-png {
@@ -391,9 +395,8 @@ main {
   border-radius: 2px;
   font-weight: 600;
   color: white;
+  grid-area: blank-square;
 }
-
-.blank-square { grid-area: blank-square; }
 
 .board-name { grid-area: board-name; }
 
@@ -407,4 +410,51 @@ footer {
   color: white;
   margin: 50px auto 0 auto;
   font-size: 12px;
+}
+
+.trivia-window-visible {
+  width: 600px;
+  height: 200px;
+  background-color: white;
+  border: solid 2px rgb(165, 220, 222);
+  border-radius: 4px;
+  padding: 20px 10px;
+  font-size: 20px;
+  margin: 20px auto;
+  display: grid;
+  row-gap: 5px;
+  column-gap: 10px;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1.5fr .75fr .75fr;
+  grid-template-areas: 
+  "trivia-question trivia-question"
+  "ans1 ans2"
+  "ans3 ans4";
+}
+
+.trivia-window-hidden {
+  visibility: hidden;
+}
+
+#trivia-question {
+  grid-area: trivia-question;
+}
+
+.answer-button {
+  border-radius: 8px;
+  font-family: Cantarell, helvetica, sans-serif;
+  background-color: rgb(199, 16, 123);
+  color: white;
+  font-size: 20px;
+  border: none;
+}
+
+.correct-answer {
+  background-color:  rgb(14, 126, 51);
+  border: none;
+}
+
+.wrong-answer {
+  background-color:  rgb(174, 21, 21);
+  border: none;
 }
