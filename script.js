@@ -460,11 +460,9 @@ function clearBoards() {
     square.classList.remove("ship-location-background");
     }
   for (let square of playerTwoBoardEls) {
-    if (playerTwoBoard[square.id - 100] === 1) {
       square.classList.remove("hit");
       square.classList.remove("miss");
       square.classList.remove("ship-location-background");
-    }
   }
 }
 
