@@ -47,16 +47,19 @@ const shipSectionOneEl = document.getElementById("ship-section-1");
 const shipSectionTwoEl = document.getElementById("ship-section-2");
 const shipRepoOneEl = document.getElementById("ship-repository-1");
 const shipRepoTwoEl = document.getElementById("ship-repository-2");
-const shipEls = document.getElementsByClassName("ship");
 const rotateButtons = Array.from(document.getElementsByClassName("rotate-button"));
 const doneSettingShipsButtons = Array.from(document.getElementsByClassName("done-setting-ships-button"));
-const carrierPNG = Array.from(document.getElementsByClassName("carrier-png"));
-const cruiserPNG = Array.from(document.getElementsByClassName("cruiser-png"));
-const submarinePNG = Array.from(document.getElementsByClassName("submarine-png"));
-const floaterPNG = Array.from(document.getElementsByClassName("floater-png"));
 const playerOneBoardTitle = document.getElementById("player-one-board-title");
 const playerTwoBoardTitle = document.getElementById("player-two-board-title");
 const battleshipAreaEl = document.getElementById("battleship-area");
+
+//Ship elements will be updated to the global cache once a new game has started and they've been created
+
+let shipEls;
+let carrierPNG;
+let cruiserPNG;
+let submarinePNG;
+let floaterPNG;
 
 //Set up necessary event listeners
 
@@ -67,151 +70,48 @@ siteNameButton.addEventListener("click",init);
 closeHowToWindowButton.addEventListener("click",closeHowTo);
 rotateButtons.forEach((button) => button.addEventListener("click",rotateShips));
 doneSettingShipsButtons.forEach((button) => button.addEventListener("click",checkShipsToSet));
-
-class ShipIcons {
-  constructor() {
-
-  }
-}
-for(let ship of shipEls) {
-  ship.addEventListener("dragstart",function(e) {
-  draggedShip = e.target;
-  })
-}
-
-for(let square of playerOneBoardEls) {
-  square.addEventListener("dragover",function(e) {
-    const shipSize = shipSizes[draggedShip.id];
-    let idx = Number(square.id);
-    let shipSquares = [];
-    let overlap = [];
-    let noOverlap;
-    for (let i=0; i<shipSize;i++) {
-      if (angle === 0)  {
-        shipSquares.push(playerOneBoardEls[idx + i])
-      } else {
-        shipSquares.push(playerOneBoardEls[idx + (10 * i)])
-      }
-    } 
-    for (let shipSquare of shipSquares) {
-      if (playerOneBoard[Number(shipSquare.id)] === 1) {
-        overlap.push(true);
-      }
-    }
-    noOverlap = overlap.length === 0;
-    overlap = [];
-    if (angle === 0 && noOverlap) {
-      if (10 - idx % 10 >= shipSize) {
-        e.preventDefault();
-        addPreview(shipSize,playerOneBoardEls,idx);
-      }
-    } else if (angle === 90 && noOverlap) {
-      if (10 - (Math.floor(idx / 10)) >= shipSize) {
-        e.preventDefault();
-        addPreview(shipSize,playerOneBoardEls,idx);
-      }
-    }
-  })
-}
-
-for(let square of playerTwoBoardEls) {
-  square.addEventListener("dragover",function(e) {
-    const shipSize = shipSizes[draggedShip.id];
-    let idx = Number(square.id - 100);
-    let shipSquares = [];
-    let overlap = [];
-    let noOverlap;
-    for (let i=0; i<shipSize;i++) {
-      if (angle === 0)  {
-        shipSquares.push(playerTwoBoardEls[idx + i])
-      } else {
-        shipSquares.push(playerTwoBoardEls[idx + (10 * i)])
-      }
-    } 
-    for (let shipSquare of shipSquares) {
-      if (playerTwoBoard[Number(shipSquare.id)- 100] === 1) {
-        overlap.push(true);
-      }
-    }
-    noOverlap = overlap.length === 0;
-    overlap = [];
-    if (angle === 0 && noOverlap) {
-      if (10 - idx % 10 >= shipSize) {
-        e.preventDefault();
-        addPreview(shipSize,playerTwoBoardEls,idx);
-      }
-    } else if (angle === 90 && noOverlap) {
-      if (10 - (Math.floor(idx / 10)) >= shipSize) {
-        e.preventDefault();
-        addPreview(shipSize,playerTwoBoardEls,idx);
-      }
-    }
-  })
-}
-
-for(let square of playerOneBoardEls) {
-  square.addEventListener("dragleave",function(e) {
-    removePreview();
-  })
-}
-
-for(let square of playerTwoBoardEls) {
-  square.addEventListener("dragleave",function(e) {
-    removePreview();
-  })
-}
-
-for(let square of playerOneBoardEls) {
-  square.addEventListener("drop",function(e) {
-    const shipSize = shipSizes[draggedShip.id];
-    let idx = Number(square.id);
-    for (let i=0; i<shipSize; i++) {
-      if (angle === 0) {
-        playerOneBoard[idx + i] = 1;
-        playerOneBoardEls[idx + i].classList.add('ship-location-background');
-      } else {
-        playerOneBoard[idx + (10 * i)] = 1;
-        playerOneBoardEls[idx + (10 * i)].classList.add('ship-location-background');
-      }
-    }
-    draggedShip.remove();
-    removePreview();
-  })
-}
-
-for(let square of playerTwoBoardEls) {
-  square.addEventListener("drop",function(e) {
-    const shipSize = shipSizes[draggedShip.id];
-    let idx = Number(square.id) - 100;
-    if (angle === 0) {
-      for (let i=0; i<shipSize;i++) {
-        playerTwoBoard[idx + i] = 1;
-        playerTwoBoardEls[idx + i].classList.add('ship-location-background');
-      }
-    } else {
-      for (let i=0; i<shipSize;i++) {
-        playerTwoBoard[idx + (10 * i)] = 1;
-        playerTwoBoardEls[idx + (10 * i)].classList.add('ship-location-background');
-      }
-    }
-    draggedShip.remove();
-    removePreview();
-  })
-}
-
-//Use 'r' as a hotkey for rotating ship repository
-
 document.addEventListener("keydown",function(e) {
   if (e.key.toLowerCase() === "r") {
     rotateShips();
   }
 })
 
-//Initializes a fresh game state and begins a game when "Start New Game" is clicked
+//Class to create new ships at the start of each game
+
+class ShipIcon {
+  constructor(shipType, shipName, src, alt) {
+    this.shipType = shipType;
+    this.shipName = shipName;
+    this.src = src;
+    this.alt = alt;
+    this.draggable = true;
+    this.isShip = "ship";
+  }
+}
+
+//Initialize homescreen state on new session
 
 init();
 
+//Initializes a fresh game state 
+
 function init() {
+  renderInit();
+  resetGame();
+}
+
+//Begins a game when "Start New Game" is clicked
+
+function startNewGame() {
+  init();
+  renderStart();
+  makeShips();
+  shipSetUp();
+}
+
+//Renders the home screen
+
+function renderInit () {
   startButtonHolderEl.classList.add("start-button-holder-visible");
   startButtonHolderEl.classList.remove("start-button-holder-hidden");
   howToPlayWindow.classList.add("how-to-play-window-hidden");
@@ -224,18 +124,191 @@ function init() {
   shipSectionTwoEl.classList.add("ship-section-hidden");
   playerOneBoardTitle.textContent = `${playerOne}'s Board`;
   playerTwoBoardTitle.textContent = `${playerTwo}'s Board`;
-  messageEl.textContent = "";
-  resetGame();
-  turn = 1;
 }
 
-function startNewGame() {
-  init();
+//Sets up the screen to allow player 1 to begin setting ships on their board
+
+function renderStart() {
   startButtonHolderEl.classList.add("start-button-holder-hidden");
   startButtonHolderEl.classList.remove("start-button-holder-visible");
   howToPlayWindow.classList.add("how-to-play-window-hidden");
   howToPlayWindow.classList.remove("how-to-play-window-visible");
-  shipSetUp();
+}
+
+//Generates the ships to be used for a game
+
+function makeShips() {
+  const p1Carrier = new ShipIcon("carrier-png","p1-carrier-png","./carrier.png","Carrier");
+  const p1Cruiser = new ShipIcon("cruiser-png","p1-cruiser-png","./cruiser.png","Cruiser");
+  const p1Submarine1 = new ShipIcon("submarine-png","p1-submarine-1-png","./submarine.png","Submarine");
+  const p1Submarine2 = new ShipIcon("submarine-png","p1-submarine-2-png","./submarine.png","Submarine");
+  const p1Floater = new ShipIcon("floater-png","p1-floater-png","./floater.png","Floater");
+  const p2Carrier = new ShipIcon("carrier-png","p2-carrier-png","./carrier.png","Carrier");
+  const p2Cruiser = new ShipIcon("cruiser-png","p2-cruiser-png","./cruiser.png","Cruiser");
+  const p2Submarine1 = new ShipIcon("submarine-png","p2-submarine-1-png","./submarine.png","Submarine");
+  const p2Submarine2 = new ShipIcon("submarine-png","p2-submarine-2-png","./submarine.png","Submarine");
+  const p2Floater = new ShipIcon("floater-png","p2-floater-png","./floater.png","Floater");
+
+  const playerOneShips = [p1Carrier,p1Cruiser,p1Submarine1,p1Submarine2,p1Floater];
+  const playerTwoShips = [p2Carrier,p2Cruiser,p2Submarine1,p2Submarine2,p2Floater];
+
+  loadShips(playerOneShips,shipRepoOneEl);
+  loadShips(playerTwoShips,shipRepoTwoEl);
+
+  globalShips();
+
+  setShipAndBoardEventListeners();
+
+  console.log(playerOneShips);
+  console.log(playerTwoShips);
+}
+
+//Loads the ships into the html for each player's ship repo
+
+function loadShips(playerShips, shipRepo) {
+  playerShips.forEach((ship) => {
+    const imgEl = document.createElement("img");
+    imgEl.classList.add(ship.shipType, ship.isShip);
+    imgEl.id = ship.shipName;
+    imgEl.src = ship.src;
+    imgEl.draggable = ship.draggable;
+    imgEl.alt = ship.alt;
+    shipRepo.appendChild(imgEl);
+  })
+}
+
+//Assign ships to variables for global use
+
+function globalShips() {
+  shipEls = document.getElementsByClassName("ship");
+  carrierPNG = Array.from(document.getElementsByClassName("carrier-png"));
+  cruiserPNG = Array.from(document.getElementsByClassName("cruiser-png"));
+  submarinePNG = Array.from(document.getElementsByClassName("submarine-png"));
+  floaterPNG = Array.from(document.getElementsByClassName("floater-png"));
+}
+
+// Sets event listeners for dragging and dropping ships onto the board once ships have been created
+
+function setShipAndBoardEventListeners() {
+  for(let ship of shipEls) {
+    ship.addEventListener("dragstart",function(e) {
+    draggedShip = e.target;
+    })
+  }
+  for(let square of playerOneBoardEls) {
+    square.addEventListener("dragover",function(e) {
+      const shipSize = shipSizes[draggedShip.id];
+      let idx = Number(square.id);
+      let shipSquares = [];
+      let overlap = [];
+      let noOverlap;
+      for (let i=0; i<shipSize;i++) {
+        if (angle === 0)  {
+          shipSquares.push(playerOneBoardEls[idx + i])
+        } else {
+          shipSquares.push(playerOneBoardEls[idx + (10 * i)])
+        }
+      } 
+      for (let shipSquare of shipSquares) {
+        if (playerOneBoard[Number(shipSquare.id)] === 1) {
+          overlap.push(true);
+        }
+      }
+      noOverlap = overlap.length === 0;
+      overlap = [];
+      if (angle === 0 && noOverlap) {
+        if (10 - idx % 10 >= shipSize) {
+          e.preventDefault();
+          addPreview(shipSize,playerOneBoardEls,idx);
+        }
+      } else if (angle === 90 && noOverlap) {
+        if (10 - (Math.floor(idx / 10)) >= shipSize) {
+          e.preventDefault();
+          addPreview(shipSize,playerOneBoardEls,idx);
+        }
+      }
+    })
+  }
+  for(let square of playerTwoBoardEls) {
+    square.addEventListener("dragover",function(e) {
+      const shipSize = shipSizes[draggedShip.id];
+      let idx = Number(square.id - 100);
+      let shipSquares = [];
+      let overlap = [];
+      let noOverlap;
+      for (let i=0; i<shipSize;i++) {
+        if (angle === 0)  {
+          shipSquares.push(playerTwoBoardEls[idx + i])
+        } else {
+          shipSquares.push(playerTwoBoardEls[idx + (10 * i)])
+        }
+      } 
+      for (let shipSquare of shipSquares) {
+        if (playerTwoBoard[Number(shipSquare.id)- 100] === 1) {
+          overlap.push(true);
+        }
+      }
+      noOverlap = overlap.length === 0;
+      overlap = [];
+      if (angle === 0 && noOverlap) {
+        if (10 - idx % 10 >= shipSize) {
+          e.preventDefault();
+          addPreview(shipSize,playerTwoBoardEls,idx);
+        }
+      } else if (angle === 90 && noOverlap) {
+        if (10 - (Math.floor(idx / 10)) >= shipSize) {
+          e.preventDefault();
+          addPreview(shipSize,playerTwoBoardEls,idx);
+        }
+      }
+    })
+  }
+  for(let square of playerOneBoardEls) {
+    square.addEventListener("dragleave",function(e) {
+      removePreview();
+    })
+  }
+  for(let square of playerTwoBoardEls) {
+    square.addEventListener("dragleave",function(e) {
+      removePreview();
+    })
+  }
+  for(let square of playerOneBoardEls) {
+    square.addEventListener("drop",function(e) {
+      const shipSize = shipSizes[draggedShip.id];
+      let idx = Number(square.id);
+      for (let i=0; i<shipSize; i++) {
+        if (angle === 0) {
+          playerOneBoard[idx + i] = 1;
+          playerOneBoardEls[idx + i].classList.add('ship-location-background');
+        } else {
+          playerOneBoard[idx + (10 * i)] = 1;
+          playerOneBoardEls[idx + (10 * i)].classList.add('ship-location-background');
+        }
+      }
+      draggedShip.remove();
+      removePreview();
+    })
+  }
+  for(let square of playerTwoBoardEls) {
+    square.addEventListener("drop",function(e) {
+      const shipSize = shipSizes[draggedShip.id];
+      let idx = Number(square.id) - 100;
+      if (angle === 0) {
+        for (let i=0; i<shipSize;i++) {
+          playerTwoBoard[idx + i] = 1;
+          playerTwoBoardEls[idx + i].classList.add('ship-location-background');
+        }
+      } else {
+        for (let i=0; i<shipSize;i++) {
+          playerTwoBoard[idx + (10 * i)] = 1;
+          playerTwoBoardEls[idx + (10 * i)].classList.add('ship-location-background');
+        }
+      }
+      draggedShip.remove();
+      removePreview();
+    })
+  }
 }
 
 //Create a pop-up with a how-to-play message when the how-to-play button is clicked
@@ -394,7 +467,7 @@ function makeGuessPlayerOne(e) {
       e.target.classList.add("hit");
       e.target.removeEventListener("click", makeGuessPlayerOne);
       playerTwoBoard[idx] = 0;
-      checkForWin();
+      checkForWin(playerTwoBoard);
     } else {
       e.target.classList.add("miss");
       e.target.removeEventListener("click", makeGuessPlayerOne);
@@ -414,7 +487,7 @@ function makeGuessPlayerTwo(e) {
       e.target.classList.add("hit");
       e.target.removeEventListener("click", makeGuessPlayerTwo);
       playerOneBoard[idx] = 0;
-      checkForWin();
+      checkForWin(playerOneBoard);
     } else {
       e.target.classList.add("miss");
       e.target.removeEventListener("click", makeGuessPlayerTwo);
@@ -439,20 +512,13 @@ function changeTurn() {
 
 //Evaluate if the win conditions have been met at the end of each turn
 
-function checkForWin() {
-  let sum1 = playerOneBoard.reduce((prev,num) => {
+function checkForWin(board) {
+  let sum = board.reduce((prev,num) => {
     prev += num;
     return prev;
   },0)
-  let sum2 = playerTwoBoard.reduce((prev,num) => {
-    prev += num;
-    return prev;
-  },0)
-  if (sum1 === 0) {
-    winUpdate(playerTwo);
-  }
-  if (sum2 === 0) {
-    winUpdate(playerOne);
+  if (sum === 0) {
+    turn === 1 ? winUpdate(playerOne) : winUpdate(playerTwo);
   }
 }
 
@@ -497,10 +563,14 @@ function resetGame() {
     playerOneBoard[i] = 0;
     playerTwoBoard[i] = 0;
   }
+  turn = 1;
   angle = 0;
   clearBoard(playerOneBoardEls) ;
   clearBoard(playerTwoBoardEls);
   removePreview();
+  messageEl.textContent = "";
+  shipRepoOneEl.innerHTML = "";
+  shipRepoTwoEl.innerHTML = "";
 }
 
 //Clears the board visually
@@ -512,9 +582,6 @@ function clearBoard(board) {
     square.classList.remove("ship-location-background");
   }
 }
-
-
-//Abandon the match if both players click "New Game" (if 'Confirm New Game' is clicked as well)
 
 /*
 function makeBoard(playerBoard) {
