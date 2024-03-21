@@ -1,4 +1,4 @@
-/*--- Set-up and Initialization---*/
+/*--- Defining Constants and Caching Elements---*/
 
 //Define required constants
 
@@ -92,6 +92,8 @@ class ShipIcon {
 //Initialize homescreen state on new session
 
 init();
+
+/*----- Game Set-up Section -----*/
 
 //Initializes a fresh game state 
 
@@ -192,9 +194,12 @@ function globalShips() {
 
 function setShipAndBoardEventListeners() {
   dragstartEventListener();
-  dragoverEventListener();
-  dragleaveEventListener();
-  dropEventListener();
+  dragoverEventListener(playerOneBoardEls,playerOneBoard);
+  dragoverEventListener(playerTwoBoardEls,playerTwoBoard);
+  dragleaveEventListener(playerOneBoardEls);
+  dragleaveEventListener(playerTwoBoardEls);
+  dropEventListener(playerOneBoardEls,playerOneBoard);
+  dropEventListener(playerTwoBoardEls,playerTwoBoard);
 }
 
 //Sets event listener to cache the dragged ship when a player starts dragging
@@ -209,24 +214,35 @@ function dragstartEventListener() {
 
 //Sets event listener to monitor if a ship is in a legal drop position while a ship is being dragged over the board
 
-function dragoverEventListener() {
-  for(let square of playerOneBoardEls) {
+function dragoverEventListener(board, boardArray) {
+  for(let square of board) {
     square.addEventListener("dragover",function(e) {
       const shipSize = shipSizes[draggedShip.id];
-      let idx = Number(square.id);
+      let idx;
+      if (turn === 1) {
+        idx = Number(square.id);
+      } else {
+        idx = Number(square.id - 100);
+      }
       let shipSquares = [];
       let overlap = [];
       let noOverlap;
       for (let i=0; i<shipSize;i++) {
         if (angle === 0)  {
-          shipSquares.push(playerOneBoardEls[idx + i])
+          shipSquares.push(board[idx + i])
         } else {
-          shipSquares.push(playerOneBoardEls[idx + (10 * i)])
+          shipSquares.push(board[idx + (10 * i)])
         }
       } 
       for (let shipSquare of shipSquares) {
-        if (playerOneBoard[Number(shipSquare.id)] === 1) {
+        if (turn === 1) {
+          if (boardArray[Number(shipSquare.id)] === 1) {
+            overlap.push(true);
+          }
+        } else {
+          if (boardArray[Number(shipSquare.id) - 100] === 1) {
           overlap.push(true);
+          }
         }
       }
       noOverlap = overlap.length === 0;
@@ -234,46 +250,12 @@ function dragoverEventListener() {
       if (angle === 0 && noOverlap) {
         if (10 - idx % 10 >= shipSize) {
           e.preventDefault();
-          addPreview(shipSize,playerOneBoardEls,idx);
+          addPreview(shipSize,board,idx);
         }
       } else if (angle === 90 && noOverlap) {
         if (10 - (Math.floor(idx / 10)) >= shipSize) {
           e.preventDefault();
-          addPreview(shipSize,playerOneBoardEls,idx);
-        }
-      }
-    })
-  }
-  for(let square of playerTwoBoardEls) {
-    square.addEventListener("dragover",function(e) {
-      const shipSize = shipSizes[draggedShip.id];
-      let idx = Number(square.id - 100);
-      let shipSquares = [];
-      let overlap = [];
-      let noOverlap;
-      for (let i=0; i<shipSize;i++) {
-        if (angle === 0)  {
-          shipSquares.push(playerTwoBoardEls[idx + i])
-        } else {
-          shipSquares.push(playerTwoBoardEls[idx + (10 * i)])
-        }
-      } 
-      for (let shipSquare of shipSquares) {
-        if (playerTwoBoard[Number(shipSquare.id)- 100] === 1) {
-          overlap.push(true);
-        }
-      }
-      noOverlap = overlap.length === 0;
-      overlap = [];
-      if (angle === 0 && noOverlap) {
-        if (10 - idx % 10 >= shipSize) {
-          e.preventDefault();
-          addPreview(shipSize,playerTwoBoardEls,idx);
-        }
-      } else if (angle === 90 && noOverlap) {
-        if (10 - (Math.floor(idx / 10)) >= shipSize) {
-          e.preventDefault();
-          addPreview(shipSize,playerTwoBoardEls,idx);
+          addPreview(shipSize,board,idx);
         }
       }
     })
@@ -282,13 +264,8 @@ function dragoverEventListener() {
 
 //Sets event listener to remove the drop-preview when no longer dragging a ship over a certain square
 
-function dragleaveEventListener() {
-  for(let square of playerOneBoardEls) {
-    square.addEventListener("dragleave",function(e) {
-      removePreview();
-    })
-  }
-  for(let square of playerTwoBoardEls) {
+function dragleaveEventListener(board) {
+  for(let square of board) {
     square.addEventListener("dragleave",function(e) {
       removePreview();
     })
@@ -297,37 +274,23 @@ function dragleaveEventListener() {
 
 //Sets event listener to update the board array storing ship locations and update the visual board when ships are dropped
 
-function dropEventListener() {
-  for(let square of playerOneBoardEls) {
+function dropEventListener(board, boardArray) {
+  for(let square of board) {
     square.addEventListener("drop",function(e) {
       const shipSize = shipSizes[draggedShip.id];
-      let idx = Number(square.id);
+      let idx;
+      if (turn === 1) {
+        idx = Number(square.id);
+      } else {
+        idx = Number(square.id) - 100;
+      }
       for (let i=0; i<shipSize; i++) {
         if (angle === 0) {
-          playerOneBoard[idx + i] = 1;
-          playerOneBoardEls[idx + i].classList.add('ship-location-background');
+          boardArray[idx + i] = 1;
+          board[idx + i].classList.add('ship-location-background');
         } else {
-          playerOneBoard[idx + (10 * i)] = 1;
-          playerOneBoardEls[idx + (10 * i)].classList.add('ship-location-background');
-        }
-      }
-      draggedShip.remove();
-      removePreview();
-    })
-  }
-  for(let square of playerTwoBoardEls) {
-    square.addEventListener("drop",function(e) {
-      const shipSize = shipSizes[draggedShip.id];
-      let idx = Number(square.id) - 100;
-      if (angle === 0) {
-        for (let i=0; i<shipSize;i++) {
-          playerTwoBoard[idx + i] = 1;
-          playerTwoBoardEls[idx + i].classList.add('ship-location-background');
-        }
-      } else {
-        for (let i=0; i<shipSize;i++) {
-          playerTwoBoard[idx + (10 * i)] = 1;
-          playerTwoBoardEls[idx + (10 * i)].classList.add('ship-location-background');
+          boardArray[idx + (10 * i)] = 1;
+          board[idx + (10 * i)].classList.add('ship-location-background');
         }
       }
       draggedShip.remove();
@@ -350,9 +313,9 @@ function closeHowTo() {
   howToPlayWindow.classList.remove("how-to-play-window-visible");
 }
 
-/*--- Game Flow ---*/
+/*--- Ship Placement Section ---*/
 
-//Accept user input to place ships on their respective boards
+//Prepares screen for accepting user input to place ships on their respective boards
 
 function shipSetUp() {
   messageEl.textContent = `Drag ships onto your board to place them.`;
@@ -452,11 +415,7 @@ function checkShipsToSet() {
   }
 }
 
-function clearMessageAfter3s() {
-  setTimeout(() => {
-    hitMissMessageEl.textContent = "";
-  }, 3000);
-}
+/* ----- Trivia Section -----*/
 
 //Load a question and four possible answers into the trivia window
 
@@ -465,6 +424,8 @@ function clearMessageAfter3s() {
 //Display the correct answer after user selection
 
 //Accept user input when a guess is made of opponent's battleship location
+
+/* ----- Battleship Guessing Section -----*/
 
 function startGuessing() {
   for (let square of playerOneBoardEls) {
@@ -479,7 +440,6 @@ function startGuessing() {
   shipSectionTwoEl.classList.remove("ship-section-visible");
   shipSectionTwoEl.classList.add("ship-section-hidden");
 }
-
 
 //Register a hit/miss after a player guesses an opponent's battleship location, then calls a function to change the turn
 
