@@ -682,6 +682,8 @@ function answerTrivia(e) {
   triviaAnswerButtons.forEach((answerButton) => {
     if (answerButton.textContent === triviaAnswer) {
       answerButton.classList.add("correct-answer");
+    } else if (answerButton.textContent !== e.target.textContent) {
+      answerButton.classList.add("unselected-answer");
     }
     answerButton.removeEventListener("click", answerTrivia);
   })
@@ -691,6 +693,7 @@ function resetTrivia() {
   triviaAnswerButtons.forEach((answerButton) => {
     answerButton.classList.remove("correct-answer");
     answerButton.classList.remove("wrong-answer");
+    answerButton.classList.remove("unselected-answer");
     triviaSectionEl.classList.remove("trivia-window-visible");
     triviaSectionEl.classList.add("trivia-window-hidden");
   })

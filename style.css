@@ -466,11 +466,30 @@ footer {
 .correct-answer {
   background-color:  rgb(165, 220, 222);
   border: none;
+  cursor: default;
+}
+
+.correct-answer:hover {
+  background-color:  rgb(165, 220, 222);
 }
 
 .wrong-answer {
-  background-color:  rgb(96, 9, 60);
+  background-color:  rgb(124, 16, 27);
   border: none;
+  cursor: default;
+}
+
+.wrong-answer:hover {
+  background-color:  rgb(96, 9, 60);
+}
+
+.unselected-answer {
+  border: none;
+  cursor: default;
+}
+
+.unselected-answer:hover {
+  background-color: rgb(199, 16, 123);
 }
 
 #trivia-right-wrong-message {
