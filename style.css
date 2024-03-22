@@ -2,6 +2,7 @@ body {
   margin: 0;
   padding: 0;
   font-family: Cantarell, helvetica, sans-serif;
+  background-color: rgb(255, 255, 255);
 }
 
 button {
@@ -355,7 +356,7 @@ main {
 }
 
 .preview {
-  background-color: rgb(130, 255, 89);
+  background-color: rgb(123, 164, 166);
 }
 
 .row-name {
