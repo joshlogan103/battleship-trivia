@@ -431,16 +431,19 @@ function renderRotatedShips() {
     shipRepoOneEl.classList.add("ship-repository-horizontal");
     shipRepoTwoEl.classList.remove("ship-repository-vertical");
     shipRepoTwoEl.classList.add("ship-repository-horizontal");
-    carrierPNG.forEach(carrier => carrier.style.margin = "10px -75px");
-    cruiserPNG.forEach(cruiser => cruiser.style.margin = "10px -50px");
-    submarinePNG.forEach(sub => sub.style.margin = "10px -35px");
-    floaterPNG.forEach(floater => floater.style.margin = "10px -20px");
+    carrierPNG.forEach(carrier => carrier.classList.add("carrier-horizontal"));
+    cruiserPNG.forEach(cruiser => cruiser.classList.add("cruiser-horizontal"));
+    submarinePNG.forEach(sub => sub.classList.add("submarine-horizontal"));
+    floaterPNG.forEach(floater => floater.classList.add("floater-horizontal"));
   } else {
     shipRepoOneEl.classList.add("ship-repository-vertical");
     shipRepoOneEl.classList.remove("ship-repository-horizontal");
     shipRepoTwoEl.classList.add("ship-repository-vertical");
     shipRepoTwoEl.classList.remove("ship-repository-horizontal");
-    shipOptions.forEach(shipOption => shipOption.style.margin = "10px auto");
+    carrierPNG.forEach(carrier => carrier.classList.remove("carrier-horizontal"));
+    cruiserPNG.forEach(cruiser => cruiser.classList.remove("cruiser-horizontal"));
+    submarinePNG.forEach(sub => sub.classList.remove("submarine-horizontal"));
+    floaterPNG.forEach(floater => floater.classList.remove("floater-horizontal"));
   }
 }
 
@@ -452,7 +455,7 @@ function checkShipsToSet() {
       changeTurn();
       angle = 0;
       shipOptions = Array.from(shipRepoTwoEl.children);
-      shipOptions.forEach(shipOption => shipOption.style.margin = "10px auto");
+      shipOptions.forEach(shipOption => shipOption.style.margin = ".625rem auto");
       shipSetUp();
     } else {
       messageEl.textContent = "Place all ships on the board before proceeding."
@@ -490,7 +493,7 @@ function startGuessing() {
 function makeGuessPlayerOne(e) {
   if (!triviaAnswerNeeded) {
     console.log(playerTwoBoard);
-    resetTrivia();
+    clearTriviaWindow();
     let idx = Number(e.target.id - 100);
     if (turn === 1 && !winner) {
       if (playerTwoBoard[idx] === 1) {
@@ -518,7 +521,7 @@ function makeGuessPlayerOne(e) {
 function makeGuessPlayerTwo(e) {
   if (!triviaAnswerNeeded) {
     console.log(playerOneBoard);
-    resetTrivia();
+    clearTriviaWindow();
     let idx = Number(e.target.id);
     if (turn === -1 && !winner) {
       if (playerOneBoard[idx] === 1) {
@@ -697,6 +700,20 @@ function answerTrivia(e) {
   })
   triviaAnswerNeeded = false;
 }
+
+//Clears the trivia window to await the next question
+
+function clearTriviaWindow() {
+  triviaAnswerButtons.forEach((answerButton) => {
+    answerButton.classList.remove("correct-answer");
+    answerButton.classList.remove("wrong-answer");
+    answerButton.classList.remove("unselected-answer");
+    answerButton.textContent = "";
+  })
+  triviaQuestionEl.textContent = ""
+  triviaMessageEl.textContent = "";
+}
+
 
 //Resets the trivia window, message and buttons
 
