@@ -14,10 +14,10 @@
 
 ## Technologies Used
 
-- HTML5
-- CSS
 - Javascript
 - JSON
+- HTML5
+- CSS
 
 ## Wireframe Screenshots
 
@@ -47,11 +47,10 @@
 
 ## Attributions
 
-Attributions
-  Images:
-    iconfinder PNGs
-  Fonts: 
-    Google Fonts: Cantarell [https://fonts.google.com/specimen/Cantarell]
+  - Images:
+    * iconfinder PNGs
+  - Fonts: 
+    * Google Fonts: Cantarell [https://fonts.google.com/specimen/Cantarell]
 
 ## Next Steps
 
