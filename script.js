@@ -498,6 +498,7 @@ function makeGuessPlayerOne(e) {
         e.target.removeEventListener("click", makeGuessPlayerOne);
         playerTwoBoard[idx] = 0;
         hitMessage();
+        clearHitMissMessage();
         checkForWin(playerTwoBoard);
         if (!winner) {
           initTrivia();
@@ -525,6 +526,7 @@ function makeGuessPlayerTwo(e) {
         e.target.removeEventListener("click", makeGuessPlayerTwo);
         playerOneBoard[idx] = 0;
         hitMessage();
+        clearHitMissMessage();
         checkForWin(playerOneBoard);
         if (!winner) {
           initTrivia();
@@ -714,5 +716,13 @@ function resetTrivia() {
 function clearTriviaMessage() {
   setTimeout(() => {
     triviaMessageEl.textContent = "";
+  },3000)
+}
+
+//Removes hit/miss message after 3 seconds
+
+function clearHitMissMessage() {
+  setTimeout(() => {
+    hitMissMessageEl.textContent = "";
   },3000)
 }
