@@ -1,5 +1,11 @@
 /*--- Define Constants and Cache Elements---*/
 
+//Import trivia questions from JSON files
+
+import historyTrivia from "./history-trivia.json" assert {type : "json"};
+import artAndMoviesTrivia from "./art-and-movies-trivia.json" assert {type : "json"};
+import geographyTrivia from "./geography-trivia.json" assert {type : "json"};
+
 //Define required constants
 
 let playerOneBoard = [];
@@ -31,9 +37,6 @@ const shipSizes = {
   "p2-submarine-2-png": 3,
   "p2-floater-png": 2,
 }
-import historyTrivia from "./history-trivia.json" assert {type : "json"};
-import artAndMoviesTrivia from "./art-and-movies-trivia.json" assert {type : "json"};
-import geographyTrivia from "./geography-trivia.json" assert {type : "json"};
 let trivia;
 let triviaQuestion;
 let triviaOptions = [];
@@ -70,8 +73,9 @@ const triviaAnswerButtons = Array.from(document.getElementsByClassName("answer-b
 const triviaMessageEl = document.getElementById("trivia-right-wrong-message");
 const triviaCategoryContainerEl = document.getElementById("trivia-category-container");
 const categoryButtons = Array.from(document.getElementsByClassName("category-button"));
+const chooseCategoryMessageEl = document.getElementById("choose-category-message");
 
-//Set up necessary event listeners
+//Set up initial event listeners
 
 newGameNavButton.addEventListener("click",startNewGame);
 startNewGameButton.addEventListener("click",startNewGame);
@@ -113,6 +117,7 @@ function init() {
   renderInit();
   resetGame();
   resetTrivia();
+  removeTriviaCategories();
 }
 
 //Begins a game when "Start New Game" is clicked
@@ -126,11 +131,15 @@ function startNewGame() {
 function renderTriviaCategories() {
   triviaCategoryContainerEl.classList.add("trivia-category-visible");
   triviaCategoryContainerEl.classList.remove("trivia-category-hidden");
+  chooseCategoryMessageEl.classList.add("choose-category-message-visible");
+  chooseCategoryMessageEl.classList.remove("choose-category-message-hidden");
 }
 
 function removeTriviaCategories() {
   triviaCategoryContainerEl.classList.remove("trivia-category-visible");
   triviaCategoryContainerEl.classList.add("trivia-category-hidden");
+  chooseCategoryMessageEl.classList.remove("choose-category-message-visible");
+  chooseCategoryMessageEl.classList.add("choose-category-message-hidden");
 }
 
 function selectCategory(e) {
@@ -201,7 +210,7 @@ function makeShips() {
   loadShips(playerOneShips,shipRepoOneEl);
   loadShips(playerTwoShips,shipRepoTwoEl);
 
-  globalShips();
+  storeShips();
 
   setShipAndBoardEventListeners();
 }
@@ -222,7 +231,7 @@ function loadShips(playerShips, shipRepo) {
 
 //Assign ships to variables for global use
 
-function globalShips() {
+function storeShips() {
   shipEls = document.getElementsByClassName("ship");
   carrierPNG = Array.from(document.getElementsByClassName("carrier-png"));
   cruiserPNG = Array.from(document.getElementsByClassName("cruiser-png"));
@@ -478,8 +487,9 @@ function startGuessing() {
 //Register a hit/miss after a player guesses an opponent's battleship location, then calls a function to change the turn
 
 function makeGuessPlayerOne(e) {
-  let idx = Number(e.target.id - 100);
+  console.log(playerTwoBoard);
   resetTrivia();
+  let idx = Number(e.target.id - 100);
   if (turn === 1 && !winner) {
     if (playerTwoBoard[idx] === 1) {
       e.target.classList.add("hit");
@@ -487,7 +497,9 @@ function makeGuessPlayerOne(e) {
       playerTwoBoard[idx] = 0;
       hitMessage();
       checkForWin(playerTwoBoard);
-      initTrivia();
+      if (!winner) {
+        initTrivia();
+      }
     } else {
       e.target.classList.add("miss");
       e.target.removeEventListener("click", makeGuessPlayerOne);
@@ -500,8 +512,9 @@ function makeGuessPlayerOne(e) {
 }
 
 function makeGuessPlayerTwo(e) {
-  let idx = Number(e.target.id);
+  console.log(playerOneBoard);
   resetTrivia();
+  let idx = Number(e.target.id);
   if (turn === -1 && !winner) {
     if (playerOneBoard[idx] === 1) {
       e.target.classList.add("hit");
@@ -509,7 +522,9 @@ function makeGuessPlayerTwo(e) {
       playerOneBoard[idx] = 0;
       hitMessage();
       checkForWin(playerOneBoard);
-      initTrivia();
+      if (!winner) {
+        initTrivia();
+      }
     } else {
       e.target.classList.add("miss");
       e.target.removeEventListener("click", makeGuessPlayerTwo);
@@ -597,6 +612,7 @@ function resetGame() {
   }
   turn = 1;
   angle = 0;
+  winner = "";
   clearBoard(playerOneBoardEls) ;
   clearBoard(playerTwoBoardEls);
   removePreview();
@@ -630,7 +646,7 @@ function initTrivia() {
 //Load a random question from the trivia.json file
 
 function loadTriviaQuestion() {
-  let random = Math.floor(Math.random() * 34);
+  let random = Math.floor(Math.random() * trivia.length);
   console.log(random);
   triviaQuestion = trivia[random].question;
   triviaOptions = trivia[random].options;

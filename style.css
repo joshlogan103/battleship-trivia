@@ -9,6 +9,10 @@ button {
   cursor: pointer;
 }
 
+main button:hover {
+  background-color: rgb(157, 11, 96);
+}
+
 .navbar {
   display: flex;
   flex-direction: row;
@@ -95,7 +99,7 @@ main {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 80px auto -80px auto;
+  margin: 100px auto -30px auto;
 }
 
 .start-button-holder-hidden {
@@ -115,6 +119,10 @@ main {
   padding: 10px 20px;
   border: none;
   border-radius: 8px;
+}
+
+main button#start-new-game-button:hover {
+  background-color: rgb(157, 11, 96);
 }
 
 #message {
@@ -471,12 +479,22 @@ footer {
   margin-top: 30px;
 }
 
+.choose-category-message-hidden {
+  visibility: hidden;
+  height: 0;
+}
+
+.choose-category-message-visible {
+  font-size: 20px;
+  margin: 60px auto 0px auto;
+}
+
 .trivia-category-visible {
   display: flex;
   align-items: center;
   justify-content: center;
   width: 800px;
-  margin-top: 80px;
+  margin: 30px auto -48.5px auto;
 }
 
 .trivia-category-hidden {
