@@ -486,6 +486,7 @@ function startGuessing() {
   playerOneBoardTotalEl.classList.remove("board-hidden");
   shipSectionTwoEl.classList.remove("ship-section-visible");
   shipSectionTwoEl.classList.add("ship-section-hidden");
+  triviaSectionEl.classList.remove("trivia-window-hidden");
 }
 
 //Register a hit/miss after a player guesses an opponent's battleship location, then calls a function to change the turn
@@ -611,6 +612,7 @@ function renderGameOverBoard() {
   }
   startButtonHolderEl.classList.add("start-button-holder-visible");
   startButtonHolderEl.classList.remove("start-button-holder-hidden");
+  resetTrivia();
 }
 
 //Resets board and variables to prepare for new game start
@@ -673,6 +675,7 @@ function renderTrivia() {
   for (let i=0; i<triviaOptions.length; i++) {
     triviaAnswerButtons[i].textContent = triviaOptions[i];
     triviaAnswerButtons[i].addEventListener("click", answerTrivia);
+    triviaAnswerButtons[i].classList.remove("answer-button-hidden");
   }
   triviaSectionEl.classList.remove("trivia-window-hidden");
   triviaSectionEl.classList.add("trivia-window-visible");
@@ -687,7 +690,7 @@ function answerTrivia(e) {
     clearTriviaMessage();
     changeTurn();
   } else {
-    triviaMessageEl.textContent = "Correct! So absolutely, wonderfully correct!";
+    triviaMessageEl.textContent = "Correct! Go ahead and guess another square on your opponent's board. You deserve it.";
     clearTriviaMessage();
   }
   triviaAnswerButtons.forEach((answerButton) => {
@@ -709,8 +712,9 @@ function clearTriviaWindow() {
     answerButton.classList.remove("wrong-answer");
     answerButton.classList.remove("unselected-answer");
     answerButton.textContent = "";
+    answerButton.classList.add("answer-button-hidden");
   })
-  triviaQuestionEl.textContent = ""
+  triviaQuestionEl.textContent = "After a successful hit, I'll magically turn into a question!";
   triviaMessageEl.textContent = "";
 }
 
@@ -733,7 +737,7 @@ function resetTrivia() {
 function clearTriviaMessage() {
   setTimeout(() => {
     triviaMessageEl.textContent = "";
-  },3000)
+  },5000)
 }
 
 //Removes hit/miss message after 3 seconds

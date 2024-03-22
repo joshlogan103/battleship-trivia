@@ -46,7 +46,7 @@ main button:hover {
   background-color: white;
   border-radius: 50%;
   color: rgb(199, 16, 123);
-  font-size: 1.25rem;
+  font-size: 1.5rem;
   padding: .4rem;
   display: flex;
   align-items: center;
@@ -496,6 +496,10 @@ footer {
   border: none;
 }
 
+.answer-button-hidden {
+  visibility: hidden !important;
+}
+
 .correct-answer {
   background-color:  rgb(165, 220, 222);
   border: none;
@@ -567,3 +571,5 @@ footer {
   margin: 0 1.25rem;
   width: 11rem;
 }
+
+
