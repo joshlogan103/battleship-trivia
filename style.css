@@ -415,7 +415,7 @@ footer {
 
 .trivia-window-visible {
   width: 600px;
-  height: 200px;
+  height: 170px;
   background-color: white;
   border: solid 2px rgb(165, 220, 222);
   border-radius: 4px;
@@ -426,7 +426,7 @@ footer {
   row-gap: 5px;
   column-gap: 10px;
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1.5fr .75fr .75fr;
+  grid-template-rows: 1.24fr .78fr .78fr;
   grid-template-areas: 
   "trivia-question trivia-question"
   "ans1 ans2"
@@ -458,4 +458,9 @@ footer {
 .wrong-answer {
   background-color:  rgb(96, 9, 60);
   border: none;
+}
+
+#trivia-right-wrong-message {
+  font-size: 20px;
+  height: 20px;
 }

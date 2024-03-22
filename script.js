@@ -59,6 +59,7 @@ const playerTwoBoardTitle = document.getElementById("player-two-board-title");
 const triviaSectionEl = document.getElementById("trivia-window");
 const triviaQuestionEl = document.getElementById("trivia-question");
 const triviaAnswerButtons = Array.from(document.getElementsByClassName("answer-button"));
+const triviaMessageEl = document.getElementById("trivia-right-wrong-message");
 
 //Ship elements will be updated to the global cache once a new game has started and they've been created
 
@@ -618,7 +619,12 @@ function renderTrivia() {
 function answerTrivia(e) {
   if (e.target.textContent !== triviaAnswer) {
     e.target.classList.add("wrong-answer");
+    triviaMessageEl.textContent = "Hmm, strange, but that doesn't seem to be quite right...";
+    clearTriviaMessage();
     changeTurn();
+  } else {
+    triviaMessageEl.textContent = "Correct! So absolutely, wonderfully correct!";
+    clearTriviaMessage();
   }
   triviaAnswerButtons.forEach((answerButton) => {
     if (answerButton.textContent === triviaAnswer) {
@@ -635,4 +641,10 @@ function resetTrivia() {
     triviaSectionEl.classList.remove("trivia-window-visible");
     triviaSectionEl.classList.add("trivia-window-hidden");
   })
+}
+
+function clearTriviaMessage() {
+  setTimeout(() => {
+    triviaMessageEl.textContent = "";
+  },3000)
 }
