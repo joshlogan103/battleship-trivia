@@ -20,6 +20,11 @@ let shipOptions = [];
 let playerOne = "Player 1";
 let playerTwo = "Player 2";
 let currentPlayer;
+let trivia;
+let triviaQuestion;
+let triviaOptions = [];
+let triviaAnswer;
+let triviaAnswerNeeded;
 let shipEls;
 let carrierPNG;
 let cruiserPNG;
@@ -37,10 +42,6 @@ const shipSizes = {
   "p2-submarine-2-png": 3,
   "p2-floater-png": 2,
 }
-let trivia;
-let triviaQuestion;
-let triviaOptions = [];
-let triviaAnswer;
 
 //Cache required elements
 
@@ -487,52 +488,56 @@ function startGuessing() {
 //Register a hit/miss after a player guesses an opponent's battleship location, then calls a function to change the turn
 
 function makeGuessPlayerOne(e) {
-  console.log(playerTwoBoard);
-  resetTrivia();
-  let idx = Number(e.target.id - 100);
-  if (turn === 1 && !winner) {
-    if (playerTwoBoard[idx] === 1) {
-      e.target.classList.add("hit");
-      e.target.removeEventListener("click", makeGuessPlayerOne);
-      playerTwoBoard[idx] = 0;
-      hitMessage();
-      checkForWin(playerTwoBoard);
-      if (!winner) {
-        initTrivia();
+  if (!triviaAnswerNeeded) {
+    console.log(playerTwoBoard);
+    resetTrivia();
+    let idx = Number(e.target.id - 100);
+    if (turn === 1 && !winner) {
+      if (playerTwoBoard[idx] === 1) {
+        e.target.classList.add("hit");
+        e.target.removeEventListener("click", makeGuessPlayerOne);
+        playerTwoBoard[idx] = 0;
+        hitMessage();
+        checkForWin(playerTwoBoard);
+        if (!winner) {
+          initTrivia();
+        }
+      } else {
+        e.target.classList.add("miss");
+        e.target.removeEventListener("click", makeGuessPlayerOne);
+        missMessage();
+        changeTurn();
       }
     } else {
-      e.target.classList.add("miss");
-      e.target.removeEventListener("click", makeGuessPlayerOne);
-      missMessage();
-      changeTurn();
+      messageEl.textContent = `${playerTwo} must guess a square on ${playerOne}'s board.`;
     }
-  } else {
-    messageEl.textContent = `${playerTwo} must guess a square on ${playerOne}'s board.`;
   }
 }
 
 function makeGuessPlayerTwo(e) {
-  console.log(playerOneBoard);
-  resetTrivia();
-  let idx = Number(e.target.id);
-  if (turn === -1 && !winner) {
-    if (playerOneBoard[idx] === 1) {
-      e.target.classList.add("hit");
-      e.target.removeEventListener("click", makeGuessPlayerTwo);
-      playerOneBoard[idx] = 0;
-      hitMessage();
-      checkForWin(playerOneBoard);
-      if (!winner) {
-        initTrivia();
+  if (!triviaAnswerNeeded) {
+    console.log(playerOneBoard);
+    resetTrivia();
+    let idx = Number(e.target.id);
+    if (turn === -1 && !winner) {
+      if (playerOneBoard[idx] === 1) {
+        e.target.classList.add("hit");
+        e.target.removeEventListener("click", makeGuessPlayerTwo);
+        playerOneBoard[idx] = 0;
+        hitMessage();
+        checkForWin(playerOneBoard);
+        if (!winner) {
+          initTrivia();
+        }
+      } else {
+        e.target.classList.add("miss");
+        e.target.removeEventListener("click", makeGuessPlayerTwo);
+        missMessage();
+        changeTurn();
       }
     } else {
-      e.target.classList.add("miss");
-      e.target.removeEventListener("click", makeGuessPlayerTwo);
-      missMessage();
-      changeTurn();
+      messageEl.textContent = `${playerOne} must guess a square on ${playerTwo}'s board.`;
     }
-  } else {
-    messageEl.textContent = `${playerOne} must guess a square on ${playerTwo}'s board.`;
   }
 }
 
@@ -641,6 +646,7 @@ function clearBoard(board) {
 function initTrivia() {
   loadTriviaQuestion();
   renderTrivia();
+  triviaAnswerNeeded = true;
 }
 
 //Load a random question from the trivia.json file
@@ -687,7 +693,10 @@ function answerTrivia(e) {
     }
     answerButton.removeEventListener("click", answerTrivia);
   })
+  triviaAnswerNeeded = false;
 }
+
+//Resets the trivia window, message and buttons
 
 function resetTrivia() {
   triviaAnswerButtons.forEach((answerButton) => {
@@ -699,6 +708,8 @@ function resetTrivia() {
   })
   triviaMessageEl.textContent = "";
 }
+
+//Removes the trivia message after 3 seconds
 
 function clearTriviaMessage() {
   setTimeout(() => {
