@@ -1,4 +1,4 @@
-/*--- Defining Constants and Caching Elements---*/
+/*--- Define Constants and Cache Elements---*/
 
 //Define required constants
 
@@ -14,6 +14,11 @@ let shipOptions = [];
 let playerOne = "Player 1";
 let playerTwo = "Player 2";
 let currentPlayer;
+let shipEls;
+let carrierPNG;
+let cruiserPNG;
+let submarinePNG;
+let floaterPNG;
 const shipSizes = {
   "p1-carrier-png": 5,
   "p1-cruiser-png": 4,
@@ -26,7 +31,10 @@ const shipSizes = {
   "p2-submarine-2-png": 3,
   "p2-floater-png": 2,
 }
-import trivia from "./trivia.json" assert {type : "json"};
+import historyTrivia from "./history-trivia.json" assert {type : "json"};
+import artAndMoviesTrivia from "./art-and-movies-trivia.json" assert {type : "json"};
+import geographyTrivia from "./geography-trivia.json" assert {type : "json"};
+let trivia;
 let triviaQuestion;
 let triviaOptions = [];
 let triviaAnswer;
@@ -60,14 +68,8 @@ const triviaSectionEl = document.getElementById("trivia-window");
 const triviaQuestionEl = document.getElementById("trivia-question");
 const triviaAnswerButtons = Array.from(document.getElementsByClassName("answer-button"));
 const triviaMessageEl = document.getElementById("trivia-right-wrong-message");
-
-//Ship elements will be updated to the global cache once a new game has started and they've been created
-
-let shipEls;
-let carrierPNG;
-let cruiserPNG;
-let submarinePNG;
-let floaterPNG;
+const triviaCategoryContainerEl = document.getElementById("trivia-category-container");
+const categoryButtons = Array.from(document.getElementsByClassName("category-button"));
 
 //Set up necessary event listeners
 
@@ -78,6 +80,8 @@ siteNameButton.addEventListener("click",init);
 closeHowToWindowButton.addEventListener("click",closeHowTo);
 rotateButtons.forEach((button) => button.addEventListener("click",rotateShips));
 doneSettingShipsButtons.forEach((button) => button.addEventListener("click",checkShipsToSet));
+categoryButtons.forEach((button) => button.addEventListener("click", selectCategory));
+
 document.addEventListener("keydown",function(e) {
   if (e.key.toLowerCase() === "r") {
     rotateShips();
@@ -108,6 +112,7 @@ init();
 function init() {
   renderInit();
   resetGame();
+  resetTrivia();
 }
 
 //Begins a game when "Start New Game" is clicked
@@ -115,6 +120,33 @@ function init() {
 function startNewGame() {
   init();
   renderStart();
+  renderTriviaCategories();
+}
+
+function renderTriviaCategories() {
+  triviaCategoryContainerEl.classList.add("trivia-category-visible");
+  triviaCategoryContainerEl.classList.remove("trivia-category-hidden");
+}
+
+function removeTriviaCategories() {
+  triviaCategoryContainerEl.classList.remove("trivia-category-visible");
+  triviaCategoryContainerEl.classList.add("trivia-category-hidden");
+}
+
+function selectCategory(e) {
+  if (e.target.id === "history-button") {
+    trivia = historyTrivia.slice();
+  } else if (e.target.id === "art-and-movies-button") {
+    trivia = artAndMoviesTrivia.slice();
+  } else if (e.target.id === "geography-button") {
+    trivia = geographyTrivia.slice();
+  }
+  console.log(trivia);
+  removeTriviaCategories();
+  beginShipSetting();
+}
+
+function beginShipSetting() {
   makeShips();
   shipSetUp();
 }
@@ -569,6 +601,7 @@ function resetGame() {
   clearBoard(playerTwoBoardEls);
   removePreview();
   messageEl.textContent = "";
+  hitMissMessageEl.textContent = "";
   shipRepoOneEl.innerHTML = "";
   shipRepoTwoEl.innerHTML = "";
 }
@@ -580,6 +613,8 @@ function clearBoard(board) {
     square.classList.remove("hit");
     square.classList.remove("miss");
     square.classList.remove("ship-location-background");
+    square.removeEventListener("click", makeGuessPlayerTwo);
+    square.removeEventListener("click", makeGuessPlayerOne);
   }
 }
 
@@ -600,6 +635,8 @@ function loadTriviaQuestion() {
   triviaQuestion = trivia[random].question;
   triviaOptions = trivia[random].options;
   triviaAnswer = trivia[random].answer;
+  trivia.splice(random,1);
+  console.log(trivia);
 }
 
 //Render a question and four possible answers into the trivia window
@@ -641,6 +678,7 @@ function resetTrivia() {
     triviaSectionEl.classList.remove("trivia-window-visible");
     triviaSectionEl.classList.add("trivia-window-hidden");
   })
+  triviaMessageEl.textContent = "";
 }
 
 function clearTriviaMessage() {

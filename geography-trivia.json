@@ -1,0 +1,172 @@
+[
+  {
+    "question": "What is the capital of Canada?",
+    "options": ["Toronto", "Ottawa", "Vancouver", "Montreal"],
+    "answer": "Ottawa"
+  },
+  {
+    "question": "Which river is the longest in the world?",
+    "options": ["Nile", "Amazon", "Yangtze", "Mississippi"],
+    "answer": "Nile"
+  },
+  {
+    "question": "Which country is the smallest in terms of land area?",
+    "options": ["Monaco", "Maldives", "Nauru", "Vatican City"],
+    "answer": "Vatican City"
+  },
+  {
+    "question": "What is the largest ocean on Earth?",
+    "options": ["Atlantic Ocean", "Indian Ocean", "Arctic Ocean", "Pacific Ocean"],
+    "answer": "Pacific Ocean"
+  },
+  {
+    "question": "Which country is known as the Land of the Rising Sun?",
+    "options": ["China", "India", "Japan", "South Korea"],
+    "answer": "Japan"
+  },
+  {
+    "question": "What is the tallest mountain in the world?",
+    "options": ["Mount Kilimanjaro", "Mount Everest", "K2", "Matterhorn"],
+    "answer": "Mount Everest"
+  },
+  {
+    "question": "Which desert is the largest in the world?",
+    "options": ["Gobi Desert", "Kalahari Desert", "Sahara Desert", "Arabian Desert"],
+    "answer": "Sahara Desert"
+  },
+  {
+    "question": "What is the capital of Australia?",
+    "options": ["Melbourne", "Sydney", "Canberra", "Perth"],
+    "answer": "Canberra"
+  },
+  {
+    "question": "Which country is the largest by land area?",
+    "options": ["Russia", "China", "Canada", "United States"],
+    "answer": "Russia"
+  },
+  {
+    "question": "What is the northernmost capital city in the world?",
+    "options": ["Reykjavik", "Helsinki", "Oslo", "Ankara"],
+    "answer": "Reykjavik"
+  },
+  {
+    "question": "What is the longest river in Europe?",
+    "options": ["Danube", "Volga", "Thames", "Rhine"],
+    "answer": "Volga"
+  },
+  {
+    "question": "Which country is the largest by population?",
+    "options": ["India", "China", "United States", "Indonesia"],
+    "answer": "China"
+  },
+  {
+    "question": "What is the highest waterfall in the world?",
+    "options": ["Niagara Falls", "Victoria Falls", "Angel Falls", "Iguazu Falls"],
+    "answer": "Angel Falls"
+  },
+  {
+    "question": "Which city is the capital of Argentina?",
+    "options": ["Buenos Aires", "Cordoba", "Rosario", "Mendoza"],
+    "answer": "Buenos Aires"
+  },
+  {
+    "question": "What is the largest country in Africa by land area?",
+    "options": ["Nigeria", "Egypt", "South Africa", "Algeria"],
+    "answer": "Algeria"
+  },
+  {
+    "question": "Which ocean surrounds the Maldives?",
+    "options": ["Indian Ocean", "Pacific Ocean", "Atlantic Ocean", "Arctic Ocean"],
+    "answer": "Indian Ocean"
+  },
+  {
+    "question": "What is the smallest country in Asia?",
+    "options": ["Maldives", "Singapore", "Bahrain", "Brunei"],
+    "answer": "Maldives"
+  },
+  {
+    "question": "Which island nation is known as the 'Pearl of the Indian Ocean'?",
+    "options": ["Sri Lanka", "Maldives", "Mauritius", "Seychelles"],
+    "answer": "Sri Lanka"
+  },
+  {
+    "question": "What is the capital of New Zealand?",
+    "options": ["Auckland", "Wellington", "Christchurch", "Hamilton"],
+    "answer": "Wellington"
+  },
+  {
+    "question": "Which African country is famous for the pyramids?",
+    "options": ["Sudan", "Egypt", "Algeria", "Nigeria"],
+    "answer": "Egypt"
+  },
+  {
+    "question": "What is the highest mountain range in South America?",
+    "options": ["Andes", "Rockies", "Himalayas", "Appalachians"],
+    "answer": "Andes"
+  },
+  {
+    "question": "Which African country has the largest population?",
+    "options": ["Nigeria", "Ethiopia", "Egypt", "Democratic Republic of the Congo"],
+    "answer": "Nigeria"
+  },
+  {
+    "question": "Which country is known as the Land of a Thousand Lakes?",
+    "options": ["Finland", "Norway", "Sweden", "Iceland"],
+    "answer": "Finland"
+  },
+  {
+    "question": "What is the longest river in Australia?",
+    "options": ["Murray River", "Darling River", "Brisbane River", "Murrumbidgee River"],
+    "answer": "Murray River"
+  },
+  {
+    "question": "Which city is located at the mouth of the Amazon River?",
+    "options": ["Rio de Janeiro", "Sao Paulo", "Manaus", "Belem"],
+    "answer": "Belem"
+  },
+  {
+    "question": "What is the largest island in the Mediterranean Sea?",
+    "options": ["Sicily", "Corsica", "Sardinia", "Crete"],
+    "answer": "Sicily"
+  },
+  {
+    "question": "Which country has the longest coastline in the world?",
+    "options": ["Canada", "Russia", "Australia", "United States"],
+    "answer": "Canada"
+  },
+  {
+    "question": "What is the southernmost continent in the world?",
+    "options": ["Asia", "Africa", "Australia", "Antarctica"],
+    "answer": "Antarctica"
+  },
+  {
+    "question": "Which river flows through Paris?",
+    "options": ["Thames", "Seine", "Danube", "Rhine"],
+    "answer": "Seine"
+  },
+  {
+    "question": "What is the capital of Brazil?",
+    "options": ["Rio de Janeiro", "Sao Paulo", "Brasilia", "Salvador"],
+    "answer": "Brasilia"
+  },
+  {
+    "question": "Which country is known as the Land of the Midnight Sun?",
+    "options": ["Sweden", "Norway", "Finland", "Iceland"],
+    "answer": "Norway"
+  },
+  {
+    "question": "What is the largest lake in Africa?",
+    "options": ["Lake Tanganyika", "Lake Victoria", "Lake Malawi", "Lake Chad"],
+    "answer": "Lake Victoria"
+  },
+  {
+  "question": "Which is the driest desert in the world?",
+  "options": ["Gobi Desert", "Sahara Desert", "Atacama Desert", "Arabian Desert"],
+  "answer": "Atacama Desert"
+  },
+  {
+  "question": "What is the capital of South Africa?",
+  "options": ["Cape Town", "Pretoria", "Johannesburg", "Durban"],
+  "answer": "Pretoria"
+  }
+]

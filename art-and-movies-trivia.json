@@ -1,0 +1,172 @@
+[
+  {
+    "question": "Who directed the movie 'Pulp Fiction'?",
+    "options": ["Steven Spielberg", "Quentin Tarantino", "Martin Scorsese", "Christopher Nolan"],
+    "answer": "Quentin Tarantino"
+  },
+  {
+    "question": "Which artist painted 'Starry Night'?",
+    "options": ["Leonardo da Vinci", "Vincent van Gogh", "Claude Monet", "Pablo Picasso"],
+    "answer": "Vincent van Gogh"
+  },
+  {
+    "question": "Who played the lead role in the movie 'Forrest Gump'?",
+    "options": ["Johnny Depp", "Tom Hanks", "Brad Pitt", "Leonardo DiCaprio"],
+    "answer": "Tom Hanks"
+  },
+  {
+    "question": "Which film won the Academy Award for Best Picture in 1994?",
+    "options": ["Schindler's List", "Forrest Gump", "Pulp Fiction", "The Shawshank Redemption"],
+    "answer": "Forrest Gump"
+  },
+  {
+    "question": "Who is the director of the 'Lord of the Rings' film trilogy?",
+    "options": ["Peter Jackson", "James Cameron", "Martin Scorsese", "George Lucas"],
+    "answer": "Peter Jackson"
+  },
+  {
+    "question": "Which artist is known for painting the 'Mona Lisa'?",
+    "options": ["Michelangelo", "Pablo Picasso", "Leonardo da Vinci", "Vincent van Gogh"],
+    "answer": "Leonardo da Vinci"
+  },
+  {
+    "question": "Who played the role of Jack Dawson in the movie 'Titanic'?",
+    "options": ["Brad Pitt", "Tom Hanks", "Leonardo DiCaprio", "Johnny Depp"],
+    "answer": "Leonardo DiCaprio"
+  },
+  {
+    "question": "Which film won the first Academy Award for Best Picture?",
+    "options": ["Wings", "All Quiet on the Western Front", "Sunrise", "The Broadway Melody"],
+    "answer": "Wings"
+  },
+  {
+    "question": "Who directed the movie 'The Godfather'?",
+    "options": ["Alfred Hitchcock", "Martin Scorsese", "Steven Spielberg", "Francis Ford Coppola"],
+    "answer": "Francis Ford Coppola"
+  },
+  {
+    "question": "Which artist is known for painting 'The Scream'?",
+    "options": ["Salvador Dalí", "Claude Monet", "Edvard Munch", "Georgia O'Keeffe"],
+    "answer": "Edvard Munch"
+  },
+  {
+    "question": "Who played the role of Ellen Ripley in the movie 'Alien'?",
+    "options": ["Meryl Streep", "Cate Blanchett", "Sigourney Weaver", "Julia Roberts"],
+    "answer": "Sigourney Weaver"
+  },
+  {
+    "question": "Which film won the Academy Award for Best Picture in 1999?",
+    "options": ["Gladiator", "The Matrix", "American Beauty", "Shakespeare in Love"],
+    "answer": "American Beauty"
+  },
+  {
+    "question": "Who directed the movie 'The Shawshank Redemption'?",
+    "options": ["Quentin Tarantino", "Frank Darabont", "Christopher Nolan", "Steven Spielberg"],
+    "answer": "Frank Darabont"
+  },
+  {
+    "question": "Which artist is known for creating the sculpture 'The Thinker'?",
+    "options": ["Michelangelo", "Claude Monet", "Pablo Picasso", "Auguste Rodin"],
+    "answer": "Auguste Rodin"
+  },
+  {
+    "question": "Who played the role of Vito Corleone in the movie 'The Godfather'?",
+    "options": ["Robert De Niro", "Marlon Brando", "James Caan", "Al Pacino"],
+    "answer": "Marlon Brando"
+  },
+  {
+    "question": "Which film won the Academy Award for Best Picture in 2001?",
+    "options": ["The Lord of the Rings: The Fellowship of the Ring", "A Beautiful Mind", "Moulin Rouge!", "Chicago"],
+    "answer": "A Beautiful Mind"
+  },
+  {
+    "question": "Who directed the movie 'Inception'?",
+    "options": ["Quentin Tarantino", "Martin Scorsese", "Christopher Nolan", "Steven Spielberg"],
+    "answer": "Christopher Nolan"
+  },
+  {
+    "question": "Which artist painted the 'Girl with a Pearl Earring'?",
+    "options": ["Pablo Picasso", "Vincent van Gogh", "Rembrandt", "Johannes Vermeer"],
+    "answer": "Johannes Vermeer"
+  },
+  {
+    "question": "Who played the role of Hannibal Lecter in the movie 'The Silence of the Lambs'?",
+    "options": ["Jack Nicholson", "Morgan Freeman", "Anthony Hopkins", "Dustin Hoffman"],
+    "answer": "Anthony Hopkins"
+  },
+  {
+    "question": "Which film won the Academy Award for Best Picture in 1972?",
+    "options": ["The French Connection", "Cabaret", "The Godfather", "A Clockwork Orange"],
+    "answer": "The Godfather"
+  },
+  {
+    "question": "Who directed the movie 'The Matrix'?",
+    "options": ["The Wachowskis", "James Cameron", "Christopher Nolan", "Steven Spielberg"],
+    "answer": "The Wachowskis"
+  },
+  {
+    "question": "Which artist is known for creating 'The Persistence of Memory'?",
+    "options": ["Claude Monet", "Pablo Picasso", "Salvador Dalí", "Vincent van Gogh"],
+    "answer": "Salvador Dalí"
+  },
+  {
+    "question": "Who played the role of Batman in the movie 'The Dark Knight'?",
+    "options": ["Heath Ledger", "Gary Oldman", "Christian Bale", "Michael Caine"],
+    "answer": "Christian Bale"
+  },
+  {
+    "question": "Which film won the Academy Award for Best Picture in 2005?",
+    "options": ["Capote", "Crash", "Brokeback Mountain", "Munich"],
+    "answer": "Crash"
+  },
+  {
+    "question": "Who directed the movie 'The Green Mile'?",
+    "options": ["Steven Spielberg", "Quentin Tarantino", "Martin Scorsese", "Frank Darabont"],
+    "answer": "Frank Darabont"
+  },
+  {
+    "question": "Which artist painted 'The Birth of Venus'?",
+    "options": ["Sandro Botticelli", "Raphael", "Leonardo da Vinci", "Titian"],
+    "answer": "Sandro Botticelli"
+  },
+  {
+    "question": "Who directed the movie 'Avatar'?",
+    "options": ["Christopher Nolan", "James Cameron", "Martin Scorsese", "Steven Spielberg"],
+    "answer": "James Cameron"
+  },
+  {
+    "question": "Which artist is known for painting 'The Starry Night'?",
+    "options": ["Leonardo da Vinci", "Vincent van Gogh", "Pablo Picasso", "Claude Monet"],
+    "answer": "Vincent van Gogh"
+  },
+  {
+    "question": "Who played the role of Tony Stark in the Marvel Cinematic Universe?",
+    "options": ["Chris Hemsworth", "Chris Evans", "Robert Downey Jr.", "Mark Ruffalo"],
+    "answer": "Robert Downey Jr."
+  },
+  {
+    "question": "Which film won the Academy Award for Best Picture in 2010?",
+    "options": ["The King's Speech", "Inception", "The Social Network", "Black Swan"],
+    "answer": "The King's Speech"
+  },
+  {
+    "question": "Who directed the movie 'The Dark Knight'?",
+    "options": ["Steven Spielberg", "Christopher Nolan", "Martin Scorsese", "Quentin Tarantino"],
+    "answer": "Christopher Nolan"
+  },
+  {
+    "question": "Who played the role of Hermione Granger in the 'Harry Potter' film series?",
+    "options": ["Emma Stone", "Emma Watson", "Keira Knightley", "Natalie Portman"],
+    "answer": "Emma Watson"
+  },
+  {
+    "question": "Which film won the Academy Award for Best Picture in 2008?",
+    "options": ["No Country for Old Men", "Atonement", "There Will Be Blood", "Slumdog Millionaire"],
+    "answer": "Slumdog Millionaire"
+  },
+  {
+    "question": "Who directed the movie 'Schindler's List'?",
+    "options": ["Steven Spielberg", "Martin Scorsese", "Quentin Tarantino", "Francis Ford Coppola"],
+    "answer": "Steven Spielberg"
+  }
+]
