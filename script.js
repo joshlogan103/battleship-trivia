@@ -28,8 +28,8 @@ const shipSizes = {
 }
 import trivia from "./trivia.json" assert {type : "json"};
 let triviaQuestion;
-let triviaAnswers = [];
-let triviaCorrectAnswer;
+let triviaOptions = [];
+let triviaAnswer;
 
 //Cache required elements
 
@@ -380,7 +380,7 @@ function rotateShips() {
   }
 }
 
-//Changes the 
+//Changes the orientation of ships yet to be set by 90 degrees to toggle between horizontal and vertical placement
 
 function renderRotatedShips() {
   if (angle === 90) {
@@ -400,6 +400,8 @@ function renderRotatedShips() {
     shipOptions.forEach(shipOption => shipOption.style.margin = "10px auto");
   }
 }
+
+//Checks that a player has set all ships on their board before allowing them to finish setup
 
 function checkShipsToSet() {
   if (turn===1) {
@@ -421,54 +423,6 @@ function checkShipsToSet() {
     }
   }
 }
-
-/* ----- Trivia Section -----*/
-
-//Load a random question from the trivia.json file
-
-function loadTriviaQuestion() {
-  let random = Math.floor(Math.random() * 10);
-  console.log(random);
-  triviaQuestion = trivia[random].question;
-  triviaAnswers = trivia[random].answers;
-  triviaCorrectAnswer = trivia[random].correctAnswer;
-  console.log(triviaQuestion);
-  console.log(triviaAnswers);
-  console.log(triviaCorrectAnswer);
-}
-
-function initTrivia() {
-  loadTriviaQuestion();
-  renderTrivia();
-}
-
-
-//Render a question and four possible answers into the trivia window
-
-function renderTrivia() {
-  triviaQuestionEl.textContent = triviaQuestion;
-  for (let i=0; i<triviaAnswers.length; i++) {
-    triviaAnswerButtons[i].textContent = triviaAnswers[i];
-    triviaAnswerButtons.forEach((triviaAns) => {
-      triviaAns.addEventListener("click", answerTrivia);
-    })
-  }
-  triviaSectionEl.classList.remove("trivia-window-hidden");
-  triviaSectionEl.classList.add("trivia-window-visible");
-}
-
-//Validate if the user selected the correct answer to the trivia question
-
-function answerTrivia(e) {
-  if (e.target.textContent === triviaCorrectAnswer) {
-    e.target.classList.add("correct-answer");
-  
-  } else {
-    e.target.classList.add("wrong-answer");
-  }
-}
-
-//Display the correct answer after user selection
 
 /* ----- Battleship Guessing Section -----*/
 
@@ -492,6 +446,7 @@ function startGuessing() {
 
 function makeGuessPlayerOne(e) {
   let idx = Number(e.target.id - 100);
+  resetTrivia();
   if (turn === 1 && !winner) {
     if (playerTwoBoard[idx] === 1) {
       e.target.classList.add("hit");
@@ -504,8 +459,6 @@ function makeGuessPlayerOne(e) {
       e.target.classList.add("miss");
       e.target.removeEventListener("click", makeGuessPlayerOne);
       missMessage();
-    }
-    if (!winner) {
       changeTurn();
     }
   } else {
@@ -515,6 +468,7 @@ function makeGuessPlayerOne(e) {
 
 function makeGuessPlayerTwo(e) {
   let idx = Number(e.target.id);
+  resetTrivia();
   if (turn === -1 && !winner) {
     if (playerOneBoard[idx] === 1) {
       e.target.classList.add("hit");
@@ -527,8 +481,6 @@ function makeGuessPlayerTwo(e) {
       e.target.classList.add("miss");
       e.target.removeEventListener("click", makeGuessPlayerTwo);
       missMessage();
-    }
-    if (!winner) {
       changeTurn();
     }
   } else {
@@ -628,4 +580,59 @@ function clearBoard(board) {
     square.classList.remove("miss");
     square.classList.remove("ship-location-background");
   }
+}
+
+/* ----- Trivia Section -----*/
+
+//Calls support functions to load and render trivia questions
+
+function initTrivia() {
+  loadTriviaQuestion();
+  renderTrivia();
+}
+
+//Load a random question from the trivia.json file
+
+function loadTriviaQuestion() {
+  let random = Math.floor(Math.random() * 34);
+  console.log(random);
+  triviaQuestion = trivia[random].question;
+  triviaOptions = trivia[random].options;
+  triviaAnswer = trivia[random].answer;
+}
+
+//Render a question and four possible answers into the trivia window
+
+function renderTrivia() {
+  triviaQuestionEl.textContent = triviaQuestion;
+  for (let i=0; i<triviaOptions.length; i++) {
+    triviaAnswerButtons[i].textContent = triviaOptions[i];
+    triviaAnswerButtons[i].addEventListener("click", answerTrivia);
+  }
+  triviaSectionEl.classList.remove("trivia-window-hidden");
+  triviaSectionEl.classList.add("trivia-window-visible");
+}
+
+//Validate if the user selected the correct answer to the trivia question and render correct/incorrect choice visually
+
+function answerTrivia(e) {
+  if (e.target.textContent !== triviaAnswer) {
+    e.target.classList.add("wrong-answer");
+    changeTurn();
+  }
+  triviaAnswerButtons.forEach((answerButton) => {
+    if (answerButton.textContent === triviaAnswer) {
+      answerButton.classList.add("correct-answer");
+    }
+    answerButton.removeEventListener("click", answerTrivia);
+  })
+}
+
+function resetTrivia() {
+  triviaAnswerButtons.forEach((answerButton) => {
+    answerButton.classList.remove("correct-answer");
+    answerButton.classList.remove("wrong-answer");
+    triviaSectionEl.classList.remove("trivia-window-visible");
+    triviaSectionEl.classList.add("trivia-window-hidden");
+  })
 }

@@ -451,11 +451,11 @@ footer {
 }
 
 .correct-answer {
-  background-color:  rgb(14, 126, 51);
+  background-color:  rgb(165, 220, 222);
   border: none;
 }
 
 .wrong-answer {
-  background-color:  rgb(174, 21, 21);
+  background-color:  rgb(96, 9, 60);
   border: none;
 }
