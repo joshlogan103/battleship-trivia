@@ -1,3 +1,4 @@
+/*
 html {
   font-size: 12px;
 }
@@ -104,6 +105,10 @@ main button:hover {
   padding: 0 2.5rem 0 0;
 }
 
+div.navbar button:hover {
+  font-size: 40px;
+}
+
 main {
   display: flex;
   flex-direction: column;
@@ -137,7 +142,7 @@ main {
   border-radius: 8px;
 }
 
-main button#start-new-game-button:hover {
+#start-new-game-button:hover {
   background-color: rgb(157, 11, 96);
 }
 
@@ -182,6 +187,595 @@ main button#start-new-game-button:hover {
   padding: .3125rem .625rem;
   border-radius: 7px;
   font-size: 1.25rem;
+}
+
+#close-how-to-window:hover {
+  background-color: rgb(157, 11, 96);
+}
+
+.ship-section-visible {
+  visibility: visible;
+  margin-top: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.ship-section-hidden {
+  visibility: hidden;
+  width: 0;
+  height: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.ship-repository-vertical {
+  width: 26rem;
+  height: 26rem;
+  background-color: white;
+  border: solid 2px rgb(165, 220, 222);
+  border-radius: 4px;
+  padding: .625rem 1.25rem;
+  font-size: 1.25rem;
+  margin: 5rem auto 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: baseline;
+}
+
+.ship-repository-horizontal {
+  width: 26rem;
+  height: 26rem;
+  background-color: white;
+  border: solid 2px rgb(165, 220, 222);
+  border-radius: 4px;
+  padding: .625rem 1.25rem;
+  font-size: 1.25rem;
+  margin: 5rem auto 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.ship {
+  cursor: grab;
+}
+
+.carrier-png {
+  width: 15rem;
+  margin: .625rem auto;
+}
+
+.carrier-horizontal {
+  margin: .625rem -3.8rem !important;
+}
+
+.cruiser-png {
+  width: 12rem;
+  margin: .625rem auto;
+}
+
+.cruiser-horizontal {
+  margin: .625rem -3rem !important;
+}
+
+.submarine-png {
+  width: 9rem;
+  margin: .625rem auto;
+}
+
+.submarine-horizontal {
+  margin: .625rem -2.2rem !important;
+}
+
+.floater-png {
+  width: 6rem;
+  margin: .625rem auto;
+}
+
+.floater-horizontal {
+  margin: .625rem -1.5rem !important;
+}
+
+.rotate-button-container {
+  visibility: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 0;
+  width: 0;
+}
+
+.rotate-button {
+  text-align: center;
+  font-size: 1.25rem;
+  background-color: rgb(199, 16, 123);
+  color: white;
+  padding: 0;
+  border: none;
+  border-radius: 8px;
+  margin: 1.25rem .3125rem;
+  width: 5.5rem;
+  height: 2.5rem;
+}
+
+.done-setting-ships-button {
+  text-align: center;
+  font-size: 1.25rem;
+  background-color: rgb(199, 16, 123);
+  color: white;
+  padding: 0;
+  border: none;
+  border-radius: 8px;
+  margin: 1.25rem .3125rem;
+  width: 5.5rem;
+  height: 2.5rem;
+}
+
+#battleship-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.board-area {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: -2rem .625rem .625rem .625rem;
+}
+
+.board {  
+  height: 36rem;
+  width: 33rem;
+  padding: 3rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-auto-columns: 1fr;
+  gap: 0px 0px;
+  grid-auto-flow: row;
+  grid-template-areas:
+    "board-name board-name board-name board-name board-name board-name board-name board-name board-name board-name board-name"
+    "blank-square col1 col2 col3 col4 col5 col6 col7 col8 col9 col10"
+    "A A1 A2 A3 A4 A5 A6 A7 A8 A9 A10"
+    "B B1 B2 B3 B4 B5 B6 B7 B8 B9 B10"
+    "C C1 C2 C3 C4 C5 C6 C7 C8 C9 C10"
+    "D D1 D2 D3 D4 D5 D6 D7 D8 D9 D10"
+    "E E1 E2 E3 E4 E5 E6 E7 E8 E9 E10"
+    "F F1 F2 F3 F4 F5 F6 F7 F8 F9 F10"
+    "G G1 G2 G3 G4 G5 G6 G7 G8 G9 G10"
+    "H H1 H2 H3 H4 H5 H6 H7 H8 H9 H10"
+    "I I1 I2 I3 I4 I5 I6 I7 I8 I9 I10"
+    "J J1 J2 J3 J4 J5 J6 J7 J8 J9 J10";
+}
+
+.board-hidden {
+  visibility: hidden;
+  width: 0;
+  height: 0;
+}
+
+#player-one-board-title {
+  height: 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.25rem;
+}
+
+#player-two-board-title {
+  height: 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.25rem;
+}
+
+.square1 {
+  height: 3rem;
+  width: 3rem;
+  border: solid 1px white;
+  background-color: rgb(165, 220, 222);
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: left;
+}
+
+.square2 {
+  height: 3rem;
+  width: 3rem;
+  border: solid 1px white;
+  background-color: rgb(165, 220, 222);
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: left;
+}
+
+.ship-location-background {
+  background-color: rgb(58, 58, 58);
+}
+
+.hit {
+  background-color: rgb(155, 35, 35);
+}
+
+.miss {
+  background-color: rgb(167, 160, 160);
+}
+
+.preview {
+  background-color: rgb(123, 164, 166);
+}
+
+.row-name {
+  height: 3rem;
+  width: 3rem;
+  border: solid 1px white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(4, 7, 50);
+  border-radius: 2px;
+  font-weight: 600;
+  color: white;
+}
+
+.col-name {
+  height: 3rem;
+  width: 3rem;
+  border: solid 1px white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(4, 7, 50);
+  border-radius: 2px;
+  font-weight: 600;
+  color: white;
+}
+
+.blank-square {
+  height: 3rem;
+  width: 3rem;
+  border: solid 1px white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(199, 16, 123);
+  border-radius: 2px;
+  font-weight: 600;
+  color: white;
+  grid-area: blank-square;
+}
+
+.board-name { grid-area: board-name; }
+
+footer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(4, 7, 50);
+  height: 3rem;
+  color: white;
+  margin: 3rem auto 0 auto;
+  font-size: .75rem;
+}
+
+.trivia-window-visible {
+  width: 34rem;
+  height: 12rem;
+  background-color: white;
+  border: solid 2px rgb(165, 220, 222);
+  border-radius: 4px;
+  padding: 1rem;
+  font-size: 1.25rem;
+  margin: 2rem auto;
+  display: grid;
+  row-gap: .3125rem;
+  column-gap: .625rem;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1.24fr .78fr .78fr;
+  grid-template-areas: 
+  "trivia-question trivia-question"
+  "ans1 ans2"
+  "ans3 ans4";
+}
+
+.trivia-window-hidden {
+  visibility: hidden;
+  height: 0;
+}
+
+#trivia-question {
+  grid-area: trivia-question;
+}
+
+.answer-button {
+  border-radius: 8px;
+  font-family: Cantarell, helvetica, sans-serif;
+  background-color: rgb(199, 16, 123);
+  color: white;
+  font-size: 1.25rem;
+  border: none;
+}
+
+.answer-button-hidden {
+  visibility: hidden !important;
+}
+
+.correct-answer {
+  background-color:  rgb(165, 220, 222);
+  border: none;
+  cursor: default;
+}
+
+.correct-answer:hover {
+  background-color:  rgb(165, 220, 222);
+}
+
+.wrong-answer {
+  background-color:  rgb(124, 16, 27);
+  border: none;
+  cursor: default;
+}
+
+.wrong-answer:hover {
+  background-color:  rgb(124, 16, 27);
+}
+
+.unselected-answer {
+  border: none;
+  cursor: default;
+}
+
+.unselected-answer:hover {
+  background-color: rgb(199, 16, 123);
+}
+
+#trivia-right-wrong-message {
+  font-size: 1.25rem;
+  height: 1.25rem;
+  margin-top: .5rem;
+}
+
+.choose-category-message-hidden {
+  visibility: hidden;
+  height: 0;
+}
+
+.choose-category-message-visible {
+  font-size: 1.25rem;
+  margin: 3.75rem auto 0 auto;
+}
+
+.trivia-category-visible {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50rem;
+  margin: 2rem auto -3rem auto;
+}
+
+.trivia-category-hidden {
+  visibility: hidden;
+  height: 0;
+  width: 0;
+  display: none;
+}
+
+.category-button {
+  text-align: center;
+  font-size: 1.25rem;
+  background-color: rgb(199, 16, 123);
+  color: white;
+  padding: .625rem 1.25rem;
+  border: none;
+  border-radius: 8px;
+  margin: 0 1.25rem;
+  width: 11rem;
+}
+*/
+
+/*--------------------------------------------------------------*/
+
+html {
+  font-size: 12px;
+}
+
+@media only screen and (min-width: 960px) {
+  html {
+    font-size: 14px;
+  }
+}
+
+@media only screen and (min-width: 1240px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Cantarell, helvetica, sans-serif;
+  background-color: rgb(255, 255, 255);
+}
+
+button {
+  cursor: pointer;
+}
+
+main button:hover {
+  background-color: rgb(157, 11, 96);
+}
+
+.navbar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background-color: rgb(4, 7, 50);
+  height: 3rem;
+  color: white;
+}
+
+.logo {
+  padding: 0 0px 0 3rem;
+}
+
+#logo-icon {
+  background-color: white;
+  border-radius: 50%;
+  color: rgb(199, 16, 123);
+  font-size: 1.5rem;
+  padding: .4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 2rem;
+  width: 2rem;
+  font-weight: 800;
+}
+
+.site-name {
+  padding: 0 6rem 0 .625rem;
+}
+
+#site-name-button {
+  border: none;
+  background-color: rgb(4, 7, 50);
+  color: white;
+  font-family: Cantarell, helvetica, sans-serif;
+  font-size: 1.5rem;
+}
+
+.new-game {
+  padding: 0 4.5rem 0 0;
+}
+
+#new-game-nav-button {
+  border: none;
+  background-color: rgb(4, 7, 50);
+  color: white;
+  font-family: Cantarell, helvetica, sans-serif;
+  font-size: 1rem;
+}
+
+.how-to-play {
+  padding: 0 23rem 0 0;
+}
+
+#how-to-play-nav-button {
+  border: none;
+  background-color: rgb(4, 7, 50);
+  color: white;
+  font-family: Cantarell, helvetica, sans-serif;
+  font-size: 1rem;
+}
+
+.scoreboard {
+  padding: 0 2.5rem 0 0;
+}
+
+.player-score-name {
+  padding: 0 1rem 0 0;
+}
+
+.player-score-number {
+  padding: 0 2.5rem 0 0;
+}
+
+div.navbar button:hover {
+  font-size: 40px;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.start-button-holder-visible {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 6rem auto -1.45rem auto;
+}
+
+.start-button-holder-hidden {
+  visibility: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  height: 0;
+}
+
+#start-new-game-button {
+  text-align: center;
+  font-size: 1.25rem;
+  background-color: rgb(199, 16, 123);
+  color: white;
+  padding: .625rem 1.25rem;
+  border: none;
+  border-radius: 8px;
+}
+
+#start-new-game-button:hover {
+  background-color: rgb(157, 11, 96);
+}
+
+#message {
+  font-size: 1.25rem;
+  height: 1.25rem;
+  margin-top: 1.25rem;
+  font-weight: 100;
+}
+
+#hit-miss-message {
+  font-size: 1.25rem;
+  height: 2rem;
+  margin-top: 1.25rem;
+  font-weight: 100;
+}
+
+.how-to-play-window-hidden {
+  visibility: hidden;
+  width: 0;
+  height: 0;
+}
+
+.how-to-play-window-visible {
+  visibility: visible;
+  width: 50rem;
+  background-color: rgb(165, 220, 222);
+  border-radius: 7px;
+  padding: 1.25rem 1.25rem;
+  font-size: 1.25rem;
+  margin: 5rem auto -1.25rem auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#close-how-to-window {
+  border: solid 2px white;
+  background-color: rgb(199, 16, 123);
+  color: white;
+  padding: .3125rem .625rem;
+  border-radius: 7px;
+  font-size: 1.25rem;
+}
+
+#close-how-to-window:hover {
+  background-color: rgb(157, 11, 96);
 }
 
 .ship-section-visible {

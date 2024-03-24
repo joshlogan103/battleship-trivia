@@ -151,7 +151,6 @@ function selectCategory(e) {
   } else if (e.target.id === "geography-button") {
     trivia = geographyTrivia.slice();
   }
-  console.log(trivia);
   removeTriviaCategories();
   beginShipSetting();
 }
@@ -191,7 +190,7 @@ function renderStart() {
   howToPlayWindow.classList.remove("how-to-play-window-visible");
 }
 
-//Generates the ships to be used for a game
+//Generates the ships to be used for a game and places them in the ship repos for each player
 
 function makeShips() {
   const p1Carrier = new ShipIcon("carrier-png","p1-carrier-png","./carrier.png","Carrier");
@@ -267,7 +266,7 @@ function dragstartEventListener() {
 function dragoverEventListener(board, boardArray) {
   for(let square of board) {
     square.addEventListener("dragover",function(e) {
-      const shipSize = shipSizes[draggedShip.id];
+      let shipSize = shipSizes[draggedShip.id];
       let idx;
       if (turn === 1) {
         idx = Number(square.id);
@@ -291,12 +290,11 @@ function dragoverEventListener(board, boardArray) {
           }
         } else {
           if (boardArray[Number(shipSquare.id) - 100] === 1) {
-          overlap.push(true);
+            overlap.push(true);
           }
         }
       }
       noOverlap = overlap.length === 0;
-      overlap = [];
       if (angle === 0 && noOverlap) {
         if (10 - idx % 10 >= shipSize) {
           e.preventDefault();
@@ -495,7 +493,6 @@ function startGuessing() {
 
 function makeGuessPlayerOne(e) {
   if (!triviaAnswerNeeded) {
-    console.log(playerTwoBoard);
     clearTriviaWindow();
     let idx = Number(e.target.id - 100);
     if (turn === 1 && !winner) {
@@ -523,7 +520,6 @@ function makeGuessPlayerOne(e) {
 
 function makeGuessPlayerTwo(e) {
   if (!triviaAnswerNeeded) {
-    console.log(playerOneBoard);
     clearTriviaWindow();
     let idx = Number(e.target.id);
     if (turn === -1 && !winner) {
@@ -662,12 +658,10 @@ function initTrivia() {
 
 function loadTriviaQuestion() {
   let random = Math.floor(Math.random() * trivia.length);
-  console.log(random);
   triviaQuestion = trivia[random].question;
   triviaOptions = trivia[random].options;
   triviaAnswer = trivia[random].answer;
   trivia.splice(random,1);
-  console.log(trivia);
 }
 
 //Render a question and four possible answers into the trivia window
@@ -681,6 +675,7 @@ function renderTrivia() {
   }
   triviaSectionEl.classList.remove("trivia-window-hidden");
   triviaSectionEl.classList.add("trivia-window-visible");
+  scrollToTop();
 }
 
 //Validate if the user selected the correct answer to the trivia question and render correct/incorrect choice visually
@@ -704,6 +699,7 @@ function answerTrivia(e) {
     answerButton.removeEventListener("click", answerTrivia);
   })
   triviaAnswerNeeded = false;
+  scrollToGameBoards();
 }
 
 //Clears the trivia window to await the next question
@@ -748,4 +744,23 @@ function clearHitMissMessage() {
   setTimeout(() => {
     hitMissMessageEl.textContent = "";
   },3000)
+}
+
+
+/*--- Test Code --- */
+
+function scrollToTop() {
+  window.scrollTo({
+    top: 0,
+    left: 0,
+    behavior: "smooth"
+  })
+}
+
+function scrollToGameBoards() {
+  window.scrollTo({
+    top: 240,
+    left: 0,
+    behavior: "smooth"
+  })
 }
