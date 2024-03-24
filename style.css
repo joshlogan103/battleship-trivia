@@ -466,7 +466,7 @@ footer {
   border-radius: 4px;
   padding: 1rem;
   font-size: 1.25rem;
-  margin: 1.25rem auto;
+  margin: 2rem auto;
   display: grid;
   row-gap: .3125rem;
   column-gap: .625rem;
@@ -532,7 +532,7 @@ footer {
 #trivia-right-wrong-message {
   font-size: 1.25rem;
   height: 1.25rem;
-  margin-top: 1rem;
+  margin-top: .5rem;
 }
 
 .choose-category-message-hidden {

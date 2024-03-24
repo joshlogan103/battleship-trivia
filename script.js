@@ -487,6 +487,8 @@ function startGuessing() {
   shipSectionTwoEl.classList.remove("ship-section-visible");
   shipSectionTwoEl.classList.add("ship-section-hidden");
   triviaSectionEl.classList.remove("trivia-window-hidden");
+  triviaSectionEl.classList.add("trivia-window-visible");
+  clearTriviaWindow();
 }
 
 //Register a hit/miss after a player guesses an opponent's battleship location, then calls a function to change the turn
@@ -550,7 +552,7 @@ function makeGuessPlayerTwo(e) {
 //Display hit message when a battleship position is guessed correctly
 
 function hitMessage() {
-  hitMissMessageEl.textContent = "Excellent shot!";
+  hitMissMessageEl.textContent = "Excellent shot! It's trivia time."
 }
 
 //Display miss message when an empty square is guessed
@@ -714,7 +716,7 @@ function clearTriviaWindow() {
     answerButton.textContent = "";
     answerButton.classList.add("answer-button-hidden");
   })
-  triviaQuestionEl.textContent = "After a successful hit, I'll magically turn into a question!";
+  triviaQuestionEl.textContent = "After a successful hit, I'll magically turn into a trivia question!";
   triviaMessageEl.textContent = "";
 }
 
