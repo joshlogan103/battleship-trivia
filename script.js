@@ -87,9 +87,17 @@ rotateButtons.forEach((button) => button.addEventListener("click",rotateShips));
 doneSettingShipsButtons.forEach((button) => button.addEventListener("click",checkShipsToSet));
 categoryButtons.forEach((button) => button.addEventListener("click", selectCategory));
 
+//Set up hotkeys for rotating ships and confirming setup is complete
+
 document.addEventListener("keydown",function(e) {
   if (e.key.toLowerCase() === "r") {
     rotateShips();
+  }
+})
+
+document.addEventListener("keydown",function(e) {
+  if (e.key.toLowerCase() === "d") {
+    checkShipsToSet();
   }
 })
 
@@ -119,6 +127,7 @@ function init() {
   resetGame();
   resetTrivia();
   removeTriviaCategories();
+  scrollToTop();
 }
 
 //Begins a game when "Start New Game" is clicked
@@ -367,6 +376,7 @@ function closeHowTo() {
 
 function shipSetUp() {
   messageEl.textContent = `Drag ships onto your board to place them.`;
+  scrollToPlaceShips();
   if (turn === 1) {
     playerTwoBoardTotalEl.classList.add("board-hidden");
     shipSectionOneEl.classList.add("ship-section-visible");
@@ -510,6 +520,7 @@ function makeGuessPlayerOne(e) {
         e.target.classList.add("miss");
         e.target.removeEventListener("click", makeGuessPlayerOne);
         missMessage();
+        clearHitMissMessage();
         changeTurn();
       }
     } else {
@@ -537,6 +548,7 @@ function makeGuessPlayerTwo(e) {
         e.target.classList.add("miss");
         e.target.removeEventListener("click", makeGuessPlayerTwo);
         missMessage();
+        clearHitMissMessage();
         changeTurn();
       }
     } else {
@@ -757,10 +769,22 @@ function scrollToTop() {
   })
 }
 
-function scrollToGameBoards() {
+function scrollToPlaceShips() {
   window.scrollTo({
-    top: 240,
+    top: 80,
     left: 0,
     behavior: "smooth"
   })
+}
+
+function scrollToGameBoards() {
+  setTimeout(() => {
+    if (window.scrollY == 0) {
+      window.scrollTo({
+        top: 340,
+        left: 0,
+        behavior: "smooth"
+      })
+    }
+  },2000)
 }
