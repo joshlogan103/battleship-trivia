@@ -183,9 +183,9 @@ function renderInit () {
   shipSectionOneEl.classList.add("ship-section-hidden");
   shipSectionTwoEl.classList.add("ship-section-hidden");
   shipRepoOneEl.classList.add("ship-repository-vertical");
-  shipRepoOneEl.classList.remove("ship-repository-horizontal");
+  shipRepoOneEl.classList.remove("ship-repository-1-horizontal");
   shipRepoTwoEl.classList.add("ship-repository-vertical");
-  shipRepoTwoEl.classList.remove("ship-repository-horizontal");
+  shipRepoTwoEl.classList.remove("ship-repository-2-horizontal");
   playerOneBoardTitle.textContent = `${playerOne}'s Board`;
   playerTwoBoardTitle.textContent = `${playerTwo}'s Board`;
 }
@@ -410,9 +410,7 @@ function addPreview(size,board,index) {
 
 function removePreview() {
   const previewSquares = Array.from(document.getElementsByClassName('preview'));
-  if (previewSquares.length > 0) {
-    previewSquares.forEach((previewSquare) => previewSquare.classList.remove('preview'));
-  }
+  previewSquares.forEach((previewSquare) => previewSquare.classList.remove('preview'));
 }
 
 //Allow user to rotate ship orientation 90 degrees before placing it on the board
@@ -436,18 +434,18 @@ function rotateShips() {
 function renderRotatedShips() {
   if (angle === 90) {
     shipRepoOneEl.classList.remove("ship-repository-vertical");
-    shipRepoOneEl.classList.add("ship-repository-horizontal");
+    shipRepoOneEl.classList.add("ship-repository-1-horizontal");
     shipRepoTwoEl.classList.remove("ship-repository-vertical");
-    shipRepoTwoEl.classList.add("ship-repository-horizontal");
+    shipRepoTwoEl.classList.add("ship-repository-2-horizontal");
     carrierPNG.forEach(carrier => carrier.classList.add("carrier-horizontal"));
     cruiserPNG.forEach(cruiser => cruiser.classList.add("cruiser-horizontal"));
     submarinePNG.forEach(sub => sub.classList.add("submarine-horizontal"));
     floaterPNG.forEach(floater => floater.classList.add("floater-horizontal"));
   } else {
     shipRepoOneEl.classList.add("ship-repository-vertical");
-    shipRepoOneEl.classList.remove("ship-repository-horizontal");
+    shipRepoOneEl.classList.remove("ship-repository-1-horizontal");
     shipRepoTwoEl.classList.add("ship-repository-vertical");
-    shipRepoTwoEl.classList.remove("ship-repository-horizontal");
+    shipRepoTwoEl.classList.remove("ship-repository-2-horizontal");
     carrierPNG.forEach(carrier => carrier.classList.remove("carrier-horizontal"));
     cruiserPNG.forEach(cruiser => cruiser.classList.remove("cruiser-horizontal"));
     submarinePNG.forEach(sub => sub.classList.remove("submarine-horizontal"));
@@ -497,6 +495,8 @@ function startGuessing() {
   triviaSectionEl.classList.remove("trivia-window-hidden");
   triviaSectionEl.classList.add("trivia-window-visible");
   clearTriviaWindow();
+  scrollToStartGuess();
+  triviaMessageEl.textContent = "Let the guessing commence! Choose a square on your opponent's board."
 }
 
 //Register a hit/miss after a player guesses an opponent's battleship location, then calls a function to change the turn
@@ -511,7 +511,6 @@ function makeGuessPlayerOne(e) {
         e.target.removeEventListener("click", makeGuessPlayerOne);
         playerTwoBoard[idx] = 0;
         hitMessage();
-        clearHitMissMessage();
         checkForWin(playerTwoBoard);
         if (!winner) {
           initTrivia();
@@ -520,7 +519,6 @@ function makeGuessPlayerOne(e) {
         e.target.classList.add("miss");
         e.target.removeEventListener("click", makeGuessPlayerOne);
         missMessage();
-        clearHitMissMessage();
         changeTurn();
       }
     } else {
@@ -539,7 +537,6 @@ function makeGuessPlayerTwo(e) {
         e.target.removeEventListener("click", makeGuessPlayerTwo);
         playerOneBoard[idx] = 0;
         hitMessage();
-        clearHitMissMessage();
         checkForWin(playerOneBoard);
         if (!winner) {
           initTrivia();
@@ -548,7 +545,6 @@ function makeGuessPlayerTwo(e) {
         e.target.classList.add("miss");
         e.target.removeEventListener("click", makeGuessPlayerTwo);
         missMessage();
-        clearHitMissMessage();
         changeTurn();
       }
     } else {
@@ -696,11 +692,11 @@ function answerTrivia(e) {
   if (e.target.textContent !== triviaAnswer) {
     e.target.classList.add("wrong-answer");
     triviaMessageEl.textContent = "Hmm, strange, but that doesn't seem to be quite right...";
-    clearTriviaMessage();
+    //clearTriviaMessage();
     changeTurn();
   } else {
     triviaMessageEl.textContent = "Correct! Go ahead and guess another square on your opponent's board. You deserve it.";
-    clearTriviaMessage();
+    //clearTriviaMessage();
   }
   triviaAnswerButtons.forEach((answerButton) => {
     if (answerButton.textContent === triviaAnswer) {
@@ -742,14 +738,6 @@ function resetTrivia() {
   triviaMessageEl.textContent = "";
 }
 
-//Removes the trivia message after 3 seconds
-
-function clearTriviaMessage() {
-  setTimeout(() => {
-    triviaMessageEl.textContent = "";
-  },5000)
-}
-
 //Removes hit/miss message after 3 seconds
 
 function clearHitMissMessage() {
@@ -759,7 +747,7 @@ function clearHitMissMessage() {
 }
 
 
-/*--- Test Code --- */
+/*--- Auto-scroll Functions --- */
 
 function scrollToTop() {
   window.scrollTo({
@@ -786,5 +774,13 @@ function scrollToGameBoards() {
         behavior: "smooth"
       })
     }
-  },2000)
+  },200)
+}
+
+function scrollToStartGuess() {
+  window.scrollTo({
+    top: 340,
+    left: 0,
+    behavior: "smooth"
+  })
 }
