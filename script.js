@@ -705,7 +705,6 @@ function answerTrivia(e) {
     answerButton.removeEventListener("click", answerTrivia);
   })
   triviaAnswerNeeded = false;
-  scrollToGameBoards();
 }
 
 //Clears the trivia window to await the next question
@@ -751,18 +750,6 @@ function scrollToPlaceShips() {
     left: 0,
     behavior: "smooth"
   })
-}
-
-function scrollToGameBoards() {
-  setTimeout(() => {
-    if (window.scrollY == 0) {
-      window.scrollTo({
-        top: 340,
-        left: 0,
-        behavior: "smooth"
-      })
-    }
-  },2000)
 }
 
 function scrollToStartGuess() {

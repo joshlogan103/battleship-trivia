@@ -2,7 +2,7 @@
 
 ## Background
 
-I built this game to combine one of my favorite games from my childhood (Battleship) with my favorite game as an adult (Trivia). I found combining the two brings a fresh experience and rebalances the game in a unique way.
+I built this game to combine one of my favorite games from my childhood (Battleship) with my favorite game as an adult (Trivia). Battleship in particular has a fair amount of compexity in making sure ship set-up functions properly and doesn't break any rules, so this felt like a great first project in putting JavaScript to work.
 
 ## How-to-Play
 
@@ -43,7 +43,19 @@ I built this game to combine one of my favorite games from my childhood (Battles
 
 ## Timeline
 
-- **Timeline**: Give us a table with all the project dates, MVP items meant for that day, whether you met your goal Y/N, and any notes about those items
+| Day       |   | Task                                                              | Status     | Notes                                      |
+|-----------|---|-------------------------------------------------------------------|------------|--------------------------------------------|
+| Sunday    |   | Create proposal, make wireframes of each game state               | Completed  |                                            |
+| Monday    |   | Create HTML, CSS, JS files with basic scaffolding                 | Completed  |                                            |
+| Tuesday   |   | Add functionality for setting ships and making guesses            | Completed  |                                            |
+| Wednesday |   | Add content and styling, this includes battleships themselves     | Completed  | Some functionality was completed Wednesday |
+| Thursdary |   | Continue with styling and add trivia functionality and JSON files | Completed  |                                            |
+| Friday    |   | Finalize MVP, clean code, breakout functions                      | Completed  |                                            |
+| Saturday  |   | Work on stretch goals, particularly a database for the trivia     | Incomplete |                                            |
+| Sunday    |   | Finalize work on stretch goals, go through final user testing     | Completed  | Had friends play game to get feedback      |
+| Monday    |   | Present work                                                      |            |                                            |
+
+Further tracking of goals and tasks was managed on [this Trello board.](https://trello.com/b/pFpab8LH/battleship-trivia)
 
 ## Attributions
 
