@@ -2,11 +2,11 @@
 
 ## Background
 
-
+I built this game to combine one of my favorite games from my childhood (Battleship) with my favorite game as an adult (Trivia). I found combining the two brings a fresh experience and rebalances the game in a unique way.
 
 ## How-to-Play
 
- Battleship Trivia is a new spin on an old classic. This game combines classic Battleship with Trivia. First, each player will set up their ships like in standard battleship. Next, the players will take turns guessing squares to find and sink their opponents ships. In this version, the twist is that after getting a succesful hit on an opponent's ship, the current player will be given a trivia question. If they answer the question correctly, they will be able to guess again. This can continue as long as a player keeps getting hits and answering questions correctly. If a question is answered incorrectly, it's the end of the players turn and the game continues. The winner is the player that sinks all of the opponent's ships first.
+ Battleship Trivia is a new spin on an old classic. This game combines classic Battleship with Trivia. First, each player will set up their ships like in standard battleship. Next, the players will take turns guessing squares to find and sink their opponent's ships. In this version, the twist is that after getting a succesful hit on an opponent's ship, the current player will be given a trivia question. If they answer the question correctly, they will be able to guess another square. This can continue as long as a player keeps getting hits and answering questions correctly. If a question is answered incorrectly, it's the end of the players turn and the game continues. The winner is the player that sinks all of their opponent's ships first.
 
 ## Play the Game
 

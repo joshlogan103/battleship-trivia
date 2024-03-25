@@ -692,11 +692,9 @@ function answerTrivia(e) {
   if (e.target.textContent !== triviaAnswer) {
     e.target.classList.add("wrong-answer");
     triviaMessageEl.textContent = "Hmm, strange, but that doesn't seem to be quite right...";
-    //clearTriviaMessage();
     changeTurn();
   } else {
     triviaMessageEl.textContent = "Correct! Go ahead and guess another square on your opponent's board. You deserve it.";
-    //clearTriviaMessage();
   }
   triviaAnswerButtons.forEach((answerButton) => {
     if (answerButton.textContent === triviaAnswer) {
@@ -724,7 +722,6 @@ function clearTriviaWindow() {
   triviaMessageEl.textContent = "";
 }
 
-
 //Resets the trivia window, message and buttons
 
 function resetTrivia() {
@@ -737,15 +734,6 @@ function resetTrivia() {
   })
   triviaMessageEl.textContent = "";
 }
-
-//Removes hit/miss message after 3 seconds
-
-function clearHitMissMessage() {
-  setTimeout(() => {
-    hitMissMessageEl.textContent = "";
-  },3000)
-}
-
 
 /*--- Auto-scroll Functions --- */
 
@@ -774,7 +762,7 @@ function scrollToGameBoards() {
         behavior: "smooth"
       })
     }
-  },200)
+  },2000)
 }
 
 function scrollToStartGuess() {
