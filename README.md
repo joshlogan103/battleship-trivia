@@ -18,6 +18,7 @@ I built this game to combine one of my favorite games from my childhood (Battles
 - JSON
 - HTML5
 - CSS
+- Figma (Wireframing)
 
 ## Wireframe Screenshots
 
